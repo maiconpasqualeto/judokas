@@ -15,7 +15,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ValueChangeEvent;
 
 import org.apache.log4j.Logger;
 import org.primefaces.context.RequestContext;
@@ -52,6 +51,7 @@ public class AtletasBean implements Serializable {
 	private boolean renderAcademias;
 	private String nomeUsuarioAcademia;
 	private List<Usuario> academias = new ArrayList<Usuario>(0);
+	private List<String> funcoes = new ArrayList<String>(0);
 	
 	@ManagedProperty(value="#{segurancaBean}")
 	private SegurancaBean segurancaBean;
@@ -79,6 +79,16 @@ public class AtletasBean implements Serializable {
 		graduacoes.add("VERMELHA E BRANCA RATI-DAN");
 		graduacoes.add("VERMELHA KIU-DAN ");
 		graduacoes.add("VERMELHA DIU-DAN");
+		
+		funcoes.add("Atleta");
+		funcoes.add("Para-Atleta");
+		funcoes.add("Árbitro");
+		funcoes.add("Dirigente");
+		funcoes.add("Professor");
+		funcoes.add("Técnico");
+		funcoes.add("Auxiliar Técnico");
+		funcoes.add("Kodansha");
+		funcoes.add("Outros");
 	}
 	
 	public Atleta getAtleta() {
@@ -161,16 +171,24 @@ public class AtletasBean implements Serializable {
 		this.nomeUsuarioAcademia = nomeUsuarioAcademia;
 	}
 
+	public List<String> getFuncoes() {
+		return funcoes;
+	}
+
+	public void setFuncoes(List<String> funcoes) {
+		this.funcoes = funcoes;
+	}
+
 	/**
 	 * 
 	 * @param event
-	 */
+	 *//*
 	public void buscarCEP(ValueChangeEvent event){
 		String cep = event.getNewValue().toString();
 		atleta.setCep(cep);
 		
 		JudokasFacade.getInstance().buscarCEP(atleta);
-	}
+	}*/
 	
 	@PostConstruct
 	public void init() {

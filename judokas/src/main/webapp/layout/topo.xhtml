@@ -18,6 +18,7 @@
 			<div id="divusuario" style="color: #FFF;position: absolute;right:10px;top:35px;z-index:200;">
 				<h:outputText value="Usuário logado: "/>
 				<h:outputText value="#{segurancaBean.usuarioSessao}" style="font-weight: bold;"/>
+				<h:outputText value=" - #{segurancaBean.tipoUsuario}" style="font-weight: bold;" rendered="#{segurancaBean.renderTipoUsuario}"/>
 			</div>
 		    <div id="divlogo" class="logo" >
 				<p:graphicImage height="100px"

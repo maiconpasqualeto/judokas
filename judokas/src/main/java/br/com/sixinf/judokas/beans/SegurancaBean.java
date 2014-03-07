@@ -37,6 +37,8 @@ public class SegurancaBean implements Serializable {
 	private boolean renderUsuarios;
 	private boolean renderRelatorio;
 	private boolean renderImpCarteiras;
+	// quando usuário for Master mostra no topo da página
+	private boolean renderTipoUsuario;
 	
 	// permissoes
 	public static List<String> permissoesMaster = new ArrayList<String>();
@@ -102,6 +104,14 @@ public class SegurancaBean implements Serializable {
 		this.renderImpCarteiras = renderImpCarteiras;
 	}
 
+	public boolean isRenderTipoUsuario() {
+		return renderTipoUsuario;
+	}
+
+	public void setRenderTipoUsuario(boolean renderTipoUsuario) {
+		this.renderTipoUsuario = renderTipoUsuario;
+	}
+
 	/**
 	 * 
 	 * @return
@@ -122,6 +132,11 @@ public class SegurancaBean implements Serializable {
 				HttpSession sess = JudokasHelper.getSession();
 				sess.setAttribute(Usuario.SESSION_NOME_USUARIO, usuario.getNomeUsuario());
 				sess.setAttribute(Usuario.SESSION_TIPO_USUARIO, usuario.getTipoUsuario());
+				
+				if (usuario.getTipoUsuario().equals(TipoUsuario.MASTER.name()))
+					renderTipoUsuario = true;
+				else 
+					renderTipoUsuario = false;
 				
 				carregaRenderMenusUsuario();
 				
@@ -201,5 +216,13 @@ public class SegurancaBean implements Serializable {
 	 */
 	public String getUsuarioSessao(){
 		return JudokasHelper.getUsuarioSessao();
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String getTipoUsuario(){
+		return JudokasHelper.getTipoUsuarioSessao().name();
 	}
 }

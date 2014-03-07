@@ -3,17 +3,10 @@
  */
 package br.com.sixinf.judokas.facade;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.log4j.Logger;
 import org.primefaces.context.RequestContext;
-import org.primefaces.json.JSONException;
-import org.primefaces.json.JSONObject;
 
 import br.com.sixinf.ferramentas.Utilitarios;
 import br.com.sixinf.ferramentas.log.LoggerException;
@@ -29,7 +22,7 @@ import br.com.sixinf.judokas.entidades.Usuario;
  */
 public class JudokasFacade {
 	
-	private static final Logger LOG = Logger.getLogger(JudokasFacade.class);
+	//private static final Logger LOG = Logger.getLogger(JudokasFacade.class);
 	private static JudokasFacade facade;
 	
 	public static JudokasFacade getInstance(){
@@ -81,7 +74,7 @@ public class JudokasFacade {
 	/**
 	 * 
 	 * @param cep
-	 */
+	 *//*
 	public void buscarCEP(Atleta atleta){
 		InputStream is = null;
 		HttpURLConnection connection = null;
@@ -132,7 +125,7 @@ public class JudokasFacade {
 		} catch (IOException | JSONException e) {
 			LOG.error("Erro ao buscar CEP", e);
 		}
-	}
+	}*/
 	
 	/**
 	 * 
