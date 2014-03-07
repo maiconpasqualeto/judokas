@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="/layout/tpl_limpo.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+	
+	<ui:define name="principal">
+	
+		<p:panel id="pnlAtletas" header="Atletas" >
+		
+			<h:form  id="frmAtletas"  >
+			
+				<p:growl id="growAtletas" showDetail="false"/>
+				
+				<p:commandButton value="Adicionar Novo Atleta" process="@this" actionListener="#{atletasBean.novo}"
+		                	id="btnNovo" oncomplete="PF('dlg').show();" update="dlgCadastro" 
+		                	resetValues="true"/>
+						
+				<p:dataTable 
+					id="tblAtletas"
+					emptyMessage="Lista vazia" 
+					value="#{atletasBean.atletas}" var="a"
+					rowKey="#{a.id}" paginator="true" rows="10" >
+					
+					<p:ajax event="rowSelect" listener="#{atletasBean.onSelect}" /> 
+					
+					<p:column>
+						<f:facet name="header">ID</f:facet>
+						<h:outputText value="#{a.id}" />
+					</p:column>
+					
+					<p:column id="clNome">
+						<f:facet name="header">Nome</f:facet>
+						<h:outputText id="lblListaNome" value="#{a.nome}" />
+				        <pe:tooltip for="lblListaNome">  
+				            <p:graphicImage value="/displayimage?arquivo=#{a.foto}" width="80" height="96"
+								rendered="#{not empty a.foto}" style="border: solid 1px lightgray" cache="false"/>  
+							<p:graphicImage id="grfNoFoto" value="/images/nophoto.jpg" width="80" height="96"
+								rendered="#{empty a.foto}" style="border: solid 1px lightgray"/>
+				        </pe:tooltip>
+					</p:column>
+					
+					<p:column headerText="Ação" style="width:130px">
+						<f:facet name="header">Ação</f:facet>
+						<p:commandButton value="Editar" process="@this" actionListener="#{atletasBean.editar(a)}"
+		                	id="btnEditar" oncomplete="PF('dlg').show();" update=":frmAtletas:pnlCampos"
+		                	resetValues="true" />
+							
+		                <p:commandButton value="Apagar" process="@this" actionListener="#{atletasBean.delete(a)}"
+		                	id="btnApagar" title="Confirma apagar o Registro?" 
+		                	update="tblAtletas,:frmAtletas:growAtletas">
+		                	
+		                	<p:confirm header="Confirmação de exclusão" 
+		                		message="Apagar registro?" icon="ui-icon-alert" />
+                            
+		                </p:commandButton>
+		            </p:column>
+				</p:dataTable>
+				
+				<p:confirmDialog global="true">
+				    <p:commandButton value="Sim" styleClass="ui-confirmdialog-yes"  />
+				    <p:commandButton value="Não" styleClass="ui-confirmdialog-no" />
+				</p:confirmDialog>
+				
+
+				<p:dialog id="dlgCadastro" widgetVar="dlg" modal="true" draggable="false" resizable="false">
+
+					<p:scrollPanel style="height:400px" mode="native">
+							
+						<p:panelGrid columns="2" id="pnlCampos">
+						
+							<p:outputLabel value="Foto" />
+							<h:panelGrid columns="2" >
+								<p:graphicImage id="grfFoto" value="/displayimage?arquivo=#{atletasBean.atleta.foto}" width="80" height="96"
+									rendered="#{not empty atletasBean.atleta.foto}" style="border: solid 1px lightgray" cache="false"/>  
+								<p:graphicImage id="grfNoFoto" value="/images/nophoto.jpg" width="80" height="96"
+									rendered="#{empty atletasBean.atleta.foto}" style="border: solid 1px lightgray"/>
+									<h:form enctype="multipart/form-data">
+										<p:fileUpload mode="advanced" sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
+											fileUploadListener="#{atletasBean.handleFileUpload}" auto="true" update=":frmAtletas:pnlCampos"/>
+									</h:form>
+							</h:panelGrid>
+							
+							<p:outputLabel value="ID" for="txtID" />
+							<p:inputText id="txtID" value="#{atletasBean.atleta.id}"
+								readonly="true">
+								<p:watermark for="txtID" value="ID Automático" />
+							</p:inputText>
+
+							<p:outputLabel value="Nome:" for="txtNome" />
+							<p:inputText id="txtNome" value="#{atletasBean.atleta.nome}"
+								required="true" label="Nome">
+								<p:focus for="txtNome" />
+							</p:inputText>
+
+							<p:outputLabel value="Identidade:" for="txtIdentidade" />
+							<p:inputText id="txtIdentidade"
+								value="#{atletasBean.atleta.identidade}" label="Identidade" />
+
+							<p:outputLabel value="Orgão Exp.:" for="txtExp" />
+							<p:inputText id="txtExp"
+								value="#{atletasBean.atleta.orgaoExpedidor}"
+								label="Orgão Expedidor" />
+
+							<p:outputLabel value="CPF:" for="txtCpf" />
+							<p:inputMask id="txtCpf" required="true" label="CPF"
+								mask="999.999.999-99" value="#{atletasBean.atleta.cpf}"
+								size="12" converter="inputMaskConverter">
+								<f:validator validatorId="cpfValidator" />
+							</p:inputMask>
+
+							<p:outputLabel value="Sexo" for="rdSexo" />
+							<p:selectOneRadio id="rdSexo" value="#{atletasBean.atleta.sexo}" required="true">
+								<f:selectItem itemLabel="Masculino" itemValue="M" />  
+            					<f:selectItem itemLabel="Feminino" itemValue="F" /> 
+							</p:selectOneRadio>
+
+							<p:outputLabel value="Data Nascimento:" for="dtNasc" />
+							<p:calendar id="dtNasc"
+								value="#{atletasBean.atleta.dataNascimento}" maxdate="now"
+								pattern="dd/MM/yyyy" placeholder=" " required="true"
+								locale="pt_BR" mode="popup" maxlength="10"
+								label="Data de Nascimento" navigator="true">
+								<p:watermark value="Clique para calendário" for="dtNasc" />
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</p:calendar>
+
+							<p:outputLabel value="Local Nascimento" for="txtLocalNasc" />
+							<p:inputText id="txtLocalNasc"
+								value="#{atletasBean.atleta.localNascimento}"
+								label="Local Nascimento" />
+
+							<p:outputLabel value="UF Nascimento:" for="txtUfNasc" />
+							<p:inputText id="txtUfNasc"
+								value="#{atletasBean.atleta.ufNascimento}" label="UF Nascimento" />
+
+							<p:outputLabel value="Email:" for="txtEmail" />
+							<p:inputText id="txtEmail" value="#{atletasBean.atleta.email}"
+								label="Email">
+								<f:validator validatorId="emailValidator" />
+							</p:inputText>
+
+							<p:outputLabel value="Graduacao:" for="cmbGraduacao" />
+							<p:selectOneMenu id="cmbGraduacao"
+								value="#{atletasBean.atleta.graduacao}" required="true"
+								label="Graduação">
+								<f:selectItem itemLabel="Selecione" itemValue="" />
+								<f:selectItems value="#{atletasBean.graduacoes}" />
+							</p:selectOneMenu>
+
+							<p:outputLabel value="Data Graduação:" for="dtGrad" />
+							<p:calendar id="dtGrad"
+								value="#{atletasBean.atleta.dataGraduacao}" maxdate="now"
+								pattern="dd/MM/yyyy" placeholder=" " locale="pt_BR" mode="popup"
+								maxlength="10" label="Data Graduação" navigator="true" required="true">
+								<p:watermark value="Clique para calendário" for="dtNasc" />
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</p:calendar>
+
+							<p:outputLabel value="CEP:" for="txtCep" />
+							<p:inputMask id="txtCep" required="true" label="CEP"
+								mask="99999-999" value="#{atletasBean.atleta.cep}"
+								valueChangeListener="#{atletasBean.buscarCEP}" size="8"
+								converter="inputMaskConverter">
+								<p:ajax event="blur" process="@this"
+									update="txtEndereco, txtBairro, txtMunicipio, txtUf" />
+							</p:inputMask>
+
+							<p:outputLabel value="Endereço:" for="txtEndereco" />
+							<p:inputText id="txtEndereco" required="true" label="Endereço"
+								value="#{atletasBean.atleta.endereco}" size="63" />
+
+							<p:outputLabel value="Número:" for="txtNumero" />
+							<p:inputText id="txtNumero" required="true" label="Número"
+								value="#{atletasBean.atleta.numero}" size="8" />
+
+							<p:outputLabel value="Complemento:" for="txtComplemento" />
+							<p:inputText id="txtComplemento" label="Complemento"
+								value="#{atletasBean.atleta.complemento}" size="15" />
+
+							<p:outputLabel value="Bairro:" for="txtBairro" />
+							<p:inputText id="txtBairro" required="true" label="Bairro"
+								value="#{atletasBean.atleta.bairro}" size="15" />
+
+							<p:outputLabel value="Municipio:" for="txtMunicipio" />
+							<p:inputText id="txtMunicipio" required="true" label="Municipio"
+								value="#{atletasBean.atleta.municipio}" size="40" />
+
+							<p:outputLabel value="UF:" for="txtUf" />
+							<p:inputText id="txtUf" required="true" label="UF"
+								value="#{atletasBean.atleta.uf}" size="2" />
+
+							<p:outputLabel value="Nome Mãe:" for="txtNomeMae" />
+							<p:inputText id="txtNomeMae" required="true" label="Nome Mãe"
+								value="#{atletasBean.atleta.nomeMae}" />
+
+							<p:outputLabel value="Email Mãe:" for="txtEmailMae" />
+							<p:inputText id="txtEmailMae" label="Email Mãe"
+								value="#{atletasBean.atleta.emailMae}">
+								<f:validator validatorId="emailValidator" />
+							</p:inputText>
+
+							<p:outputLabel value="Nome Pai:" for="txtNomePai" />
+							<p:inputText id="txtNomePai" label="Nome Pai"
+								value="#{atletasBean.atleta.nomePai}" />
+
+							<p:outputLabel value="Email Pai:" for="txtEmailPai" />
+							<p:inputText id="txtEmailPai" label="Email Pai"
+								value="#{atletasBean.atleta.emailPai}">
+								<f:validator validatorId="emailValidator" />
+							</p:inputText>
+
+							<p:outputLabel value="Fone contato:" for="txtFoneContato" />
+							<p:inputMask id="txtFoneContato" label="Telefone de contato"
+								mask="(99)99999999" value="#{atletasBean.atleta.foneContato}"
+								size="16" converter="inputMaskConverter" />
+								
+							<p:outputLabel value="Academia:" for="cmbAcademia" rendered="#{atletasBean.renderAcademias}"/>
+							<p:selectOneMenu id="cmbAcademia" rendered="#{atletasBean.renderAcademias}"
+								value="#{atletasBean.nomeUsuarioAcademia}" required="true"
+								label="Academia">
+								<f:selectItem itemLabel="Selecione" itemValue="" />
+								<f:selectItems value="#{atletasBean.academias}"  var="a" itemLabel="#{a.nome}" itemValue="#{a.nomeUsuario}" />
+							</p:selectOneMenu>
+
+						</p:panelGrid>
+						
+						<p:commandButton id="btnSalvar" value="Salvar e Fechar" action="#{atletasBean.salvarFecha}" 
+							update="growAtletas,tblAtletas,pnlCampos" oncomplete="registroGravado(xhr, status, args)"/>
+							
+						<p:commandButton id="btnSalvarENovo" value="Salvar e Adiciona Novo" action="#{atletasBean.salvar}" 
+							update="growAtletas,tblAtletas,pnlCampos" />
+
+					</p:scrollPanel>
+					
+					<p:defaultCommand target="btnSalvar" />
+
+				</p:dialog>
+				
+			</h:form>
+			
+		</p:panel>
+						
+	</ui:define>
+	
+</ui:composition>

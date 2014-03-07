@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pe="http://primefaces.org/ui/extensions"
+	xmlns:of="http://omnifaces.org/functions">
+
+<h:head>
+	<script type='text/javascript'>
+	    //<![CDATA[
+		$(function(){
+		    $('#conteudo') .css({'height': (($(window).height()-135))+'px'});
+		    $(window).resize(function(){
+		        $('#conteudo') .css({'height': (($(window).height()-135))+'px'});
+		    });
+		});		
+		//]]>
+	</script>
+</h:head>
+<h:body>
+
+	<ui:decorate template="../layout/tpl_off.xhtml">
+		
+		<ui:define name="topo">
+			<ui:include src="../layout/topo_login.xhtml"></ui:include>			
+		</ui:define>
+
+		<ui:define name="principal">
+			<ul style="color: #fff;">
+				<li><h3 style="color: #fff">ERRO no processamento da requisição</h3></li>
+		        <li>Date/time: #{of:formatDate(now, 'yyyy-MM-dd HH:mm:ss')}</li>
+		        <li>User agent: #{header['user-agent']}</li>
+		        <li>Request URI: <a href="#{requestScope['javax.servlet.error.request_uri']}">#{requestScope['javax.servlet.error.request_uri']}</a></li>
+		        <li>Ajax request: #{facesContext.partialViewContext.ajaxRequest ? 'Yes' : 'No'}</li>
+		        <li>Status code: #{requestScope['javax.servlet.error.status_code']}</li>
+		        <li>Exception type: #{requestScope['javax.servlet.error.exception_type']}</li>
+		        <li>Exception message: #{requestScope['javax.servlet.error.message']}</li>
+		        <li>Stack trace: <pre><code>#{of:printStackTrace(requestScope['javax.servlet.error.exception'])}</code></pre></li>
+		    </ul>
+    	</ui:define>
+    	
+   	</ui:decorate>
+   	
+</h:body>
+
+</html>

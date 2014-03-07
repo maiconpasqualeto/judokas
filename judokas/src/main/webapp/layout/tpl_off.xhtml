@@ -1,0 +1,35 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+  <h:head>
+		<h:outputStylesheet name="common-style.css" library="css" />
+		<style type="text/css">
+            .ui-widget { font-size: 0.8em; }
+            .ui-wizard-step-title { font-size: 1.1em; }            
+            .ui-menubar {
+            	padding: 0 0 0 0;
+            	margin: 5px 1px 10px 1px;
+            }
+        </style>
+  </h:head>
+  	<h:body>
+  		<header>
+  			<ui:insert name="topo" >
+			  <ui:include src="topo.xhtml" />
+			</ui:insert>
+	    </header>
+	    
+	    <div id="conteudo" class="conteudo_off">
+		  	<ui:insert name="principal" />
+	    </div>
+	    <footer>
+		    <div id="divfooter" >
+		    	<ui:insert name="rodape">
+		    	  <ui:include src="rodape.xhtml" />
+		    	</ui:insert>
+	   	    </div> 
+   	    </footer>
+	</h:body>
+</html>

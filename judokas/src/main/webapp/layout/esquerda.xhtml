@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<body>
+		<ui:composition>
+			<p:panel style="border: 0;">
+				<h:form id="frmEsquerda">
+					<p:dataTable var="pet" value="#{mapBean.pets}" emptyMessage="Sem registros" >  
+				        
+				        <p:column headerText="Nome">
+				        	<p:graphicImage height="30" value="/images/dog_icon1.gif"/> 
+				            <p:commandLink value="#{pet.nome}" action="#{mapBean.atualizaPetCaminho(pet)}" 
+				            	onclick="PF('dlgCaminho').show();" update=":frmEsquerda:dgCaminho" process="@this"
+				            	style="font-weight: bold;" />  
+				        </p:column>
+				        
+				    </p:dataTable>   
+				    
+				    <p:dialog id="dlgCaminho" widgetVar="dlgCaminho">
+				    
+				    	<p:panelGrid id="dgCaminho" columns="2">
+				    
+					    	<p:outputLabel value="Pet:" for="txtPet" />
+					    	<h:outputText id="txtPet" value="#{mapBean.petCaminho.nome}" styleClass="outputLabel" />
+					    	
+					    	<p:outputLabel value="Data Inicio" for="dtInicio" />
+					    	<p:calendar id="dtInicio" value="#{mapBean.dataInicioCaminho}" 
+								pattern="dd/MM/yyyy HH:mm" required="true" stepMinute="10">
+								<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+					    	</p:calendar>
+					    	
+					    	<p:outputLabel value="Data Fim" for="dtFim" />
+					    	<p:calendar id="dtFim" value="#{mapBean.dataFimCaminho}" 
+								pattern="dd/MM/yyyy HH:mm" required="true" stepMinute="10">
+								<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+					    	</p:calendar>
+				    	
+				    	</p:panelGrid>
+				    	
+				    	<p:commandButton id="btnGerar" value="Gerar Caminho" action="#{mapBean.caminho()}" 
+				    		oncomplete="updateCaminho(xhr, status, args); PF('dlgCaminho').hide();"
+				    		update="dgCaminho"/>
+				    
+				    </p:dialog>
+				</h:form>
+			</p:panel>
+	
+		</ui:composition>
+	</body>
+</html>

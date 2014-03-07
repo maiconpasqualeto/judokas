@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui" >
+
+	<h:head>
+		
+	</h:head>
+	<h:body>
+		<ui:composition>
+			<h:form>
+				<p:menubar style="margin: auto; border: 0; background: none; width: 300px;">					
+					<p:menuitem value="Home" url="/pages/principal.xhtml" />
+					<p:submenu label="Cadastros" style="margin-left: 10px" rendered="#{segurancaBean.renderCadastro}">
+						<p:menuitem value="Atletas" url="/pages/atletas.xhtml" rendered="#{segurancaBean.renderAtletas}"/>
+						<p:menuitem value="Usuarios" url="/pages/usuarios.xhtml" rendered="#{segurancaBean.renderUsuarios}" />						
+					</p:submenu>
+					<p:submenu label="Relatórios" style="margin-left: 10px" rendered="#{segurancaBean.renderRelatorio}">
+						<p:menuitem value="Impressão Carteirinhas" url="#"  rendered="#{segurancaBean.renderImpCarteiras}" />
+					</p:submenu>
+					<p:menuitem value="Sair" action="#{segurancaBean.logoff}" style="margin-left: 10px" />
+				</p:menubar>
+			</h:form>	
+		</ui:composition>
+	</h:body>
+
+</html>
+
+

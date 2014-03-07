@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" 
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:p="http://primefaces.org/ui">
+
+	<h:head>
+		
+	</h:head>
+	<h:body>
+		<ui:composition>
+			<p:ajaxStatus styleClass="ui-shadow" style="position:fixed;left:50%;top:45%;margin-left:-110px">
+			    <f:facet name="start" > 
+			    	<p:graphicImage value="/images/loading3.gif" />
+			    </f:facet>  
+			  	
+			    <f:facet name="complete">  
+			        <h:outputText value="" />  
+			    </f:facet>  
+			</p:ajaxStatus>  
+				              
+			<table  style="width: 100%; height: 100%;">
+				<tr>
+					<td style="text-align: center;">
+						<h:outputText value="&#169; Sixinf Tecnologia da Informação" />
+					</td>
+				</tr>
+			</table>
+		</ui:composition>
+	</h:body>
+
+</html>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<h:head>
+	<script type='text/javascript'>
+	    //<![CDATA[
+		$(function(){
+		    $('#conteudo') .css({'height': (($(window).height()-135))+'px'});
+		    $(window).resize(function(){
+		        $('#conteudo') .css({'height': (($(window).height()-135))+'px'});
+		    });
+		});
+		
+		function handleLoginRequest(xhr, status, args) {  
+	        if( !args.validationFailed && args.abreDialog ) {  
+	            PF('dlg').show();
+	        } 
+	    }
+		
+		function novaSenhaGravada(xhr, status, args) {
+			if( !args.validationFailed && args.fechaDialog ) {  
+	            PF('dlg').hide();
+	        }
+		}
+		
+		//]]>
+	</script>
+</h:head>
+<h:body>
+
+	<ui:decorate template="../layout/tpl_off.xhtml">
+		
+		<ui:define name="topo">
+			<ui:include src="../layout/topo_login.xhtml"></ui:include>			
+		</ui:define>
+
+		<ui:define name="principal">
+		
+			<div id="painel1" class="painel1">
+				<h2>Judô, caminho suave!</h2>
+				<h3>Cadastro de carteirinhas da Federação de Judô de Mato Grosso do Sul</h3>
+				<p>Entre com seu login e senha para acessar o sistema</p>
+				
+				<h:form id="frmLogin">
+				
+					<p:growl id="growLogin" showDetail="false" />
+				
+					<div id="divCadastroNovo" class="divCadastroNovo">
+						<p:inputText id="txtLogin" required="true" label="Login"
+							value="#{segurancaBean.usuario.nomeUsuario}" styleClass="camposFormCadastroNovo" size="37">
+							<p:watermark for="txtLogin" value="Nome de usuário" />
+							<p:focus for="txtLogin"/>
+							<pe:tooltip for="txtLogin" value="Digite seu nome de usuário para acesso"/>
+						</p:inputText>
+						
+						<p:password id="txtSenha" required="true" label="Senha" size="37"
+							value="#{segurancaBean.usuario.senha}" styleClass="camposFormCadastroNovo">
+							<p:watermark for="txtSenha" value="Sua Senha" />
+							<pe:tooltip for="txtSenha" value="Sua senha"/>
+						</p:password>
+						
+					</div>
+					
+					<p:commandButton id="btnEntrar" value="Entrar no sistema"
+						  styleClass="btn-convert" update="frmLogin" style="width: 100%;"
+						  action="#{segurancaBean.logar}" oncomplete="handleLoginRequest(xhr, status, args)">
+					</p:commandButton>
+					
+				</h:form>
+				
+			</div>
+			
+				<p:dialog id="dlgNovaSenha" widgetVar="dlg" modal="true" appendTo="@(body)"
+					resizable="false" closable="false" draggable="false" header="Nova Senha" >
+					
+					<h:form id="frmNovaSenha" >
+					
+						<p:growl id="growNovaSenha" showDetail="false" />
+	
+						<p:panelGrid columns="2" id="pnlCamposDlg">
+							
+							<p:outputLabel id="lblNovaSenha" for="txtNovaSenha" value="Nova Senha:" />
+							<p:password id="txtNovaSenha" value="#{segurancaBean.usuario.senha}" 
+								size="12" label="Nova Senha"
+								match="txtConfSenha" required="true">
+								<f:validateLength minimum="6" />
+								<p:watermark value="digite a senha" for="txtNovaSenha" />
+								<p:focus for="txtNovaSenha"/>
+							</p:password>
+							<p:outputLabel id="lblConfSenha" for="txtConfSenha" value="Confirma Senha:" />
+							<p:password id="txtConfSenha" value="#{segurancaBean.usuario.senha}" 
+								required="true" size="12" label="Confirma Senha">
+								<p:watermark value="confirme a senha" for="txtConfSenha"></p:watermark>
+							</p:password>
+							
+						</p:panelGrid>
+						
+						<p:commandButton id="btnSalvar" value="Salvar" ajax="true"
+							update="frmNovaSenha"
+							actionListener="#{segurancaBean.salvarNovaSenha}" 
+							oncomplete="novaSenhaGravada(xhr, status, args)"/>
+							
+						<p:commandButton id="btnCancela" value="Cancelar" ajax="true"
+							onclick="PF('dlg').hide();" process="@this" update="pnlCamposDlg" >  
+					        <p:resetInput target="pnlCamposDlg" />  
+				        </p:commandButton>  
+						
+					</h:form>
+					
+				</p:dialog>
+			
+		</ui:define>
+		
+
+	</ui:decorate>
+</h:body>
+
+</html>

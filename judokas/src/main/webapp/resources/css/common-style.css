@@ -1,0 +1,245 @@
+body {
+	margin:0; 
+	padding:0; 
+	height:100%;
+	background-color: #f8f8f8;
+	font-family: Arial,sans-serif;
+}
+
+#page{
+	width: 100%;
+	margin: 0 auto;
+}
+
+header{
+	--width: 100%;
+	min-height: 85px;
+	--padding: 5 5 5 5;	
+}
+
+#divheader{
+	--background: linear-gradient(to bottom, rgba(145,176,222,1) 0, rgba(30,63,77,1) 100%);
+	width: 100%;
+	min-width: 920px;
+	height: 47px;	
+	position: relative;
+	background-color: #4c4c4c; 
+	padding-top: 13px;
+}
+
+.bar {
+	position:relative;
+	border-top: 3px solid #fff;
+	border-bottom: 3px solid #fff;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	background-color: #e8e8e8;
+	height: 30px;
+	width: 100%;
+	-webkit-box-shadow: 0 2px 7px 0 rgba(5, 5, 5, 0.75);
+	-moz-box-shadow: 0 2px 7px 0 rgba(5, 5, 5, 0.75);
+	box-shadow: 0 2px 7px 0 rgba(5, 5, 5, 0.75);
+	z-index: 100;
+}
+
+#divfooter{
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	overflow: auto;
+	height: 35px;
+	border-top: 3px solid #FFF;
+	background-color: #4c4c4c; 
+	width: 100%;
+	--clear: both;
+	font-size: x-small; 
+	font-weight: bold; 
+	text-shadow: 0px 1px 0px rgba(50,50,50,0.7); 
+	color: #FFF;
+	box-shadow: 0 -3px 7px 0 rgba(5, 5, 5, 0.75);
+}
+
+nav{
+	margin: auto;
+	width: 100%;
+}
+
+#menu1 {
+	--margin: 7 7 7 7;
+}
+
+.logo {
+	min-width: 185px;
+	min-height: 65px;
+	border: 7px solid #818181;
+	background: white;
+	margin-left: 50px;
+	padding-top: 5px;
+	border-bottom-left-radius: 20px;
+	-moz-border-radius-bottomleft: 20px;
+	-webkit-border-bottom-left-radius: 20px;
+	border-bottom-right-radius: 20px;
+	-moz-border-radius-bottomright: 20px;
+	-webkit-border-bottom-right-radius: 20px;
+	box-shadow: 0px 0px 12px -3px #000;
+	-webkit-box-shadow: 0px 0px 12px -3px #000;
+	position: absolute;
+	top: -8px;
+	z-index: 200;
+	text-align: center;
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.conteudo_logado {
+	position: relative;
+	background-image: url("../images/kitadae_bg1_light.jpg");
+	background-size: cover;
+	background-position: top center;
+	min-height: 550px;
+	min-width: 920px;
+}
+
+.conteudo_off {
+	position: relative;
+	background-image: url("../images/kitadae_bg1.jpg");
+	background-size: cover;
+	background-position: top center;
+	min-height: 550px;
+	min-width: 920px;
+}
+
+#esquerda {	
+	position: absolute;
+	left: 0;
+	width: 250px;
+	margin-bottom:16px;
+	margin-left:15px;
+	margin-top: 10px;
+}
+
+#centro{
+	margin-left: 290px;
+}
+
+.panelGridLSemBorda td, .panelGridLSemBorda tr {
+	border: none !important;
+	background: transparent !important;
+}
+
+.panelGridLComBorda td, .panelGridLComBorda tr {
+	border: 1px solid #A8A8A8 !important;
+}
+
+.outputLabel{
+	font-weight: bold;
+}
+
+.gridRow {
+	vertical-align: top;
+	font-size: large;
+}
+
+.gridRowTabs {
+	vertical-align: top;
+}
+
+.ui-datatable tbody td{
+	padding: 0px 2px !important;
+}
+
+.login {
+	position: relative;
+	margin-top: 10px; 
+	margin-right: 10px; 
+	float: right; 
+	padding: 10px;
+	background-color: white;
+	border-radius: 10px;
+	border: solid 3px #818181;
+}
+
+.painel1 {
+	float:left;
+	margin-left: 100px;
+	width: 400px;
+	color: white;
+	text-shadow: 0 2px 2px rgba(0,0,0,0.6); 
+	text-align: justify;
+}
+
+.camposFormCadastroNovo {
+	--width: 95.5%; 
+	height: 30px; 
+	font-size: large !important;
+	margin-bottom: 5px;
+}
+
+.divCadastroNovo {
+	padding: 10px 0 5px 10px;
+	border-radius: 10px;
+	margin-bottom: 10px;
+	background: rgba(60,60,60,0.5);
+}
+
+.btn-convert {
+	background-color: hsl(102, 81%, 36%) !important;
+	background-repeat: repeat-x;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#63e82a", endColorstr="#3ea611");
+	background-image: -khtml-gradient(linear, left top, left bottom, from(#63e82a), to(#3ea611));
+	background-image: -moz-linear-gradient(top, #63e82a, #3ea611);
+	background-image: -ms-linear-gradient(top, #63e82a, #3ea611);
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #63e82a), color-stop(100%, #3ea611));
+	background-image: -webkit-linear-gradient(top, #63e82a, #3ea611);
+	background-image: -o-linear-gradient(top, #63e82a, #3ea611);
+	background-image: linear-gradient(#63e82a, #3ea611);
+	border-color: #3ea611 #3ea611 hsl(102, 81%, 31.5%);
+	color: #fff !important;
+	text-shadow: 0 2px 2px rgba(0,0,0,0.6) !important; 
+	-webkit-font-smoothing: antialiased;
+	font-size: large !important;
+	--width: 100%;
+	height: 50px;
+}
+
+.divAutoCadastro {
+	float:left;
+	margin-left: 100px;
+	margin-top: 4px;
+	min-width: 750px;
+	padding: 10px 10px 10px 10px;
+	border-radius: 10px;
+	
+	background: rgba(0,0,0,0.5);
+}
+
+.gridPlanoTable {
+	border-collapse: collapse; 
+	font-weight: bold; 
+	font-size: large; 
+	border: 1px solid #a0a0a0;
+	background-color: #fff;
+	margin-top: 10px;
+}
+
+.gridPlanoDescricao {
+	vertical-align: middle;
+	border: 1px solid #a0a0a0;
+	padding: 10px; 
+	height: 20px;	
+}
+
+.gridPlanoTipo1 {
+	vertical-align: middle;
+	text-align: center;
+	border: 1px solid #a0a0a0;
+	width: 90px; 
+	background-color: #D6EFFF;
+}
+
+.gridPlanoTipo2 {
+	vertical-align: middle;
+	text-align: center;
+	border: 1px solid #a0a0a0;
+	width: 90px;
+}

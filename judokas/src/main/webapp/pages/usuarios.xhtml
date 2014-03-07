@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="/layout/tpl_limpo.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:define name="principal">
+	
+		<p:panel id="pnlUsuarios" header="Usuarios" >
+		
+			<h:form  id="frmUsuarios">
+			
+				<p:growl id="growUsuarios" showDetail="false"/>
+				
+				<p:commandButton value="Adicionar Novo Registro" process="@this" actionListener="#{usuariosBean.novo}"
+		                	id="btnNovo" oncomplete="PF('dlg').show();" update="dlgCadastro" 
+		                	resetValues="true"/>
+				
+				<p:dataTable 
+					id="tblUsuarios"
+					emptyMessage="Lista vazia" 
+					value="#{usuariosBean.usuarios}" var="u"
+					rowKey="#{u.id}"					
+					paginator="true" rows="10" >
+					
+					<p:column>
+						<f:facet name="header">ID</f:facet>
+						<h:outputText value="#{u.id}" />
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">Nome</f:facet>
+						<h:outputText value="#{u.nome}" />
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">Nome Usuário</f:facet>
+						<h:outputText value="#{u.nomeUsuario}" />
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">Tipo Usuário</f:facet>
+						<h:outputText value="#{u.tipoUsuario}" />
+					</p:column>
+					
+					<p:column headerText="Ação" style="width:130px">
+						<f:facet name="header">Ação</f:facet>
+						<p:commandButton value="Editar" process="@this" actionListener="#{usuariosBean.editar(u)}"
+		                	id="btnEditar" oncomplete="PF('dlg').show();" update=":frmUsuarios:pnlCampos"
+		                	resetValues="true"/>
+							
+		                <p:commandButton value="Apagar" process="@this" actionListener="#{usuariosBean.delete(u)}"
+		                	id="btnApagar" title="Confirma apagar o Registro?" 
+		                	update="tblUsuarios,:frmUsuarios:growUsuarios">
+		                	
+		                	<p:confirm header="Confirmação de exclusão" 
+		                		message="Apagar registro?" icon="ui-icon-alert" />
+                            
+		                </p:commandButton>
+		            </p:column>
+				</p:dataTable>
+				
+				<p:confirmDialog global="true">
+				    <p:commandButton value="Sim" styleClass="ui-confirmdialog-yes"  />
+				    <p:commandButton value="Não" styleClass="ui-confirmdialog-no" />
+				</p:confirmDialog>
+				
+
+				<p:dialog id="dlgCadastro" widgetVar="dlg" modal="true" resizable="false">
+					
+					<p:panelGrid columns="2" id="pnlCampos">
+
+						<p:outputLabel value="ID" for="txtID" />
+						<p:inputText id="txtID" value="#{usuariosBean.usuario.id}"
+							readonly="true">
+							<p:watermark for="txtID" value="ID Automático" />
+						</p:inputText>
+
+						<p:outputLabel value="Nome Completo:" for="txtNome" />
+						<p:inputText id="txtNome" value="#{usuariosBean.usuario.nome}"
+							required="true" label="Nome">
+							<p:focus for="txtNome" />
+						</p:inputText>
+
+						<p:outputLabel value="Nome para login:" for="txtNomeUsuario" />
+						<p:inputText id="txtNomeUsuario"
+							value="#{usuariosBean.usuario.nomeUsuario}" label="Nome para login">
+							<f:validateRegex pattern="[a-zA-Z0-9]*" />
+						</p:inputText>
+						
+						<p:outputLabel value="Email:" for="txtEmail" />
+						<p:inputText id="txtEmail" value="#{usuariosBean.usuario.email}"
+							label="Email">
+							<f:validator validatorId="emailValidator" />
+						</p:inputText>
+
+						<p:outputLabel value="Tipo usuário:" for="cmbTipoUsuario" rendered="#{usuariosBean.renderTipoUsuario}" />
+						<p:selectOneMenu id="cmbTipoUsuario" rendered="#{usuariosBean.renderTipoUsuario}"
+							value="#{usuariosBean.usuario.tipoUsuario}" required="true"
+							label="Tipo usuário">
+							<f:selectItem itemLabel="Selecione" itemValue="" />
+							<f:selectItems value="#{usuariosBean.tiposUsuario}" />
+						</p:selectOneMenu>
+						
+					</p:panelGrid>
+					
+					<p:commandButton id="btnSalvar" value="Salvar e Fechar" action="#{usuariosBean.salvarEFechar}"
+						update="growUsuarios,tblUsuarios,pnlCampos" oncomplete="registroGravado(xhr, status, args)" />
+						
+					<p:commandButton id="btnSalvarENovo" value="Salvar e Adicionar Novo" action="#{usuariosBean.salvarENovo}"
+						update="growUsuarios,tblUsuarios,pnlCampos" />
+					
+					<p:commandButton id="btnResetar" value="Resetar Senha" action="#{usuariosBean.resetarSenha}" >
+						<p:confirm header="Confirmação restar senha?" 
+		                		message="Resetar senha?" icon="ui-icon-alert" />
+					</p:commandButton>
+
+					<p:defaultCommand target="btnSalvar" />
+
+				</p:dialog>
+
+			</h:form>
+			
+		</p:panel>
+						
+	</ui:define>
+	
+</ui:composition>

@@ -1,0 +1,61 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+  <h:head>
+		<h:outputStylesheet name="common-style.css" library="css" />
+		<style type="text/css">
+            .ui-widget { font-size: 0.8em; }
+            .ui-wizard-step-title { font-size: 1.1em; }            
+            --.ui-menu-list { font-size: 70%; }
+            --.ui-datatable-data { font-size: 68%; }
+            --.ui-wizard-step-title { font-size: 100%; }
+			--.ui-widget .ui-widget { font-size: 1.0em; }
+            .ui-menubar {
+            	padding: 0 0 0 0;
+            	margin: 5px 1px 10px 1px;
+            }
+            --.ui-menu .ui-menuitem {padding: 0 10 0 0;}
+            --.ui-menubar .ui-menuitem-link {padding: 2 2 2 2;}
+            --.ui-menubar .ui-menu-child {top: 21px}
+            --form {margin-bottom: 0px; padding: 0 0 0 0;}
+            --.ui-picklist-item table { font-size: inherit; color: inherit; }
+            --.ui-picklist .ui-picklist-list { width: 330px; }
+        </style>
+        <script type='text/javascript'>
+			//<![CDATA[
+			$(function(){
+			    $('#conteudo').css({'height': (($(window).height()-135))+'px'});
+			    $(window).resize(function(){
+			        $('#conteudo').css({'height': (($(window).height()-135))+'px'});
+			    });
+			});
+			
+			function registroGravado(xhr, status, args) {
+				if( !args.validationFailed && args.fechaDialog ) {  
+		            PF('dlg').hide();
+		        }
+			}
+			//]]>
+		</script>
+  </h:head>
+  	<h:body>
+  		<header>
+  			<ui:insert name="topo" >
+			  <ui:include src="topo.xhtml" />
+			</ui:insert>
+	    </header>
+	    
+	    <div id="conteudo" class="conteudo_logado">
+		  	<ui:insert name="principal" />
+	    </div>
+	    <footer>
+		    <div id="divfooter" >
+		    	<ui:insert name="rodape">
+		    	  <ui:include src="rodape.xhtml" />
+		    	</ui:insert>
+	   	    </div> 
+   	    </footer>
+	</h:body>
+</html>

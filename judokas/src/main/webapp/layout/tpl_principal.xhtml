@@ -1,0 +1,59 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+  <h:head>
+		<h:outputStylesheet name="common-style.css" library="css" />
+		<style type="text/css">
+            --.ui-widget { font-size: 70%; }
+            .ui-menu-list { font-size: 70%; }
+            .ui-datatable-data, .ui-state-default { font-size: 68%; }
+			--.ui-widget .ui-widget { font-size: 95%; }
+            .ui-menubar {
+            	padding: 0 0 0 0;
+            	margin: 5px 1px 10px 1px;
+             }
+            .ui-menu .ui-menuitem {padding: 0 10 0 0;}
+            .ui-menubar .ui-menuitem-link {padding: 2 2 2 2;}
+            .ui-menubar .ui-menu-child {top: 21px}
+            form {margin-bottom: 0px; padding: 0 0 0 0;}
+            .ui-picklist-item table { font-size: inherit; color: inherit; }
+            .ui-picklist .ui-picklist-list { width: 330px; }
+        </style>
+        <script src="http://maps.google.com/maps/api/js?sensor=false&amp;v=3.4" type="text/javascript"></script>
+        <script type='text/javascript'>
+		$(function(){
+		    $('#centro').css({'height': (($(window).height()-135))+'px'});
+		    $('#esquerda').css({'height': (($(window).height()-170))+'px'});
+		    $(window).resize(function(){
+		        $('#centro').css({'height': (($(window).height()-135))+'px'});
+		        $('#esquerda').css({'height': (($(window).height()-170))+'px'});
+		    });
+		});
+		</script>
+  </h:head>
+  	<h:body>
+  		<header>
+  			<ui:insert name="topo" >
+			  <ui:include src="topo.xhtml" />
+			</ui:insert>
+	    </header>
+	    
+	    <div id="conteudo">
+		    <div id="esquerda" class="ui-widget-content ui-corner-all ui-helper-clearfix ui-shadow">
+			  	<ui:include src="esquerda.xhtml" />
+		    </div>
+		    <div id="centro">
+			  	<ui:insert name="principal" />
+		    </div>
+	    </div>
+	    <footer>
+		    <div id="divfooter" >
+		    	<ui:insert name="rodape">
+		    	  <ui:include src="rodape.xhtml" />
+		    	</ui:insert>
+	   	    </div> 
+   	    </footer>
+	</h:body>
+</html>
