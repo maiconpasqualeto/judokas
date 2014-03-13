@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<h:head>
+	<style type="text/css">
+        .ui-picklist .ui-picklist-filter { padding-right: 25px; }
+		.ui-picklist .ui-picklist-list { height: 350px; width: 300px; }
+     </style>
+</h:head>
+<h:body>
+	<ui:decorate template="../layout/tpl_limpo.xhtml">
+	
+	<ui:define name="principal">
+	
+		<p:panel id="pnlImpressao" header="Impressão de carteirinhas" >
+		
+			<h:form  id="frmImpressao">
+				
+				<p:growl id="growImpressao" showDetail="false"/>
+	
+				<p:pickList id="pojoPickList" value="#{impressaoBean.atletas}" var="atleta"
+				        itemValue="#{atleta}" itemLabel="#{atleta.nome}" converter="atletaConverter"  
+				        showSourceControls="true" showTargetControls="true" showCheckbox="true"  
+				        showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" >  
+					
+			        <f:facet name="sourceCaption">Atletas</f:facet>  
+			        <f:facet name="targetCaption">Para Imprimir</f:facet>  
+			  
+			        <p:ajax event="transfer" listener="#{impressaoBean.onTransfer}" />  
+			  
+			        <p:column style="width:25%">  
+			        	<p:graphicImage value="/displayimage?arquivo=#{atleta.foto}" width="64" height="76"
+								rendered="#{not empty atleta.foto}" style="border: solid 1px lightgray" cache="false"/>  
+						<p:graphicImage value="/images/nophoto.jpg" width="64" height="76"
+							rendered="#{empty atleta.foto}" style="border: solid 1px lightgray"/>
+			        </p:column>  
+			  
+		            <p:column style="width:75%;">  
+			            #{atleta.nome}  
+			        </p:column>  
+		  
+		    	</p:pickList>  
+		    	
+		    	<p:separator />
+		    			    	
+		    	<p:commandButton value="Imprimir carteirinhas" process="@this" id="btnImprimir" ajax="false">
+	                <p:fileDownload value="#{impressaoBean.printReport()}"></p:fileDownload>
+               	</p:commandButton>
+               	
+	    	</h:form>
+    	</p:panel>
+   	</ui:define>
+</ui:decorate>
+</h:body>
+
+</html>

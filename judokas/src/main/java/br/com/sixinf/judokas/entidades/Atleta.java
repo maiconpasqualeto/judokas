@@ -3,6 +3,7 @@
  */
 package br.com.sixinf.judokas.entidades;
 
+import java.awt.Image;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -17,6 +18,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import br.com.sixinf.ferramentas.persistencia.Entidade;
 
@@ -62,6 +64,12 @@ public class Atleta implements Serializable, Entidade {
 	@ManyToOne(targetEntity=Usuario.class)
 	@JoinColumn(name="id_usuario")
 	private Usuario usuario;
+	
+	@Transient
+	private Image fotoImpressao;
+	
+	@Transient
+	private Image graduacaoImpressao;
 	
 	public Long getId() {
 		return id;
@@ -133,6 +141,22 @@ public class Atleta implements Serializable, Entidade {
 
 	public void setDataEmissaoCarteira(Date dataEmissaoCarteira) {
 		this.dataEmissaoCarteira = dataEmissaoCarteira;
+	}
+
+	public Image getFotoImpressao() {
+		return fotoImpressao;
+	}
+
+	public void setFotoImpressao(Image fotoImpressao) {
+		this.fotoImpressao = fotoImpressao;
+	}
+
+	public Image getGraduacaoImpressao() {
+		return graduacaoImpressao;
+	}
+
+	public void setGraduacaoImpressao(Image graduacaoImpressao) {
+		this.graduacaoImpressao = graduacaoImpressao;
 	}
 
 	@Override

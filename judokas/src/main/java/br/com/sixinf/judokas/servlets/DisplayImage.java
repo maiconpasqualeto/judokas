@@ -39,6 +39,10 @@ public class DisplayImage extends HttpServlet {
         	
 	            String arquivo = request.getParameter("arquivo");
 	            
+	            if (arquivo == null || 
+	            		arquivo.isEmpty())
+	            	return;
+	            
 	            is = new FileInputStream(new File(arquivo));
 	            byte[] bytes = Utilitarios.fazLeituraStreamEmByteArray(is);
 	            

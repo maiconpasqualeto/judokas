@@ -19,7 +19,7 @@
 						<p:menuitem value="Usuarios" url="/pages/usuarios.xhtml" rendered="#{segurancaBean.renderUsuarios}" />						
 					</p:submenu>
 					<p:submenu label="Relatórios" style="margin-left: 10px" rendered="#{segurancaBean.renderRelatorio}">
-						<p:menuitem value="Impressão Carteirinhas" url="#"  rendered="#{segurancaBean.renderImpCarteiras}" />
+						<p:menuitem value="Impressão Carteirinhas" url="/pages/carteiras.xhtml"  rendered="#{segurancaBean.renderImpCarteiras}" />
 					</p:submenu>
 					<p:menuitem value="Sair" action="#{segurancaBean.logoff}" style="margin-left: 10px" />
 				</p:menubar>

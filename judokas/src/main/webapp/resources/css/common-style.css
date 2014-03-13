@@ -21,10 +21,10 @@ header{
 	--background: linear-gradient(to bottom, rgba(145,176,222,1) 0, rgba(30,63,77,1) 100%);
 	width: 100%;
 	min-width: 920px;
-	height: 47px;	
+	height: 54px;
 	position: relative;
 	background-color: #4c4c4c; 
-	padding-top: 13px;
+	padding-top: 20px;
 }
 
 .bar {
