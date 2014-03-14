@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
@@ -39,6 +40,7 @@ import org.primefaces.model.StreamedContent;
 
 import br.com.sixinf.ferramentas.log.LoggerException;
 import br.com.sixinf.judokas.entidades.Atleta;
+import br.com.sixinf.judokas.entidades.Usuario;
 import br.com.sixinf.judokas.facade.JudokasFacade;
 
 /**
@@ -53,6 +55,8 @@ public class ImpressaoBean implements Serializable {
 	private static final Logger LOG = Logger.getLogger(ImpressaoBean.class);
 	
 	private DualListModel<Atleta> atletas = new DualListModel<Atleta>();
+	private List<Usuario> usuarios = new ArrayList<Usuario>();
+	private String nomeUsuarioAcademia;
 	
 	public DualListModel<Atleta> getAtletas() {
 		return atletas;
@@ -62,16 +66,33 @@ public class ImpressaoBean implements Serializable {
 		this.atletas = atletas;
 	}
 
+	public List<Usuario> getUsuarios() {
+		return usuarios;
+	}
+
+	public void setUsuarios(List<Usuario> usuarios) {
+		this.usuarios = usuarios;
+	}
+
+	public String getNomeUsuarioAcademia() {
+		return nomeUsuarioAcademia;
+	}
+
+	public void setNomeUsuarioAcademia(String nomeUsuarioAcademia) {
+		this.nomeUsuarioAcademia = nomeUsuarioAcademia;
+	}
+
 	/**
 	 * 
 	 */
 	@PostConstruct
 	public void init() {
 		try {
-			
-			List<Atleta> source = JudokasFacade.getInstance().buscarAtletas();
+			JudokasFacade facade = JudokasFacade.getInstance();
+			List<Atleta> source = new ArrayList<Atleta>();
 			List<Atleta> target = new ArrayList<Atleta>();
 			atletas = new DualListModel<Atleta>(source, target);
+			usuarios = facade.buscarUsuariosACADEMIA();
 			
 		} catch (LoggerException e) {
 			Logger.getLogger(ImpressaoBean.class).error("Erro no método init", e);
@@ -96,6 +117,17 @@ public class ImpressaoBean implements Serializable {
 	
 	public StreamedContent printReport() throws JRException, IOException, ClassNotFoundException, SQLException {  
 		
+		List<Atleta> atletasImpressao = atletas.getTarget();
+		
+		if (atletasImpressao.isEmpty()) {
+			FacesMessage m = new FacesMessage(
+					FacesMessage.SEVERITY_ERROR, 
+					"Nenhuma atleta selecionado", 
+					"Nenhuma atleta selecionado");
+			FacesContext.getCurrentInstance().addMessage(null, m);
+			return null;
+		}	
+		
 		InputStream is = null;
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		ExternalContext externalContext = FacesContext.getCurrentInstance()
@@ -106,7 +138,6 @@ public class ImpressaoBean implements Serializable {
 
 		String academia = "Judo Clube Rocha";
 		
-		List<Atleta> atletasImpressao = atletas.getTarget();
 		for (Atleta a : atletasImpressao) {
 			String fotoPath = a.getFoto();
 			Image fotoImpressao = null;
@@ -149,7 +180,11 @@ public class ImpressaoBean implements Serializable {
 		
     }	
 	
-	
+	/**
+	 * 
+	 * @param graduacao
+	 * @return
+	 */
 	private String returnGraduacaoPath(String graduacao){
 		String path = null;
 		if (("BRANCA").equals(graduacao))
@@ -219,5 +254,14 @@ public class ImpressaoBean implements Serializable {
 				path = "/images/graduacao_v_10_dan.png";
 		
 		return path;
+	}
+	
+	/**
+	 * @throws LoggerException 
+	 * 
+	 */
+	public void buscarAtletas() throws LoggerException {
+		atletas.setSource(JudokasFacade.getInstance().buscarAtletasAcademia(nomeUsuarioAcademia));
+		
 	}
 }

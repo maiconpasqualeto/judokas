@@ -145,6 +145,17 @@ public class JudokasFacade {
 		return atletas; 
 	}
 	
+	
+	/**
+	 * 
+	 * @return
+	 * @throws LoggerException 
+	 */
+	public List<Atleta> buscarAtletasAcademia(String nomeUsuarioAcademia) throws LoggerException{
+		List<Atleta> atletas = dao.buscarAtletasDaAcademia(nomeUsuarioAcademia);
+		return atletas; 
+	}
+	
 	/**
 	 * 
 	 * @param atleta

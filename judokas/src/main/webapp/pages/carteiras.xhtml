@@ -24,10 +24,18 @@
 			<h:form  id="frmImpressao">
 				
 				<p:growl id="growImpressao" showDetail="false"/>
+				
+				<p:selectOneMenu value="#{impressaoBean.nomeUsuarioAcademia}" >
+					<f:selectItem itemLabel="Selecione uma academia" itemValue="0" />
+					<f:selectItems value="#{impressaoBean.usuarios}" var="u" itemLabel="#{u.nome}" itemValue="#{u.nomeUsuario}" />
+					<p:ajax event="change" listener="#{impressaoBean.buscarAtletas}" update="plAtletas" />
+				</p:selectOneMenu>
+				
+				<p:separator />
 	
-				<p:pickList id="pojoPickList" value="#{impressaoBean.atletas}" var="atleta"
+				<p:pickList id="plAtletas" value="#{impressaoBean.atletas}" var="atleta"
 				        itemValue="#{atleta}" itemLabel="#{atleta.nome}" converter="atletaConverter"  
-				        showSourceControls="true" showTargetControls="true" showCheckbox="true"  
+				        showSourceControls="true" showTargetControls="true"
 				        showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" >  
 					
 			        <f:facet name="sourceCaption">Atletas</f:facet>  
@@ -41,7 +49,7 @@
 						<p:graphicImage value="/images/nophoto.jpg" width="64" height="76"
 							rendered="#{empty atleta.foto}" style="border: solid 1px lightgray"/>
 			        </p:column>  
-			  
+			  		
 		            <p:column style="width:75%;">  
 			            #{atleta.nome}  
 			        </p:column>  
@@ -50,7 +58,8 @@
 		    	
 		    	<p:separator />
 		    			    	
-		    	<p:commandButton value="Imprimir carteirinhas" process="@this" id="btnImprimir" ajax="false">
+		    	<p:commandButton value="Imprimir carteirinhas" process="@this" id="btnImprimir" 
+		    		ajax="false" update="growImpressao">
 	                <p:fileDownload value="#{impressaoBean.printReport()}"></p:fileDownload>
                	</p:commandButton>
                	
