@@ -3,6 +3,7 @@
  */
 package br.com.sixinf.judokas.facade;
 
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 
@@ -151,8 +152,8 @@ public class JudokasFacade {
 	 * @return
 	 * @throws LoggerException 
 	 */
-	public List<Atleta> buscarAtletasAcademia(String nomeUsuarioAcademia) throws LoggerException{
-		List<Atleta> atletas = dao.buscarAtletasDaAcademia(nomeUsuarioAcademia);
+	public List<Atleta> buscarAtletasAcademia(Long idUsuarioAcademia) throws LoggerException{
+		List<Atleta> atletas = dao.buscarAtletasDaAcademia(idUsuarioAcademia);
 		return atletas; 
 	}
 	
@@ -267,5 +268,19 @@ public class JudokasFacade {
 		usuario.setSenha(Utilitarios.geraHashSHA2(usuario.getNomeUsuario()));
 		dao.alterarSenhaUsuario(usuario);
 		
+	}
+	
+	public void apagarFotoAtleta(Atleta atleta) throws LoggerException {
+		File foto = new File(atleta.getFoto());
+		foto.delete();
+		
+		atleta.setFoto(null);
+		
+		dao.apagarFoto(atleta);
+				
+	}
+
+	public void atualizaDataImpressao(List<Long> ids) throws LoggerException {
+		dao.atualizaDataImpressao(new Date(), ids);
 	}
 }

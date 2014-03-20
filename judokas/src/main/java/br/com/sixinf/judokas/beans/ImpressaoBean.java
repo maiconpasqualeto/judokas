@@ -11,6 +11,9 @@ import java.io.InputStream;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,7 +59,7 @@ public class ImpressaoBean implements Serializable {
 	
 	private DualListModel<Atleta> atletas = new DualListModel<Atleta>();
 	private List<Usuario> usuarios = new ArrayList<Usuario>();
-	private String nomeUsuarioAcademia;
+	private Usuario usuarioAcademia;
 	
 	public DualListModel<Atleta> getAtletas() {
 		return atletas;
@@ -74,12 +77,12 @@ public class ImpressaoBean implements Serializable {
 		this.usuarios = usuarios;
 	}
 
-	public String getNomeUsuarioAcademia() {
-		return nomeUsuarioAcademia;
+	public Usuario getUsuarioAcademia() {
+		return usuarioAcademia;
 	}
 
-	public void setNomeUsuarioAcademia(String nomeUsuarioAcademia) {
-		this.nomeUsuarioAcademia = nomeUsuarioAcademia;
+	public void setUsuarioAcademia(Usuario usuarioAcademia) {
+		this.usuarioAcademia = usuarioAcademia;
 	}
 
 	/**
@@ -115,7 +118,7 @@ public class ImpressaoBean implements Serializable {
 		
 	}
 	
-	public StreamedContent printReport() throws JRException, IOException, ClassNotFoundException, SQLException {  
+	public StreamedContent printReport() throws JRException, IOException, ClassNotFoundException, SQLException, LoggerException {  
 		
 		List<Atleta> atletasImpressao = atletas.getTarget();
 		
@@ -135,9 +138,7 @@ public class ImpressaoBean implements Serializable {
 		ServletContext contextS = (ServletContext) externalContext.getContext();
 		String arquivo = contextS
 				.getRealPath("/resources/reports/carteirinhas.jasper");
-
-		String academia = "Judo Clube Rocha";
-		
+		List<Long> ids = new ArrayList<Long>();
 		for (Atleta a : atletasImpressao) {
 			String fotoPath = a.getFoto();
 			Image fotoImpressao = null;
@@ -153,6 +154,11 @@ public class ImpressaoBean implements Serializable {
 			String graduacaoPath = returnGraduacaoPath(a.getGraduacao());
 			graduacaoImpressao =  new ImageIcon(contextS.getRealPath(graduacaoPath)).getImage();
 			a.setGraduacaoImpressao(graduacaoImpressao);
+			
+			String categoria = returnCategoria(a.getDataNascimento());
+			a.setCategoriaImpressao(categoria);
+			
+			ids.add(a.getId());
 		}
 		
 		try {
@@ -161,8 +167,8 @@ public class ImpressaoBean implements Serializable {
 					atletasImpressao);
 			
 			Map<String, Object> parametros = new HashMap<String, Object>();
-			parametros.put("agremiacao", academia);
-			
+			parametros.put("agremiacao", usuarioAcademia.getNome());
+						
 			JasperPrint print = JasperFillManager.fillReport(arquivo, parametros,
 					beanColDataSource);
 			
@@ -175,11 +181,45 @@ public class ImpressaoBean implements Serializable {
 		} catch (JRException e) {
 			LOG.error("Erro ao gerar relatório jasper", e);
 		}
+		
+		JudokasFacade.getInstance().atualizaDataImpressao(ids);
 				
-		return new DefaultStreamedContent(is, "application/pdf", "carteirinhas_" + academia + ".pdf");
+		return new DefaultStreamedContent(is, "application/pdf", "carteirinhas_" + usuarioAcademia.getNome() + ".pdf");
 		
     }	
 	
+	private String returnCategoria(Date dataNascimento) {
+		Calendar hj = GregorianCalendar.getInstance();  
+		Calendar nascimento = new GregorianCalendar();
+		nascimento.setTime(dataNascimento);  
+		         
+		int anohj = hj.get(Calendar.YEAR);  
+		int anoNascimento = nascimento.get(Calendar.YEAR);  
+		int idade = anohj - anoNascimento;
+		
+		String categoria = "";
+		
+		if (idade == 7 || idade == 8 )
+			categoria = "SUB 9";
+		else 
+			if (idade == 9 || idade == 10 )
+				categoria = "SUB 11";
+		else 
+			if (idade == 11 || idade == 12 )
+				categoria = "SUB 13";
+		else 
+			if (idade == 13 || idade == 14 )
+				categoria = "SUB 15";
+		else 
+			if (idade == 15 || idade == 16 )
+				categoria = "SUB 18";
+		else 
+			if (idade >= 17 )
+				categoria = "+SUB 18";
+		
+		return categoria;
+	}
+
 	/**
 	 * 
 	 * @param graduacao
@@ -261,7 +301,7 @@ public class ImpressaoBean implements Serializable {
 	 * 
 	 */
 	public void buscarAtletas() throws LoggerException {
-		atletas.setSource(JudokasFacade.getInstance().buscarAtletasAcademia(nomeUsuarioAcademia));
+		atletas.setSource(JudokasFacade.getInstance().buscarAtletasAcademia(usuarioAcademia.getId()));
 		
 	}
 }

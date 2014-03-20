@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version last-->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="carteirinhas" pageWidth="595" pageHeight="842" columnWidth="585" leftMargin="5" rightMargin="5" topMargin="0" bottomMargin="0" whenResourceMissingType="Empty" uuid="127454db-d647-4282-9d83-60f7ba7f81c5">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Abordagem Adapter"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Judokas Adapter"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<parameter name="agremiacao" class="java.lang.String">
 		<parameterDescription><![CDATA[Agremiação do atleta]]></parameterDescription>
@@ -21,6 +21,7 @@
 	<field name="graduacaoImpressao" class="java.awt.Image">
 		<fieldDescription><![CDATA[graduacaoImpressao]]></fieldDescription>
 	</field>
+	<field name="categoriaImpressao" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -28,13 +29,16 @@
 		<band splitType="Stretch"/>
 	</title>
 	<pageHeader>
-		<band splitType="Stretch"/>
+		<band height="10" splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
 	</pageHeader>
 	<columnHeader>
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="206" splitType="Stretch">
+		<band height="200" splitType="Stretch">
 			<staticText>
 				<reportElement x="132" y="0" width="166" height="32" uuid="dad352f7-77d5-4b4d-9680-1b2517a353d2">
 					<property name="local_mesure_unitheight" value="pixel"/>
@@ -64,7 +68,7 @@
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<imageExpression><![CDATA["/home/maicon/git/judokas/judokas/src/main/webapp/images/logo_fjms.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["../../images/logo_fjms.jpg"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement key="" x="100" y="32" width="32" height="24" uuid="75c31c0c-70a3-46cb-b362-b8563f526304">
@@ -73,7 +77,7 @@
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<imageExpression><![CDATA["/home/maicon/git/judokas/judokas/src/main/webapp/images/logo cbj.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["../../images/logo cbj.jpg"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="0" y="0" width="98" height="137" uuid="6608ba7f-50a9-42a1-9d57-463557788fb9">
@@ -128,7 +132,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{dataNascimento}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new java.text.SimpleDateFormat("dd/MMM/yyyy").format($F{dataNascimento})]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="102" y="121" width="196" height="16" uuid="fcf6fda2-09e5-4fd1-9715-64100185979f">
@@ -204,18 +208,21 @@
 				<text><![CDATA[Agremiação]]></text>
 			</staticText>
 			<image>
-				<reportElement x="0" y="165" width="298" height="38" uuid="815b5b4e-8217-47df-b49d-a6346b380a94"/>
-				<imageExpression><![CDATA["/home/maicon/git/judokas/judokas/src/main/webapp/images/faixa_amarrada.png"]]></imageExpression>
+				<reportElement x="0" y="158" width="298" height="38" uuid="815b5b4e-8217-47df-b49d-a6346b380a94">
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<imageExpression><![CDATA["../../images/faixa_amarrada.png"]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="5" y="166" width="54" height="12" uuid="feb5a5c4-19c3-4a59-a246-9604a9ecfa52"/>
+				<reportElement x="5" y="164" width="54" height="12" uuid="feb5a5c4-19c3-4a59-a246-9604a9ecfa52"/>
 				<textElement>
 					<font size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Matrícula]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="5" y="180" width="66" height="16" uuid="d79efa5a-d3eb-433c-bacd-36c0502d2ac7"/>
+				<reportElement x="5" y="176" width="66" height="16" uuid="d79efa5a-d3eb-433c-bacd-36c0502d2ac7"/>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -227,7 +234,7 @@
 				</textElement>
 			</textField>
 			<staticText>
-				<reportElement x="24" y="143" width="58" height="16" uuid="c04c48db-8d5d-4d95-93ce-5cb4e43ea6be"/>
+				<reportElement x="24" y="143" width="58" height="12" uuid="c04c48db-8d5d-4d95-93ce-5cb4e43ea6be"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="10" isBold="true"/>
 				</textElement>
@@ -237,10 +244,10 @@
 				<reportElement x="0" y="140" width="298" height="2" backcolor="#FFF700" uuid="081dc1ba-3325-4da7-9096-18502bb7c441"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="0" y="160" width="298" height="2" backcolor="#FFF700" uuid="ff0a4e94-9132-41a6-b1a2-a30034dee59e"/>
+				<reportElement x="0" y="155" width="298" height="2" backcolor="#FFF700" uuid="ff0a4e94-9132-41a6-b1a2-a30034dee59e"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="102" y="150" width="196" height="2" backcolor="#FFF700" uuid="a6b1f822-cbfa-477a-b0b7-e333696f816d"/>
+				<reportElement x="101" y="148" width="196" height="2" backcolor="#FFF700" uuid="a6b1f822-cbfa-477a-b0b7-e333696f816d"/>
 			</rectangle>
 			<image>
 				<reportElement x="304" y="2" width="112" height="74" uuid="79522e83-1ce1-4a0e-851c-0631948f4586">
@@ -256,7 +263,7 @@
 					<property name="local_mesure_unity" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
-				<imageExpression><![CDATA["/home/maicon/git/judokas/judokas/src/main/webapp/images/judo_escrito_japones.png"]]></imageExpression>
+				<imageExpression><![CDATA["../../images/judo_escrito_japones.png"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="466" y="2" width="112" height="74" uuid="5650f1da-3a47-4357-a176-ab31afb8c6e1">
@@ -267,7 +274,7 @@
 					<property name="local_mesure_unity" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
-				<imageExpression><![CDATA["/home/maicon/git/judokas/judokas/src/main/webapp/images/anuidade.png"]]></imageExpression>
+				<imageExpression><![CDATA["../../images/anuidade.png"]]></imageExpression>
 			</image>
 			<textField>
 				<reportElement mode="Transparent" x="316" y="96" width="240" height="12" forecolor="#000000" backcolor="#FFFFFF" uuid="e4c5bdfe-6ded-43e4-8f6b-dd5ba042463f"/>
@@ -317,7 +324,7 @@
 				<text><![CDATA[www.fjms.com.br  -  fjms@fjms.com.br]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement x="0" y="205" width="585" height="1" backcolor="#000000" uuid="2b52723f-25f4-4d0b-bd8d-06d31ec574f0">
+				<reportElement x="0" y="198" width="585" height="1" backcolor="#000000" uuid="2b52723f-25f4-4d0b-bd8d-06d31ec574f0">
 					<property name="local_mesure_unitx" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="local_mesure_unitheight" value="pixel"/>
@@ -328,20 +335,31 @@
 				</graphicElement>
 			</rectangle>
 			<image>
-				<reportElement x="237" y="165" width="62" height="38" uuid="8c2ff6ca-ab6b-4ddf-8f4d-ac342c3d9bad">
+				<reportElement x="237" y="158" width="61" height="38" uuid="8c2ff6ca-ab6b-4ddf-8f4d-ac342c3d9bad">
 					<property name="local_mesure_unitx" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
-				<imageExpression><![CDATA["/home/maicon/git/judokas/judokas/src/main/webapp/images/bandeira_ms.png"]]></imageExpression>
+				<imageExpression><![CDATA["../../images/bandeira_ms.png"]]></imageExpression>
 			</image>
+			<textField>
+				<reportElement x="218" y="100" width="74" height="16" forecolor="#A90000" uuid="af5a6dcb-3003-4eab-b99d-b2e14ec0431c"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{categoriaImpressao}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>
 		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band splitType="Stretch"/>
+		<band height="10" splitType="Stretch">
+			<property name="local_mesure_unitheight" value="pixel"/>
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+		</band>
 	</pageFooter>
 	<summary>
 		<band splitType="Stretch"/>

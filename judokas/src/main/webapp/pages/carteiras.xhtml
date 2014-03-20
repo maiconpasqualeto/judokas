@@ -11,7 +11,7 @@
 <h:head>
 	<style type="text/css">
         .ui-picklist .ui-picklist-filter { padding-right: 25px; }
-		.ui-picklist .ui-picklist-list { height: 350px; width: 300px; }
+		.ui-picklist .ui-picklist-list { height: 300px; width: 300px; }
      </style>
 </h:head>
 <h:body>
@@ -25,16 +25,16 @@
 				
 				<p:growl id="growImpressao" showDetail="false"/>
 				
-				<p:selectOneMenu value="#{impressaoBean.nomeUsuarioAcademia}" >
-					<f:selectItem itemLabel="Selecione uma academia" itemValue="0" />
-					<f:selectItems value="#{impressaoBean.usuarios}" var="u" itemLabel="#{u.nome}" itemValue="#{u.nomeUsuario}" />
+				<p:selectOneMenu value="#{impressaoBean.usuarioAcademia}" converter="genericPojoConverter" >
+					<f:selectItem itemLabel="Selecione uma academia" itemValue="#{null}" />
+					<f:selectItems value="#{impressaoBean.usuarios}" var="u" itemLabel="#{u.nome}" itemValue="#{u}" />
 					<p:ajax event="change" listener="#{impressaoBean.buscarAtletas}" update="plAtletas" />
 				</p:selectOneMenu>
 				
 				<p:separator />
 	
 				<p:pickList id="plAtletas" value="#{impressaoBean.atletas}" var="atleta"
-				        itemValue="#{atleta}" itemLabel="#{atleta.nome}" converter="atletaConverter"  
+				        itemValue="#{atleta}" itemLabel="#{atleta.nome}" converter="genericPojoConverter"  
 				        showSourceControls="true" showTargetControls="true"
 				        showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" >  
 					

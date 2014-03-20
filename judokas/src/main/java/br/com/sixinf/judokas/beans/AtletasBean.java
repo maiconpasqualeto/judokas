@@ -281,4 +281,8 @@ public class AtletasBean implements Serializable {
 	public void novo(){
 		atleta = new Atleta();		
 	}
+	
+	public void removerFoto() throws LoggerException{
+		JudokasFacade.getInstance().apagarFotoAtleta(atleta);
+	}
 }

@@ -71,6 +71,9 @@ public class Atleta implements Serializable, Entidade {
 	@Transient
 	private Image graduacaoImpressao;
 	
+	@Transient
+	private String categoriaImpressao;
+	
 	public Long getId() {
 		return id;
 	}
@@ -157,6 +160,14 @@ public class Atleta implements Serializable, Entidade {
 
 	public void setGraduacaoImpressao(Image graduacaoImpressao) {
 		this.graduacaoImpressao = graduacaoImpressao;
+	}
+
+	public String getCategoriaImpressao() {
+		return categoriaImpressao;
+	}
+
+	public void setCategoriaImpressao(String categoriaImpressao) {
+		this.categoriaImpressao = categoriaImpressao;
 	}
 
 	@Override

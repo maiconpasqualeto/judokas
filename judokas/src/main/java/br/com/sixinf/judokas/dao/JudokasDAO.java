@@ -3,6 +3,7 @@
  */
 package br.com.sixinf.judokas.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -109,6 +110,34 @@ public class JudokasDAO extends BridgeBaseDAO {
 			hql.append("order by a.nome ");
 			TypedQuery<Atleta> q = em.createQuery(hql.toString(), Atleta.class);
 			q.setParameter("nomeUsuario", nomeUsuario);
+			
+			atletas = q.getResultList();
+			
+		} catch (Exception e) {
+			throw new LoggerException("Erro ao buscar atletas por academia", e, LOG);
+		} finally {
+            em.close();
+        }
+		return atletas;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 * @throws LoggerException 
+	 */
+	public List<Atleta> buscarAtletasDaAcademia(Long idUsuario) throws LoggerException {
+		EntityManager em = AdministradorPersistencia.getEntityManager();
+		
+		List<Atleta> atletas = null;
+		try {
+			StringBuilder hql = new StringBuilder();
+			hql.append("select a from Atleta a join a.usuario u ");
+			hql.append("where a.statusRegistro = 'A' ");
+			hql.append("and u.id = :idUsuario ");
+			hql.append("order by a.nome ");
+			TypedQuery<Atleta> q = em.createQuery(hql.toString(), Atleta.class);
+			q.setParameter("idUsuario", idUsuario);
 			
 			atletas = q.getResultList();
 			
@@ -342,6 +371,75 @@ public class JudokasDAO extends BridgeBaseDAO {
 		} finally {
             em.close();
         }
+	}
+	
+	/**
+	 * 
+	 * @param usuario
+	 * @throws LoggerException 
+	 */
+	public void apagarFoto(Atleta atleta) throws LoggerException {
+		EntityManager em = AdministradorPersistencia.getEntityManager();
+		EntityTransaction t = em.getTransaction();
+		try {
+			
+			StringBuilder hql = new StringBuilder();
+	        hql.append("update Atleta a ");
+	        hql.append("set a.foto = null ");
+	        hql.append("where a.id = :id");
+	        
+	        Query q = em.createQuery(hql.toString());
+	        
+	        q.setParameter("id", atleta.getId());
+	        
+	        t.begin();
+			
+			q.executeUpdate();
+			
+			t.commit();
+			
+		} catch (Exception e) {
+			t.rollback();
+			throw new LoggerException("Erro ao apagar a foto", e, LOG);
+		} finally {
+            em.close();
+        }
+	}
+
+	/**
+	 * 
+	 * @param dataEmissao
+	 * @param ids
+	 * @throws LoggerException
+	 */
+	public void atualizaDataImpressao(Date dataEmissao, List<Long> ids) throws LoggerException {
+		EntityManager em = AdministradorPersistencia.getEntityManager();
+		EntityTransaction t = em.getTransaction();
+		try {
+			
+			StringBuilder hql = new StringBuilder();
+	        hql.append("update Atleta a ");
+	        hql.append("set a.dataEmissaoCarteira = :dataEmissaoCarteira ");
+	        hql.append("where a.id in (:ids)");
+	        
+	        Query q = em.createQuery(hql.toString());
+	        
+	        q.setParameter("dataEmissaoCarteira", dataEmissao);
+	        q.setParameter("ids", ids);
+	        
+	        t.begin();
+			
+			q.executeUpdate();
+			
+			t.commit();
+			
+		} catch (Exception e) {
+			t.rollback();
+			throw new LoggerException("Erro ao atualizar data de emissao das carteirinhas", e, LOG);
+		} finally {
+            em.close();
+        }
+		
 	}
 	
 }
