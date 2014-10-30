@@ -442,4 +442,31 @@ public class JudokasDAO extends BridgeBaseDAO {
 		
 	}
 	
+	/**
+	 * 
+	 * @return
+	 * @throws LoggerException 
+	 */
+	public List<Atleta> buscarAtletasNovos() throws LoggerException {
+		EntityManager em = AdministradorPersistencia.getEntityManager();
+		
+		List<Atleta> atletas = null;
+		try {
+			StringBuilder hql = new StringBuilder();
+			hql.append("select a from Atleta a ");
+			hql.append("where a.statusRegistro = 'A' ");
+			hql.append("and a.dataEmissaoCarteira is null ");
+			hql.append("order by a.usuario.nome, a.nome ");
+			TypedQuery<Atleta> q = em.createQuery(hql.toString(), Atleta.class);
+			
+			atletas = q.getResultList();
+			
+		} catch (Exception e) {
+			throw new LoggerException("Erro ao buscar atletas novos", e, LOG);
+		} finally {
+            em.close();
+        }
+		return atletas;
+	}
+	
 }

@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version last-->
+<!-- Created with Jaspersoft Studio version 5.6.2.final using JasperReports Library version 5.6.1  -->
+<!-- 2014-10-29T22:56:32 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="carteirinhas" pageWidth="595" pageHeight="842" columnWidth="585" leftMargin="5" rightMargin="5" topMargin="0" bottomMargin="0" whenResourceMissingType="Empty" uuid="127454db-d647-4282-9d83-60f7ba7f81c5">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Judokas Adapter"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
-	<parameter name="agremiacao" class="java.lang.String">
-		<parameterDescription><![CDATA[Agremiação do atleta]]></parameterDescription>
-	</parameter>
+	<style name="Fonte header" forecolor="#000000" fontName="Arial" fontSize="8"/>
 	<queryString language="SQL">
 		<![CDATA[]]>
 	</queryString>
@@ -22,6 +21,12 @@
 		<fieldDescription><![CDATA[graduacaoImpressao]]></fieldDescription>
 	</field>
 	<field name="categoriaImpressao" class="java.lang.String"/>
+	<field name="funcao" class="java.lang.String">
+		<fieldDescription><![CDATA[funcao]]></fieldDescription>
+	</field>
+	<field name="agremiacaoImpressao" class="java.lang.String">
+		<fieldDescription><![CDATA[agremiacaoImpressao]]></fieldDescription>
+	</field>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -79,7 +84,7 @@
 				</reportElement>
 				<imageExpression><![CDATA["../../images/logo cbj.jpg"]]></imageExpression>
 			</image>
-			<image>
+			<image scaleImage="FillFrame">
 				<reportElement x="0" y="0" width="98" height="137" uuid="6608ba7f-50a9-42a1-9d57-463557788fb9">
 					<property name="local_mesure_unitwidth" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
@@ -132,7 +137,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA[new java.text.SimpleDateFormat("dd/MMM/yyyy").format($F{dataNascimento})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new java.text.SimpleDateFormat("dd/MMM/yyyy", new Locale("PT", "br")).format($F{dataNascimento})]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="102" y="121" width="196" height="16" uuid="fcf6fda2-09e5-4fd1-9715-64100185979f">
@@ -150,10 +155,10 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font size="10"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{agremiacao}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{agremiacaoImpressao}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement positionType="FixRelativeToBottom" mode="Opaque" x="106" y="77" width="24" height="8" forecolor="#000000" uuid="60d6f773-4369-4d04-9dd3-f0369701624a">
+				<reportElement style="Fonte header" positionType="FixRelativeToBottom" mode="Opaque" x="106" y="77" width="26" height="7" forecolor="#000000" uuid="60d6f773-4369-4d04-9dd3-f0369701624a">
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="local_mesure_unitx" value="pixel"/>
@@ -166,13 +171,13 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center">
-					<font size="6" isBold="true"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial" size="6" isBold="true" pdfFontName="Helvetica" pdfEncoding="Cp1256" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Nome]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="FixRelativeToBottom" mode="Opaque" x="106" y="96" width="62" height="8" forecolor="#000000" uuid="3003ca9c-c686-4143-86e9-fa6fd335e96d">
+				<reportElement positionType="FixRelativeToBottom" mode="Opaque" x="106" y="96" width="56" height="8" forecolor="#000000" uuid="3003ca9c-c686-4143-86e9-fa6fd335e96d">
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="local_mesure_unity" value="pixel"/>
@@ -184,13 +189,13 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center">
-					<font size="6" isBold="true"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial" size="6" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Data Nascimento]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="FixRelativeToBottom" mode="Opaque" x="106" y="117" width="46" height="8" forecolor="#000000" uuid="d98d4760-4fc0-435c-b95d-db519be84b30">
+				<reportElement positionType="FixRelativeToBottom" mode="Opaque" x="106" y="117" width="56" height="8" forecolor="#000000" uuid="d98d4760-4fc0-435c-b95d-db519be84b30">
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="local_mesure_unity" value="pixel"/>
@@ -202,8 +207,8 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center">
-					<font size="6" isBold="true"/>
+				<textElement textAlignment="Left">
+					<font fontName="Arial" size="6" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Agremiação]]></text>
 			</staticText>
@@ -233,13 +238,6 @@
 					<font size="9" isBold="true"/>
 				</textElement>
 			</textField>
-			<staticText>
-				<reportElement x="24" y="143" width="58" height="12" uuid="c04c48db-8d5d-4d95-93ce-5cb4e43ea6be"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="SansSerif" size="10" isBold="true"/>
-				</textElement>
-				<text><![CDATA[ATLETA]]></text>
-			</staticText>
 			<rectangle>
 				<reportElement x="0" y="140" width="298" height="2" backcolor="#FFF700" uuid="081dc1ba-3325-4da7-9096-18502bb7c441"/>
 			</rectangle>
@@ -314,7 +312,7 @@
 				<text><![CDATA[Presidente da FJMS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="368" y="160" width="140" height="10" forecolor="#3126FF" uuid="60c1ed37-72a7-40a3-93ed-40acdb059742">
+				<reportElement x="367" y="186" width="140" height="10" forecolor="#3126FF" uuid="60c1ed37-72a7-40a3-93ed-40acdb059742">
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
@@ -349,6 +347,15 @@
 					<font isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{categoriaImpressao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="1" y="140" width="98" height="16" forecolor="#000000" backcolor="#FFFFFF" uuid="47a9f06d-84e9-4a2c-972d-a0619b582617"/>
+				<box padding="0" topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="Arial" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single" lineSpacingSize="1.0" firstLineIndent="0" leftIndent="0" rightIndent="0" spacingBefore="0" spacingAfter="0" tabStopWidth="40"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{funcao}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

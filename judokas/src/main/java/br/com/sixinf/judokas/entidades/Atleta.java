@@ -65,6 +65,9 @@ public class Atleta implements Serializable, Entidade {
 	@JoinColumn(name="id_usuario")
 	private Usuario usuario;
 	
+	@Column(name = "matricula_zempo")
+	private String matriculaZempo;
+	
 	@Transient
 	private Image fotoImpressao;
 	
@@ -73,6 +76,9 @@ public class Atleta implements Serializable, Entidade {
 	
 	@Transient
 	private String categoriaImpressao;
+	
+	@Transient
+	private String agremiacaoImpressao;
 	
 	public Long getId() {
 		return id;
@@ -168,6 +174,22 @@ public class Atleta implements Serializable, Entidade {
 
 	public void setCategoriaImpressao(String categoriaImpressao) {
 		this.categoriaImpressao = categoriaImpressao;
+	}
+
+	public String getMatriculaZempo() {
+		return matriculaZempo;
+	}
+
+	public void setMatriculaZempo(String matriculaZempo) {
+		this.matriculaZempo = matriculaZempo;
+	}
+
+	public String getAgremiacaoImpressao() {
+		return agremiacaoImpressao;
+	}
+
+	public void setAgremiacaoImpressao(String agremiacaoImpressao) {
+		this.agremiacaoImpressao = agremiacaoImpressao;
 	}
 
 	@Override

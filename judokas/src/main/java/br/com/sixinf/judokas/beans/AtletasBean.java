@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -15,8 +16,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
 
 import org.apache.log4j.Logger;
+import org.primefaces.component.calendar.Calendar;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.SelectEvent;
@@ -52,6 +55,8 @@ public class AtletasBean implements Serializable {
 	private String nomeUsuarioAcademia;
 	private List<Usuario> academias = new ArrayList<Usuario>(0);
 	private List<String> funcoes = new ArrayList<String>(0);
+	private boolean apagarFoto = false;
+	private boolean matriculaObrigatorio = false;
 	
 	@ManagedProperty(value="#{segurancaBean}")
 	private SegurancaBean segurancaBean;
@@ -88,7 +93,6 @@ public class AtletasBean implements Serializable {
 		funcoes.add("Técnico");
 		funcoes.add("Auxiliar Técnico");
 		funcoes.add("Kodansha");
-		funcoes.add("Outros");
 	}
 	
 	public Atleta getAtleta() {
@@ -179,6 +183,22 @@ public class AtletasBean implements Serializable {
 		this.funcoes = funcoes;
 	}
 
+	public boolean isApagarFoto() {
+		return apagarFoto;
+	}
+
+	public void setApagarFoto(boolean apagarFoto) {
+		this.apagarFoto = apagarFoto;
+	}
+
+	public boolean isMatriculaObrigatorio() {
+		return matriculaObrigatorio;
+	}
+
+	public void setMatriculaObrigatorio(boolean matriculaObrigatorio) {
+		this.matriculaObrigatorio = matriculaObrigatorio;
+	}
+
 	/**
 	 * 
 	 * @param event
@@ -212,8 +232,12 @@ public class AtletasBean implements Serializable {
 		RequestContext.getCurrentInstance().addCallbackParam("fechaDialog", true);
 	}
 	
+	/**
+	 * 
+	 * @throws LoggerException
+	 */
 	public void salvar() throws LoggerException {
-		
+				
 		TipoUsuario tipo = JudokasHelper.getTipoUsuarioSessao();
 		String nomeUsuario = null;
 		
@@ -221,6 +245,16 @@ public class AtletasBean implements Serializable {
 			nomeUsuario = JudokasHelper.getUsuarioSessao();
 		else 
 			nomeUsuario = nomeUsuarioAcademia;
+		
+		// se não for atleta novo e solicitou apagar a foto
+		if (atleta.getId() != null && 
+				!atleta.getId().equals(0L) &&
+				apagarFoto) {
+			
+			JudokasFacade.getInstance().apagarFotoAtleta(atleta);
+			
+			apagarFoto = false;
+		}
 		
 		JudokasFacade.getInstance().salvarAtleta(atleta, nomeUsuario);
 		
@@ -273,16 +307,62 @@ public class AtletasBean implements Serializable {
 	public void editar(Atleta a) throws LoggerException {
 		atleta = a;
 		nomeUsuarioAcademia = JudokasFacade.getInstance().buscarUsuarioAtleta(a).getNomeUsuario();
+		apagarFoto = false;
 	}
 	
 	/**
 	 * 
 	 */
 	public void novo(){
-		atleta = new Atleta();		
+		atleta = new Atleta();	
+		apagarFoto = false;
 	}
 	
 	public void removerFoto() throws LoggerException{
-		JudokasFacade.getInstance().apagarFotoAtleta(atleta);
+		apagarFoto = true;
 	}
+	
+	/**
+	 * 
+	 */
+	public void atualizaMatriculaRequired(SelectEvent event){
+		Date dataNasc = (Date) event.getObject();
+		
+		String categoria = JudokasFacade.getInstance().returnCategoria(dataNasc);
+		
+		if (categoria.equals("SUB 13") ||
+				categoria.equals("SUB 15") ||
+				categoria.equals("SUB 18") ||
+				categoria.equals("+SUB 18")) 
+			
+			matriculaObrigatorio = true;
+		
+		else 
+			
+			matriculaObrigatorio = false;
+		
+	}
+	
+	/**
+	 * 
+	 * @param event
+	 */
+	public void atualizaMatriculaRequiredChange(AjaxBehaviorEvent event){
+		Calendar c = (Calendar) event.getSource();
+		Date dataNasc = (Date) c.getValue();
+		
+		String categoria = JudokasFacade.getInstance().returnCategoria(dataNasc);
+		
+		if (categoria.equals("SUB 13") ||
+				categoria.equals("SUB 15") ||
+				categoria.equals("SUB 18") ||
+				categoria.equals("+SUB 18")) 
+			
+			matriculaObrigatorio = true;
+		
+		else 
+			
+			matriculaObrigatorio = false;
+	}
+	
 }
