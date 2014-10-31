@@ -498,4 +498,14 @@ public class JudokasFacade {
 		
 		return path;
 	}
+
+	/**
+	 * 
+	 * @param atleta
+	 * @throws LoggerException
+	 */
+	public void cancelarCarteirinha(Atleta atleta) throws LoggerException {
+		atleta.setDataEmissaoCarteira(null);
+		dao.cancelarCarteirinha(atleta);
+	}
 }

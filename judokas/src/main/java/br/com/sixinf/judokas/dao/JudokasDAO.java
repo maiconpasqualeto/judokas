@@ -469,4 +469,37 @@ public class JudokasDAO extends BridgeBaseDAO {
 		return atletas;
 	}
 	
+	/**
+	 * 
+	 * @param atleta
+	 * @throws LoggerException 
+	 */
+	public void cancelarCarteirinha(Atleta atleta) throws LoggerException {
+		EntityManager em = AdministradorPersistencia.getEntityManager();
+		EntityTransaction t = em.getTransaction();
+		try {
+			
+			StringBuilder hql = new StringBuilder();
+	        hql.append("update Atleta a ");
+	        hql.append("set a.dataEmissaoCarteira = null ");
+	        hql.append("where a.id = :id");
+	        
+	        Query q = em.createQuery(hql.toString());
+	        
+	        q.setParameter("id", atleta.getId());
+	        
+	        t.begin();
+			
+			q.executeUpdate();
+			
+			t.commit();
+			
+		} catch (Exception e) {
+			t.rollback();
+			throw new LoggerException("Erro ao cancelar carteirinha atleta", e, LOG);
+		} finally {
+            em.close();
+        }
+	}
+	
 }

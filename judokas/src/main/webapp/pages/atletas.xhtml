@@ -51,18 +51,27 @@
 						</h:outputText>
 					</p:column>
 					
-					<p:column headerText="Ação" style="width:130px">
+					<p:column headerText="Ação" style="width:230px; text-align: center;">
 						<f:facet name="header">Ação</f:facet>
 						<p:commandButton value="Editar" process="@this" actionListener="#{atletasBean.editar(a)}"
 		                	id="btnEditar" oncomplete="PF('dlg').show();" update=":frmAtletas:pnlCampos"
 		                	resetValues="true" />
 							
 		                <p:commandButton value="Apagar" process="@this" actionListener="#{atletasBean.delete(a)}"
-		                	id="btnApagar" title="Confirma apagar o Registro?" 
+		                	id="btnApagar" title="Apagar cadastro atleta" 
 		                	update="tblAtletas,:frmAtletas:growAtletas">
 		                	
 		                	<p:confirm header="Confirmação de exclusão" 
 		                		message="Apagar registro?" icon="ui-icon-alert" />
+                            
+		                </p:commandButton>
+		                
+		                <p:commandButton value="Cancelar" process="@this" actionListener="#{atletasBean.cancelarCarteirinha(a)}"
+		                	id="btnCancelarCart" title="Cancelar impressão da carteirinha" 
+		                	update="tblAtletas,:frmAtletas:growAtletas">
+		                	
+		                	<p:confirm header="Confirmação cancelar carteirinha" 
+		                		message="Cancelar impressão da carteirinha?" icon="ui-icon-alert" />
                             
 		                </p:commandButton>
 		            </p:column>

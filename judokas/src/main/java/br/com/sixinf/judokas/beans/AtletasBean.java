@@ -365,4 +365,15 @@ public class AtletasBean implements Serializable {
 			matriculaObrigatorio = false;
 	}
 	
+	/**
+	 * 
+	 * @param atleta
+	 * @throws LoggerException 
+	 */
+	public void cancelarCarteirinha(Atleta atleta) throws LoggerException {
+		
+		JudokasFacade.getInstance().cancelarCarteirinha(atleta);
+		
+	}
+	
 }
