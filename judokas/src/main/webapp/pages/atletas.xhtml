@@ -34,6 +34,11 @@
 					</p:column>
 					
 					<p:column>
+						<f:facet name="header">Agremiação</f:facet>
+						<h:outputText value="#{a.usuario.nome}" />
+					</p:column>
+					
+					<p:column>
 						<f:facet name="header">Nome</f:facet>
 						<h:outputText id="lblListaNome" value="#{a.nome}" />
 				        <pe:tooltip for="lblListaNome">  
@@ -55,11 +60,11 @@
 						<f:facet name="header">Ação</f:facet>
 						<p:commandButton value="Editar" process="@this" actionListener="#{atletasBean.editar(a)}"
 		                	id="btnEditar" oncomplete="PF('dlg').show();" update=":frmAtletas:pnlCampos"
-		                	resetValues="true" />
+		                	resetValues="true" rendered="#{atletasBean.segurancaBean.renderTipoUsuario}"/>
 							
 		                <p:commandButton value="Apagar" process="@this" actionListener="#{atletasBean.delete(a)}"
 		                	id="btnApagar" title="Apagar cadastro atleta" 
-		                	update="tblAtletas,:frmAtletas:growAtletas">
+		                	update="tblAtletas,:frmAtletas:growAtletas" rendered="#{atletasBean.segurancaBean.renderTipoUsuario}">
 		                	
 		                	<p:confirm header="Confirmação de exclusão" 
 		                		message="Apagar registro?" icon="ui-icon-alert" />
@@ -68,12 +73,17 @@
 		                
 		                <p:commandButton value="Cancelar" process="@this" actionListener="#{atletasBean.cancelarCarteirinha(a)}"
 		                	id="btnCancelarCart" title="Cancelar impressão da carteirinha" 
-		                	update="tblAtletas,:frmAtletas:growAtletas">
+		                	update="tblAtletas,:frmAtletas:growAtletas" rendered="#{atletasBean.segurancaBean.renderTipoUsuario}">
 		                	
 		                	<p:confirm header="Confirmação cancelar carteirinha" 
 		                		message="Cancelar impressão da carteirinha?" icon="ui-icon-alert" />
                             
 		                </p:commandButton>
+		                
+		                <p:commandButton value="Consultar" process="@this" actionListener="#{atletasBean.editar(a)}"
+		                	id="btnConsultar" oncomplete="PF('dlg').show();" update=":frmAtletas:pnlCampos"
+		                	resetValues="true" rendered="#{!atletasBean.segurancaBean.renderTipoUsuario}"/>
+		                	
 		            </p:column>
 				</p:dataTable>
 				
@@ -95,11 +105,12 @@
 									rendered="#{not empty atletasBean.atleta.foto and not atletasBean.apagarFoto}" style="border: solid 1px lightgray" cache="false"/>  
 								<p:graphicImage id="grfNoFoto" value="/images/nophoto.jpg" width="80" height="96"
 									rendered="#{empty atletasBean.atleta.foto or atletasBean.apagarFoto}" style="border: solid 1px lightgray"/>
-								<h:form enctype="multipart/form-data">
+								<h:form enctype="multipart/form-data" rendered="#{atletasBean.segurancaBean.renderTipoUsuario}" >
 									<p:fileUpload mode="advanced" sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
 										fileUploadListener="#{atletasBean.handleFileUpload}" auto="true" update=":frmAtletas:pnlFoto" label="Selecione Foto"/>
 								</h:form>
-								<p:commandButton value="Apagar Foto" actionListener="#{atletasBean.removerFoto}" process="@this" update="pnlFoto,tblAtletas" />								
+								<p:commandButton value="Apagar Foto" actionListener="#{atletasBean.removerFoto}" process="@this" update="pnlFoto,tblAtletas" 
+									rendered="#{atletasBean.segurancaBean.renderTipoUsuario}" />								
 							</h:panelGrid>
 							
 							
@@ -173,12 +184,13 @@
 					<p:button value="Fechar" onclick="PF('dlg').hide();"/>
 						
 					<p:commandButton id="btnSalvar" value="Salvar e Fechar" action="#{atletasBean.salvarFecha}" 
-						update="growAtletas,tblAtletas,pnlCampos" oncomplete="registroGravado(xhr, status, args)"/>
+						update="growAtletas,tblAtletas,pnlCampos" oncomplete="registroGravado(xhr, status, args)"
+						rendered="#{atletasBean.segurancaBean.renderTipoUsuario}" />
 						
 					<p:commandButton id="btnSalvarENovo" value="Salvar e Adiciona Novo" action="#{atletasBean.salvar}" 
-						update="growAtletas,tblAtletas,pnlCampos" />
+						update="growAtletas,tblAtletas,pnlCampos" rendered="#{atletasBean.segurancaBean.renderTipoUsuario}"/>
 					
-					<p:defaultCommand target="btnSalvar" />
+					<p:defaultCommand target="btnSalvar" rendered="#{atletasBean.segurancaBean.renderTipoUsuario}" />
 
 				</p:dialog>
 				

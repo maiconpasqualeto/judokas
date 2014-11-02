@@ -9,7 +9,7 @@
 	
 	<ui:define name="principal">
 	
-		<p:panel id="pnlCadastrados" header="Cadastro de atletas novos" >
+		<p:panel id="pnlCadastrados" header="Lista de atletas para impressão de carteirinha" >
 			
 			<h:form  id="frmCadastrados">
 			
@@ -19,7 +19,7 @@
 		                	id="btnOpenImprimir" oncomplete="PF('dlg').show();" update="dlgImpressao" />
 				
 				<p:dataTable id="tblCadastros" value="#{principalBean.atletasCadastrados}" var="atleta" 
-						emptyMessage="Nenhum atleta cadastrado" paginator="true" rows="10" >
+						emptyMessage="Nenhum atleta novo cadastrado" paginator="true" rows="10" >
 						
 					<p:column headerText="ID">
 						<h:outputText value="#{atleta.id}" />

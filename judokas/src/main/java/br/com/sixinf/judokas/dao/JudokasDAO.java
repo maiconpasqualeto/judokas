@@ -79,8 +79,9 @@ public class JudokasDAO extends BridgeBaseDAO {
 		try {
 			StringBuilder hql = new StringBuilder();
 			hql.append("select a from Atleta a ");
+			hql.append("inner join fetch a.usuario u ");
 			hql.append("where a.statusRegistro = 'A' ");
-			hql.append("order by a.nome ");
+			hql.append("order by u.nome, a.nome");
 			TypedQuery<Atleta> q = em.createQuery(hql.toString(), Atleta.class);
 			
 			atletas = q.getResultList();

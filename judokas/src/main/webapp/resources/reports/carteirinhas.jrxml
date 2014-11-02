@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 5.6.2.final using JasperReports Library version 5.6.1  -->
-<!-- 2014-10-29T22:56:32 -->
+<!-- 2014-11-02T12:28:43 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="carteirinhas" pageWidth="595" pageHeight="842" columnWidth="585" leftMargin="5" rightMargin="5" topMargin="0" bottomMargin="0" whenResourceMissingType="Empty" uuid="127454db-d647-4282-9d83-60f7ba7f81c5">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Judokas Adapter"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
-	<style name="Fonte header" forecolor="#000000" fontName="Arial" fontSize="8"/>
 	<queryString language="SQL">
 		<![CDATA[]]>
 	</queryString>
@@ -61,8 +60,9 @@
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<textElement textAlignment="Center" verticalAlignment="Bottom" markup="none">
-					<font size="7" isBold="true"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Impact" size="8" isBold="false"/>
+					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<text><![CDATA[FILIADA A CONFEDERAÇÃO BRASILEIRA DE JUDÔ]]></text>
 			</staticText>
@@ -158,7 +158,7 @@
 				<textFieldExpression><![CDATA[$F{agremiacaoImpressao}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement style="Fonte header" positionType="FixRelativeToBottom" mode="Opaque" x="106" y="77" width="26" height="7" forecolor="#000000" uuid="60d6f773-4369-4d04-9dd3-f0369701624a">
+				<reportElement key="" positionType="FixRelativeToBottom" mode="Opaque" x="106" y="77" width="26" height="7" isPrintWhenDetailOverflows="true" forecolor="#000000" uuid="60d6f773-4369-4d04-9dd3-f0369701624a">
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="local_mesure_unitx" value="pixel"/>
@@ -172,7 +172,7 @@
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Left">
-					<font fontName="Arial" size="6" isBold="true" pdfFontName="Helvetica" pdfEncoding="Cp1256" isPdfEmbedded="true"/>
+					<font fontName="DejaVu Sans" size="6" isBold="true" pdfFontName="Times-Roman" pdfEncoding="Cp1256" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Nome]]></text>
 			</staticText>
