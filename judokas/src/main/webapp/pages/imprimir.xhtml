@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="/layout/tpl_limpo.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:define name="principal">
+	
+		<p:panel id="pnlCadastrados" header="Lista de atletas para impressão de carteirinha" >
+			
+			<h:form  id="frmCadastrados">
+			
+				<p:growl id="growAtletas" showDetail="false"/>
+				
+				<p:commandButton value="Imprimir Carteiras" process="@this" 
+		                	id="btnOpenImprimir" oncomplete="PF('dlg').show();" update="dlgImpressao" />
+				
+				<p:dataTable id="tblCadastros" value="#{principalBean.atletasCadastrados}" var="atleta" 
+						emptyMessage="Nenhum atleta novo cadastrado" paginator="true" rows="10" >
+						
+					<p:column headerText="ID">
+						<h:outputText value="#{atleta.id}" />
+					</p:column>
+						
+					<p:column headerText="Nome Atleta">
+						<h:outputText value="#{atleta.nome}" />
+					</p:column>
+					
+					<p:column headerText="Academia">
+						<h:outputText value="#{atleta.usuario.nome}" />
+					</p:column>
+				
+				</p:dataTable>
+				
+				<p:dialog id="dlgImpressao" widgetVar="dlg" modal="true" draggable="false" resizable="false">
+
+					<p:pickList id="plAtletas" value="#{principalBean.atletasPrint}" var="atleta"
+					        itemValue="#{atleta}" itemLabel="#{atleta.nome}" converter="genericPojoConverter"  
+					        showSourceControls="true" showTargetControls="true"
+					        showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" >  
+					
+				        <f:facet name="sourceCaption">Atletas</f:facet>  
+				        <f:facet name="targetCaption">Para Imprimir</f:facet>  
+				  						        
+				        <p:column style="width:25%">  
+				        	<p:graphicImage value="/displayimage?arquivo=#{atleta.foto}" width="64" height="76"
+									rendered="#{not empty atleta.foto}" style="border: solid 1px lightgray" cache="false"/>  
+							<p:graphicImage value="/images/nophoto.jpg" width="64" height="76"
+								rendered="#{empty atleta.foto}" style="border: solid 1px lightgray"/>
+				        </p:column>  
+				  		
+			            <p:column style="width:75%;">  
+				            <h:outputText value="#{atleta.nome}" />  
+				        </p:column>  
+			  
+			    	</p:pickList>  
+			    	
+			    	<p:separator />
+			    			    	
+			    	<p:commandButton value="Imprimir carteirinhas" process="@this" id="btnImprimir" 
+			    		ajax="false">
+		                	<p:fileDownload value="#{principalBean.printReport()}"></p:fileDownload>
+	               	</p:commandButton>
+	               	
+					
+				</p:dialog>
+				
+				
+			</h:form>
+			
+		</p:panel>
+
+	</ui:define>
+	
+</ui:composition>

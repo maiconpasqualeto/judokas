@@ -17,8 +17,7 @@
 				<p:growl id="growAtletas" showDetail="false"/>
 				
 				<p:commandButton value="Adicionar Novo Atleta" process="@this" actionListener="#{atletasBean.novo}"
-		                	id="btnNovo" oncomplete="PF('dlg').show();" update="dlgCadastro" 
-		                	resetValues="true"/>
+		                	id="btnNovo" oncomplete="PF('dlg').show();" update="dlgCadastro" />
 						
 				<p:dataTable 
 					id="tblAtletas"
@@ -60,7 +59,7 @@
 						<f:facet name="header">Ação</f:facet>
 						<p:commandButton value="Editar" process="@this" actionListener="#{atletasBean.editar(a)}"
 		                	id="btnEditar" oncomplete="PF('dlg').show();" update=":frmAtletas:pnlCampos"
-		                	resetValues="true" rendered="#{atletasBean.segurancaBean.renderTipoUsuario}"/>
+		                	rendered="#{atletasBean.segurancaBean.renderTipoUsuario}"/>
 							
 		                <p:commandButton value="Apagar" process="@this" actionListener="#{atletasBean.delete(a)}"
 		                	id="btnApagar" title="Apagar cadastro atleta" 
@@ -81,8 +80,8 @@
 		                </p:commandButton>
 		                
 		                <p:commandButton value="Consultar" process="@this" actionListener="#{atletasBean.editar(a)}"
-		                	id="btnConsultar" oncomplete="PF('dlg').show();" update=":frmAtletas:pnlCampos"
-		                	resetValues="true" rendered="#{!atletasBean.segurancaBean.renderTipoUsuario}"/>
+		                	id="btnConsultar" oncomplete="PF('dlg').show();" update=":frmAtletas:dlgCadastro"
+		                	rendered="#{!atletasBean.segurancaBean.renderTipoUsuario}"/>
 		                	
 		            </p:column>
 				</p:dataTable>
@@ -105,12 +104,12 @@
 									rendered="#{not empty atletasBean.atleta.foto and not atletasBean.apagarFoto}" style="border: solid 1px lightgray" cache="false"/>  
 								<p:graphicImage id="grfNoFoto" value="/images/nophoto.jpg" width="80" height="96"
 									rendered="#{empty atletasBean.atleta.foto or atletasBean.apagarFoto}" style="border: solid 1px lightgray"/>
-								<h:form enctype="multipart/form-data" rendered="#{atletasBean.segurancaBean.renderTipoUsuario}" >
+								<h:form enctype="multipart/form-data" rendered="#{atletasBean.segurancaBean.renderTipoUsuario or (empty atletasBean.atleta.nome)}" >
 									<p:fileUpload mode="advanced" sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
 										fileUploadListener="#{atletasBean.handleFileUpload}" auto="true" update=":frmAtletas:pnlFoto" label="Selecione Foto"/>
 								</h:form>
 								<p:commandButton value="Apagar Foto" actionListener="#{atletasBean.removerFoto}" process="@this" update="pnlFoto,tblAtletas" 
-									rendered="#{atletasBean.segurancaBean.renderTipoUsuario}" />								
+									rendered="#{atletasBean.segurancaBean.renderTipoUsuario or (empty atletasBean.atleta.nome)}" />								
 							</h:panelGrid>
 							
 							
@@ -123,7 +122,6 @@
 							<p:outputLabel value="Nome:" for="txtNome" />
 							<p:inputText id="txtNome" value="#{atletasBean.atleta.nome}"
 								required="true" label="Nome">
-								<p:focus for="txtNome" />
 							</p:inputText>
 							
 							<p:outputLabel value="Data Nascimento:" for="dtNasc" />
@@ -137,22 +135,23 @@
 									
 									<f:convertDateTime pattern="dd/MM/yyyy" />
 									
-									<p:ajax event="dateSelect" listener="#{atletasBean.atualizaMatriculaRequired}" 
-										process="@this" update="pnlCampos"/>
+									<p:ajax event="dateSelect" listener="#{atletasBean.onDateNascSelect}" 
+										process="@this" update="pnlCampos" partialSubmit="true" />
 										
-									<p:ajax event="change" listener="#{atletasBean.atualizaMatriculaRequiredChange}" 
-										process="@this" update="pnlCampos"/>
+									<p:ajax event="change" listener="#{atletasBean.onDateChange}" 
+										process="@this" update="pnlCampos" partialSubmit="true" />
 							</p:calendar>
 							
-							<p:outputLabel value="Matrícula Zempô" for="txtMatricula" rendered="#{!atletasBean.matriculaObrigatorio}"/>							
+							<p:outputLabel id="lblMatricula" value="Matrícula Zempô" for="txtMatricula" rendered="#{!atletasBean.matriculaObrigatorio}"/>
 							<p:inputMask id="txtMatricula" value="#{atletasBean.atleta.matriculaZempo}"
 								label="Matrícula Zempô" rendered="#{!atletasBean.matriculaObrigatorio}"
 								mask="aa999999"/>
-							
-							<p:outputLabel value="Matrícula Zempô" for="txtMatriculaReq" rendered="#{atletasBean.matriculaObrigatorio}"/>	
-							<p:inputText id="txtMatriculaReq" value="#{atletasBean.atleta.matriculaZempo}"
-								required="true" label="Matrícula Zempô" rendered="#{atletasBean.matriculaObrigatorio}" />								
-							
+									
+							<p:outputLabel id="lblMatriculaReq" value="Matrícula Zempô" for="txtMatriculaReq" rendered="#{atletasBean.matriculaObrigatorio}"/>	
+							<p:inputMask id="txtMatriculaReq" value="#{atletasBean.atleta.matriculaZempo}"
+								required="true" label="Matrícula Zempô" rendered="#{atletasBean.matriculaObrigatorio}" 
+								mask="aa999999"/>
+											
 							<p:outputLabel value="Graduação:" for="cmbGraduacao" />
 							<p:selectOneMenu id="cmbGraduacao"
 								value="#{atletasBean.atleta.graduacao}" required="true"
@@ -185,12 +184,12 @@
 						
 					<p:commandButton id="btnSalvar" value="Salvar e Fechar" action="#{atletasBean.salvarFecha}" 
 						update="growAtletas,tblAtletas,pnlCampos" oncomplete="registroGravado(xhr, status, args)"
-						rendered="#{atletasBean.segurancaBean.renderTipoUsuario}" />
+						rendered="#{atletasBean.segurancaBean.renderTipoUsuario or (empty atletasBean.atleta.nome) }" />
 						
 					<p:commandButton id="btnSalvarENovo" value="Salvar e Adiciona Novo" action="#{atletasBean.salvar}" 
-						update="growAtletas,tblAtletas,pnlCampos" rendered="#{atletasBean.segurancaBean.renderTipoUsuario}"/>
+						update="growAtletas,tblAtletas,pnlCampos" rendered="#{atletasBean.segurancaBean.renderTipoUsuario or (empty atletasBean.atleta.nome)}"/>
 					
-					<p:defaultCommand target="btnSalvar" rendered="#{atletasBean.segurancaBean.renderTipoUsuario}" />
+					<p:defaultCommand target="btnSalvar" rendered="#{atletasBean.segurancaBean.renderTipoUsuario or (empty atletasBean.atleta.nome)}" />
 
 				</p:dialog>
 				

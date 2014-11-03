@@ -1,0 +1,19 @@
+<fontfamilies>
+  <fontfamily name="Arial">
+    <normal>fonts/arial.ttf</normal>
+    <bold>fonts/arialbd.ttf</bold>
+    <italic>fonts/ariali.ttf</italic>
+    <bolditalic>fonts/arialbdi.ttf</bolditalic>
+    <pdfembedded>true</pdfembedded>
+  </fontfamily>
+  <fontfamily name="ImpactFamily">
+    <normal>fonts/impact.ttf</normal>
+    <pdfembedded>true</pdfembedded>
+    <pdfEncoding>Identity-H</pdfEncoding>
+  </fontfamily>
+  <fontfamily name="SansSerifFamily">
+    <normal>fonts/impact.ttf</normal>
+    <pdfembedded>true</pdfembedded>
+    <pdfEncoding>Identity-H</pdfEncoding>
+  </fontfamily>
+</fontfamilies>

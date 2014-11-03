@@ -308,6 +308,8 @@ public class AtletasBean implements Serializable {
 		atleta = a;
 		nomeUsuarioAcademia = JudokasFacade.getInstance().buscarUsuarioAtleta(a).getNomeUsuario();
 		apagarFoto = false;
+		
+		atualizaMatriculaRequired(a.getDataNascimento());
 	}
 	
 	/**
@@ -324,11 +326,20 @@ public class AtletasBean implements Serializable {
 	
 	/**
 	 * 
+	 * @param event
 	 */
-	public void atualizaMatriculaRequired(SelectEvent event){
+	public void onDateNascSelect(SelectEvent event){
 		Date dataNasc = (Date) event.getObject();
 		
-		String categoria = JudokasFacade.getInstance().returnCategoria(dataNasc);
+		atualizaMatriculaRequired(dataNasc);
+	}
+	
+	/**
+	 * 
+	 * @param dataNascimento
+	 */
+	public void atualizaMatriculaRequired(Date dataNascimento){
+		String categoria = JudokasFacade.getInstance().returnCategoria(dataNascimento);
 		
 		if (categoria.equals("SUB 13") ||
 				categoria.equals("SUB 15") ||
@@ -340,29 +351,17 @@ public class AtletasBean implements Serializable {
 		else 
 			
 			matriculaObrigatorio = false;
-		
 	}
 	
 	/**
 	 * 
 	 * @param event
 	 */
-	public void atualizaMatriculaRequiredChange(AjaxBehaviorEvent event){
+	public void onDateChange(AjaxBehaviorEvent event){
 		Calendar c = (Calendar) event.getSource();
 		Date dataNasc = (Date) c.getValue();
 		
-		String categoria = JudokasFacade.getInstance().returnCategoria(dataNasc);
-		
-		if (categoria.equals("SUB 13") ||
-				categoria.equals("SUB 15") ||
-				categoria.equals("SUB 18") ||
-				categoria.equals("+SUB 18")) 
-			
-			matriculaObrigatorio = true;
-		
-		else 
-			
-			matriculaObrigatorio = false;
+		atualizaMatriculaRequired(dataNasc);
 	}
 	
 	/**

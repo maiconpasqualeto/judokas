@@ -134,14 +134,17 @@ public class SegurancaBean implements Serializable {
 				sess.setAttribute(Usuario.SESSION_NOME_USUARIO, usuario.getNomeUsuario());
 				sess.setAttribute(Usuario.SESSION_TIPO_USUARIO, usuario.getTipoUsuario());
 				
-				if (usuario.getTipoUsuario().equals(TipoUsuario.MASTER.name()))
+				String pagina = "/pages/principal.xhtml?faces-redirect=true";
+				
+				if (usuario.getTipoUsuario().equals(TipoUsuario.MASTER.name())) {
 					renderTipoUsuario = true;
-				else 
+					pagina = "/pages/imprimir.xhtml?faces-redirect=true";
+				} else 
 					renderTipoUsuario = false;
 				
 				carregaRenderMenusUsuario();
 				
-				return "/pages/principal.xhtml?faces-redirect=true";
+				return pagina;
 			}
 			
 		} else {

@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;
@@ -356,15 +355,6 @@ public class JudokasFacade {
 	public DefaultStreamedContent geraReportCarteirinhas(
 			List<Atleta> atletasImpressao) throws LoggerException{
 		
-		if (atletasImpressao.isEmpty()) {
-			FacesMessage m = new FacesMessage(
-					FacesMessage.SEVERITY_ERROR, 
-					"Nenhuma atleta selecionado", 
-					"Nenhuma atleta selecionado");
-			FacesContext.getCurrentInstance().addMessage(null, m);
-			return null;
-		}	
-		
 		InputStream is = null;
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		ExternalContext externalContext = FacesContext.getCurrentInstance()
@@ -408,7 +398,7 @@ public class JudokasFacade {
 			JasperPrint print = JasperFillManager.fillReport(arquivo, parametros,
 					beanColDataSource);
 			
-			JRExporter exporter = new JRPdfExporter();
+			JRPdfExporter exporter = new JRPdfExporter();
 			exporter.setParameter(JRExporterParameter.JASPER_PRINT, print);
 			exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, baos);
 			exporter.exportReport();
@@ -423,6 +413,7 @@ public class JudokasFacade {
 				new SimpleDateFormat("yyyy_MM_dd").format(new Date()) + ".pdf");
 	}
 	
+		
 	/**
 	 * 
 	 * @param graduacao

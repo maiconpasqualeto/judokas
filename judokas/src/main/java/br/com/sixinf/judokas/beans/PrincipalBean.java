@@ -10,8 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import net.sf.jasperreports.engine.JRException;
 
@@ -70,11 +72,20 @@ public class PrincipalBean implements Serializable{
 
 	
 	public StreamedContent printReport() throws JRException, IOException, ClassNotFoundException, SQLException, LoggerException {  
+		if (atletasPrint.getTarget().isEmpty()) {
+			FacesMessage m = new FacesMessage(
+					FacesMessage.SEVERITY_ERROR, 
+					"Nenhuma atleta selecionado", 
+					"Nenhuma atleta selecionado");
+			FacesContext.getCurrentInstance().addMessage(null, m);
+			return null;
+		}	
+		
 		StreamedContent retorno = JudokasFacade.getInstance().geraReportCarteirinhas(atletasPrint.getTarget());
 		
 		init();
 		
 		return retorno; 
     }
-	
+		
 }
