@@ -51,6 +51,7 @@ public class SegurancaBean implements Serializable {
 		permissoesMaster.add("atletas.xhtml");
 		permissoesMaster.add("usuarios.xhtml");
 		permissoesMaster.add("carteiras.xhtml");
+		permissoesMaster.add("imprimir.xhtml");
 		
 		// ACADEMIA
 		permissoesAdmin.add("principal.xhtml");

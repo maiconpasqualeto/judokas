@@ -2,6 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <ui:composition template="/layout/tpl_limpo.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
@@ -12,12 +13,12 @@
 	
 		<p:panel id="pnlAtletas" header="Atletas" >
 		
-			<h:form  id="frmAtletas">
+			<h:form id="frmAtletas">
 			
 				<p:growl id="growAtletas" showDetail="false"/>
 				
 				<p:commandButton value="Adicionar Novo Atleta" process="@this" actionListener="#{atletasBean.novo}"
-		                	id="btnNovo" oncomplete="PF('dlg').show();" update="dlgCadastro" />
+		                	id="btnNovo" oncomplete="PF('dlg').show();"  update="dlgCadastro" />
 						
 				<p:dataTable 
 					id="tblAtletas"
@@ -94,90 +95,149 @@
 
 				<p:dialog id="dlgCadastro" widgetVar="dlg" modal="true" draggable="false" resizable="false">
 
-					<p:scrollPanel style="height:400px" mode="native">
+					<p:scrollPanel style="width: 480px;" mode="native">
+					
+						<h:panelGroup id="pnlCampos" layout="block" styleClass="ui-grid ui-grid-responsive forms">
+					
+						    <div class="ui-grid-row input-space">
+						        <div class="ui-grid-col-3 vertical-center">
+						        	<p:outputLabel value="Foto" />
+						        </div>
+						        <div class="ui-grid-col-9">
+						        	<h:panelGrid columns="3" id="pnlFoto">
+										<p:graphicImage id="grfFoto" value="/displayimage?arquivo=#{atletasBean.atleta.foto}" width="80" height="96"
+											rendered="#{not empty atletasBean.atleta.foto and not atletasBean.apagarFoto}" style="border: solid 1px lightgray" cache="false"/>  
+										<p:graphicImage id="grfNoFoto" value="/images/nophoto.jpg" width="80" height="96"
+											rendered="#{empty atletasBean.atleta.foto or atletasBean.apagarFoto}" style="border: solid 1px lightgray"/>
+										<h:form enctype="multipart/form-data" rendered="#{atletasBean.segurancaBean.renderTipoUsuario or (empty atletasBean.atleta.nome)}" >
+											<p:fileUpload mode="advanced" sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
+												fileUploadListener="#{atletasBean.handleFileUpload}" auto="true" update=":frmAtletas:pnlFoto" label="Selecione Foto"/>
+										</h:form>
+										<p:commandButton value="Apagar Foto" actionListener="#{atletasBean.removerFoto}" process="@this" update="pnlFoto,tblAtletas" 
+											rendered="#{atletasBean.segurancaBean.renderTipoUsuario or (empty atletasBean.atleta.nome)}" />								
+									</h:panelGrid>
+						        </div>
+						    </div>
 							
-						<p:panelGrid columns="2" id="pnlCampos">
-						
-							<p:outputLabel value="Foto" />
-							<h:panelGrid columns="3" id="pnlFoto">
-								<p:graphicImage id="grfFoto" value="/displayimage?arquivo=#{atletasBean.atleta.foto}" width="80" height="96"
-									rendered="#{not empty atletasBean.atleta.foto and not atletasBean.apagarFoto}" style="border: solid 1px lightgray" cache="false"/>  
-								<p:graphicImage id="grfNoFoto" value="/images/nophoto.jpg" width="80" height="96"
-									rendered="#{empty atletasBean.atleta.foto or atletasBean.apagarFoto}" style="border: solid 1px lightgray"/>
-								<h:form enctype="multipart/form-data" rendered="#{atletasBean.segurancaBean.renderTipoUsuario or (empty atletasBean.atleta.nome)}" >
-									<p:fileUpload mode="advanced" sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
-										fileUploadListener="#{atletasBean.handleFileUpload}" auto="true" update=":frmAtletas:pnlFoto" label="Selecione Foto"/>
-								</h:form>
-								<p:commandButton value="Apagar Foto" actionListener="#{atletasBean.removerFoto}" process="@this" update="pnlFoto,tblAtletas" 
-									rendered="#{atletasBean.segurancaBean.renderTipoUsuario or (empty atletasBean.atleta.nome)}" />								
-							</h:panelGrid>
+							<div class="ui-grid-row input-space">
+						        <div class="ui-grid-col-3 vertical-center">
+						        	<p:outputLabel value="ID" for="txtID" />
+						        </div>
+						        <div class="ui-grid-col-9">
+						        	<p:inputText id="txtID" value="#{atletasBean.atleta.id}"
+										readonly="true" >
+										<p:watermark for="txtID" value="ID Automático" />
+									</p:inputText>
+						        </div>
+							</div>
 							
+							<div class="ui-grid-row input-space">
+						        <div class="ui-grid-col-3 vertical-center">
+						        	<p:outputLabel value="Nome:" for="txtNome" />
+						        </div>
+						        <div class="ui-grid-col-9">
+						        	<p:inputText id="txtNome" value="#{atletasBean.atleta.nome}" style="width: 96%;"
+										required="true" label="Nome" readonly="#{!atletasBean.segurancaBean.renderTipoUsuario and (not empty atletasBean.atleta.nome)}">
+									</p:inputText>
+						        </div>
+							</div>
 							
-							<p:outputLabel value="ID" for="txtID" />
-							<p:inputText id="txtID" value="#{atletasBean.atleta.id}"
-								readonly="true">
-								<p:watermark for="txtID" value="ID Automático" />
-							</p:inputText>
-
-							<p:outputLabel value="Nome:" for="txtNome" />
-							<p:inputText id="txtNome" value="#{atletasBean.atleta.nome}"
-								required="true" label="Nome">
-							</p:inputText>
-							
-							<p:outputLabel value="Data Nascimento:" for="dtNasc" />
-							<p:calendar id="dtNasc"
-								value="#{atletasBean.atleta.dataNascimento}" maxdate="now"
-								pattern="dd/MM/yyyy" placeholder=" " required="true"
-								locale="pt" mode="popup" maxlength="10" 
-								label="Data de Nascimento" navigator="true" yearRange="1920:now">
-								
-									<p:watermark value="Clique para calendário" for="dtNasc"  />
-									
-									<f:convertDateTime pattern="dd/MM/yyyy" />
-									
-									<p:ajax event="dateSelect" listener="#{atletasBean.onDateNascSelect}" 
-										process="@this" update="pnlCampos" partialSubmit="true" />
+							<div class="ui-grid-row input-space">
+						        <div class="ui-grid-col-3 vertical-center">
+						        	<p:outputLabel value="Data Nascimento:" for="dtNasc" />
+						        </div>
+						        <div class="ui-grid-col-9">
+						        	<p:calendar id="dtNasc"
+										value="#{atletasBean.atleta.dataNascimento}" maxdate="now"
+										pattern="dd/MM/yyyy" placeholder=" " required="true"
+										locale="pt" mode="popup" maxlength="10" 
+										label="Data de Nascimento" navigator="true" yearRange="1920:now"
+										rendered="#{atletasBean.segurancaBean.renderTipoUsuario or (empty atletasBean.atleta.nome)}" >
 										
-									<p:ajax event="change" listener="#{atletasBean.onDateChange}" 
-										process="@this" update="pnlCampos" partialSubmit="true" />
-							</p:calendar>
-							
-							<p:outputLabel id="lblMatricula" value="Matrícula Zempô" for="txtMatricula" rendered="#{!atletasBean.matriculaObrigatorio}"/>
-							<p:inputMask id="txtMatricula" value="#{atletasBean.atleta.matriculaZempo}"
-								label="Matrícula Zempô" rendered="#{!atletasBean.matriculaObrigatorio}"
-								mask="aa999999"/>
-									
-							<p:outputLabel id="lblMatriculaReq" value="Matrícula Zempô" for="txtMatriculaReq" rendered="#{atletasBean.matriculaObrigatorio}"/>	
-							<p:inputMask id="txtMatriculaReq" value="#{atletasBean.atleta.matriculaZempo}"
-								required="true" label="Matrícula Zempô" rendered="#{atletasBean.matriculaObrigatorio}" 
-								mask="aa999999"/>
+											<p:watermark value="Clique para calendário" for="dtNasc"  />
 											
-							<p:outputLabel value="Graduação:" for="cmbGraduacao" />
-							<p:selectOneMenu id="cmbGraduacao"
-								value="#{atletasBean.atleta.graduacao}" required="true"
-								label="Graduação">
-								<f:selectItem itemLabel="Selecione" itemValue="" />
-								<f:selectItems value="#{atletasBean.graduacoes}" />
-							</p:selectOneMenu>
+											<f:convertDateTime pattern="dd/MM/yyyy" />
+											
+											<p:ajax event="dateSelect" listener="#{atletasBean.onDateNascSelect}" 
+												process="@this" update="pnlMatricula" partialSubmit="true" />
+												
+											<p:ajax event="change" listener="#{atletasBean.onDateChange}" 
+												process="@this" update="pnlMatricula" partialSubmit="true" />
+									</p:calendar>
+									<h:inputText value="#{atletasBean.atleta.dataNascimento}" readonly="true" 
+										styleClass="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all"
+										rendered="#{!atletasBean.segurancaBean.renderTipoUsuario and (not empty atletasBean.atleta.nome)}" >
+											<f:convertDateTime pattern="dd/MM/yyyy" />
+									</h:inputText>
+						        </div>
+							</div>
 							
-							<p:outputLabel value="Função" for="cmbGraduacao" />
-							<p:selectOneMenu id="cmbFuncao"
-								value="#{atletasBean.atleta.funcao}" required="true"
-								label="Função">
-								<f:selectItem itemLabel="Selecione" itemValue="" />
-								<f:selectItems value="#{atletasBean.funcoes}" />
-							</p:selectOneMenu>
-								
-							<p:outputLabel value="Academia:" for="cmbAcademia" rendered="#{atletasBean.renderAcademias}"/>
-							<p:selectOneMenu id="cmbAcademia" rendered="#{atletasBean.renderAcademias}"
-								value="#{atletasBean.nomeUsuarioAcademia}" required="true"
-								label="Academia">
-								<f:selectItem itemLabel="Selecione" itemValue="" />
-								<f:selectItems value="#{atletasBean.academias}"  var="a" itemLabel="#{a.nome}" itemValue="#{a.nomeUsuario}" />
-							</p:selectOneMenu>
-
-						</p:panelGrid>
+							<h:panelGroup id="pnlMatricula" styleClass="ui-grid-row input-space" layout="block">
+						        <div class="ui-grid-col-3 vertical-center">
+						        	<p:outputLabel id="lblMatricula" value="Matrícula Zempô" for="txtMatricula" rendered="#{!atletasBean.matriculaObrigatorio}"/>
+									<p:outputLabel id="lblMatriculaReq" value="Matrícula Zempô" for="txtMatriculaReq" rendered="#{atletasBean.matriculaObrigatorio}"/>
+						        </div>
+						        <div class="ui-grid-col-9">
+						        	<p:inputMask id="txtMatricula" value="#{atletasBean.atleta.matriculaZempo}"
+										label="Matrícula Zempô" rendered="#{!atletasBean.matriculaObrigatorio}"
+										mask="aa999999" readonly="#{!atletasBean.segurancaBean.renderTipoUsuario and (not empty atletasBean.atleta.nome)}"/>
+										
+									<p:inputMask id="txtMatriculaReq" value="#{atletasBean.atleta.matriculaZempo}"
+										required="true" label="Matrícula Zempô" rendered="#{atletasBean.matriculaObrigatorio}" 
+										mask="aa999999" readonly="#{!atletasBean.segurancaBean.renderTipoUsuario and (not empty atletasBean.atleta.nome)}"/>
+						        </div>
+							</h:panelGroup>
+							
+							<div class="ui-grid-row input-space">
+						        <div class="ui-grid-col-3 vertical-center">
+						        	<p:outputLabel value="Graduação:" for="cmbGraduacao" />
+						        </div>
+						        <div class="ui-grid-col-9">
+						        	<p:selectOneMenu id="cmbGraduacao"
+										value="#{atletasBean.atleta.graduacao}" required="true"
+										label="Graduação" rendered="#{atletasBean.segurancaBean.renderTipoUsuario or (empty atletasBean.atleta.nome)}">
+										<f:selectItem itemLabel="Selecione" itemValue="" />
+										<f:selectItems value="#{atletasBean.graduacoes}" />
+									</p:selectOneMenu>
+									<h:inputText value="#{atletasBean.atleta.graduacao}" readonly="true" 
+										styleClass="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all"
+										rendered="#{!atletasBean.segurancaBean.renderTipoUsuario and (not empty atletasBean.atleta.nome)}" />
+						        </div>
+							</div>
+							
+							<div class="ui-grid-row input-space">
+						        <div class="ui-grid-col-3 vertical-center">
+						        	<p:outputLabel value="Função" for="cmbGraduacao" />
+						        </div>
+						        <div class="ui-grid-col-9">
+						        	<p:selectOneMenu id="cmbFuncao" 
+										value="#{atletasBean.atleta.funcao}" required="true"
+										label="Função" rendered="#{atletasBean.segurancaBean.renderTipoUsuario or (empty atletasBean.atleta.nome)}">
+										<f:selectItem itemLabel="Selecione" itemValue="" />
+										<f:selectItems value="#{atletasBean.funcoes}" />
+									</p:selectOneMenu>
+									<h:inputText value="#{atletasBean.atleta.funcao}" readonly="true" 
+										styleClass="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all"
+										rendered="#{!atletasBean.segurancaBean.renderTipoUsuario and (not empty atletasBean.atleta.nome)}" />
+						        </div>
+							</div>
+							
+							<div class="ui-grid-row input-space">
+						        <div class="ui-grid-col-3 vertical-center">
+						        	<p:outputLabel value="Academia:" for="cmbAcademia" rendered="#{atletasBean.renderAcademias}"/>
+						        </div>
+						        <div class="ui-grid-col-9">
+						        	<p:selectOneMenu id="cmbAcademia" rendered="#{atletasBean.renderAcademias}"
+										value="#{atletasBean.nomeUsuarioAcademia}" required="true"
+										label="Academia">
+										<f:selectItem itemLabel="Selecione" itemValue="" />
+										<f:selectItems value="#{atletasBean.academias}"  var="a" itemLabel="#{a.nome}" itemValue="#{a.nomeUsuario}" />
+									</p:selectOneMenu>
+						        </div>
+							</div>
 						
+						</h:panelGroup>
+												
 					</p:scrollPanel>
 					
 					<p:button value="Fechar" onclick="PF('dlg').hide();"/>

@@ -36,6 +36,8 @@
 				</p:dataTable>
 				
 				<p:dialog id="dlgImpressao" widgetVar="dlg" modal="true" draggable="false" resizable="false">
+				
+					<p:ajax event="close" update=":frmCadastrados:tblCadastros"/>
 
 					<p:pickList id="plAtletas" value="#{principalBean.atletasPrint}" var="atleta"
 					        itemValue="#{atleta}" itemLabel="#{atleta.nome}" converter="genericPojoConverter"  

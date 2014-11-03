@@ -243,3 +243,11 @@ nav{
 	border: 1px solid #a0a0a0;
 	width: 90px;
 }
+
+.forms .vertical-center {
+	margin: auto 5px;
+}
+
+.forms .input-space {
+	margin-bottom: 5px;
+}
