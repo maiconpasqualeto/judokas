@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="/layout/tpl_limpo.xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:define name="principal">
+	
+		<p:panel id="pnlCartEmit" header="Imprimir carteirinhas emitidas" >
+			
+			<h:form  id="frmCartEmit">
+			
+				<p:growl id="grow" showDetail="false"/>
+							    	
+		    	<p:commandButton value="Imprimir carteirinhas" process="@this" id="btnImprimir" 
+		    		ajax="false">
+	                	<p:fileDownload value="#{impressaoBean.geraCarteirinhasEmitidas()}"></p:fileDownload>
+               	</p:commandButton>
+				
+			</h:form>
+			
+		</p:panel>
+
+	</ui:define>
+	
+</ui:composition>

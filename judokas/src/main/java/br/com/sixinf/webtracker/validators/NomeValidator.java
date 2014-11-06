@@ -29,7 +29,10 @@ public class NomeValidator implements Validator {
 			if (parte.length() == 1 ||
 					parte.contains(".") ||
 					parte.contains(","))
-				throw new ValidatorException(new FacesMessage("O Nome não pode ser abreviado"));
+				throw new ValidatorException(
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+								"O Nome não pode ser abreviado",
+									"O Nome não pode ser abreviado"));
 		}
 	}
 

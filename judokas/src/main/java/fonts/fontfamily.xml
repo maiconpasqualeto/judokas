@@ -5,6 +5,7 @@
     <italic>fonts/ariali.ttf</italic>
     <bolditalic>fonts/arialbdi.ttf</bolditalic>
     <pdfembedded>true</pdfembedded>
+    <pdfEncoding>Identity-H</pdfEncoding>
   </fontfamily>
   <fontfamily name="ImpactFamily">
     <normal>fonts/impact.ttf</normal>
@@ -16,4 +17,18 @@
     <pdfembedded>true</pdfembedded>
     <pdfEncoding>Identity-H</pdfEncoding>
   </fontfamily>
+  <fontFamily name="DejavuFamily">
+    <normal>
+      <ttf>fonts/DejaVuSans.ttf</ttf>
+      <pdf>DejaVuSans</pdf>
+    </normal>
+    <bold>
+      <ttf>fonts/DejaVuSans-Bold.ttf</ttf>
+      <pdf>DejaVuSans-Bold</pdf>
+    </bold>
+    <pdfEmbedded>true</pdfEmbedded>
+    <pdfEncoding>Identity-H</pdfEncoding>
+    <exportFonts>
+    </exportFonts>
+  </fontFamily>
 </fontfamilies>

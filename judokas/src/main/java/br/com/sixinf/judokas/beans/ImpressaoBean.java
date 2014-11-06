@@ -107,4 +107,12 @@ public class ImpressaoBean implements Serializable {
 		atletas.setSource(JudokasFacade.getInstance().buscarAtletasAcademia(usuarioAcademia.getId()));
 		
 	}
+	
+	/**
+	 * @throws LoggerException 
+	 * 
+	 */
+	public StreamedContent geraCarteirinhasEmitidas() throws LoggerException{
+		return JudokasFacade.getInstance().geraReportCarteirinhasEmitidas();
+	}
 }
