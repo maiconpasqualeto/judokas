@@ -12,25 +12,32 @@
 	</h:head>
 	<h:body>
 		<ui:composition>
-			<div id="divheader" >
-				<h:outputText value="Federação de Judô de Mato Grosso do Sul" style="font-size:1.7em; font-weight: bold; padding-left: 310px;color: #FFF" />
-			</div>
-			<div id="divusuario" style="color: #FFF;position: absolute;right:10px;top:50px;z-index:200;">
-				<h:outputText value="Usuário logado: "/>
-				<h:outputText value="#{segurancaBean.usuarioSessao}" style="font-weight: bold;"/>
-				<h:outputText value=" - #{segurancaBean.tipoUsuario}" style="font-weight: bold;" rendered="#{segurancaBean.renderTipoUsuario}"/>
-			</div>
-		    <div id="divlogo" class="logo" >
-				<p:graphicImage height="100px"
-							value="/images/logo_fjms.jpg"/>
-  			</div>
-  			<div id="divbar" class="bar" >
-					<ui:insert name="menu" >
-						<ui:include src="menu.xhtml" />
-					</ui:insert>
-  			</div> 
+			<p:idleMonitor timeout="16200000"> <!-- 1620000 = 4,5 horas -->
+		        <p:ajax event="idle" listener="#{segurancaBean.sessionIdleListener}" /> 
+		    </p:idleMonitor>
 			
-		</ui:composition>
+			<div id="divheader">
+				<h:outputText value="Federação de Judô de Mato Grosso do Sul"
+					style="font-size:1.7em; font-weight: bold; padding-left: 310px;color: #FFF" />
+			</div>
+			<div id="divusuario"
+				style="color: #FFF; position: absolute; right: 10px; top: 50px; z-index: 200;">
+				<h:outputText value="Usuário logado: " />
+				<h:outputText value="#{segurancaBean.usuarioSessao}"
+					style="font-weight: bold;" />
+				<h:outputText value=" - #{segurancaBean.tipoUsuario}"
+					style="font-weight: bold;"
+					rendered="#{segurancaBean.renderTipoUsuario}" />
+			</div>
+			<div id="divlogo" class="logo">
+				<p:graphicImage height="100px" value="/images/logo_fjms.jpg" />
+			</div>
+			<div id="divbar" class="bar">
+				<ui:insert name="menu">
+					<ui:include src="menu.xhtml" />
+				</ui:insert>
+			</div>
+	</ui:composition>
 	</h:body>
 
 </html>

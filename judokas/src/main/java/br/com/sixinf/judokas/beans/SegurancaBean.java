@@ -3,6 +3,7 @@
  */
 package br.com.sixinf.judokas.beans;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
 import org.primefaces.context.RequestContext;
 
 import br.com.sixinf.ferramentas.log.LoggerException;
@@ -178,6 +180,10 @@ public class SegurancaBean implements Serializable {
 		renderRelatorio = false;
 		renderImpCarteiras = false;
 		
+		HttpSession sess = JudokasHelper.getSession();
+		sess.removeAttribute(Usuario.SESSION_NOME_USUARIO);
+		sess.removeAttribute(Usuario.SESSION_TIPO_USUARIO);
+		
 		return "/pages/home.xhtml?faces-redirect=true";
 	}
 	
@@ -231,4 +237,25 @@ public class SegurancaBean implements Serializable {
 	public String getTipoUsuario(){
 		return JudokasHelper.getTipoUsuarioSessao().name();
 	}
+	
+	/**
+	 * 
+	 */
+	public void sessionIdleListener() {
+        logoff();
+        
+        try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect("home.xhtml");
+		} catch (IOException e) {
+			Logger.getLogger(getClass()).error("Erro de io no redirect", e);
+		}
+    }
+	
+	/*public void sessionExpired() {
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect("home.xhtml");
+		} catch (IOException e) {
+			Logger.getLogger(getClass()).error("Erro de io no redirect", e);
+		}
+	}*/
 }

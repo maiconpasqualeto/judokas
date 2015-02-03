@@ -57,12 +57,12 @@
 	
 	<error-page>
 		<exception-type>javax.faces.application.ViewExpiredException</exception-type>
-		<location>/pages/error.xhtml</location>
+		<location>/pages/home.xhtml</location>
 	</error-page>
-	
+		
    <session-config>
         <session-timeout>
-            30
+            300
         </session-timeout>
     </session-config>
 
