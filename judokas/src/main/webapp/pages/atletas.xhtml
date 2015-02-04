@@ -18,7 +18,7 @@
 				<p:growl id="growAtletas" showDetail="false"/>
 				
 				<p:commandButton value="Adicionar Novo Atleta" process="@this" actionListener="#{atletasBean.novo}"
-		                	id="btnNovo" oncomplete="PF('dlg').show();"  update="dlgCadastro" />
+		                	id="btnNovo" oncomplete="PF('dlg').show();"  update=":dlgCadastro" />
 						
 				<p:dataTable 
 					id="tblAtletas"
@@ -59,7 +59,7 @@
 					<p:column headerText="Ação" style="width:230px; text-align: center;">
 						<f:facet name="header">Ação</f:facet>
 						<p:commandButton value="Editar" process="@this" actionListener="#{atletasBean.editar(a)}"
-		                	id="btnEditar" oncomplete="PF('dlg').show();" update=":frmAtletas:pnlCampos"
+		                	id="btnEditar" oncomplete="PF('dlg').show();" update=":formDialog:pnlCampos"
 		                	rendered="#{atletasBean.segurancaBean.renderTipoUsuario}"/>
 							
 		                <p:commandButton value="Apagar" process="@this" actionListener="#{atletasBean.delete(a)}"
@@ -81,7 +81,7 @@
 		                </p:commandButton>
 		                
 		                <p:commandButton value="Consultar" process="@this" actionListener="#{atletasBean.editar(a)}"
-		                	id="btnConsultar" oncomplete="PF('dlg').show();" update=":frmAtletas:dlgCadastro"
+		                	id="btnConsultar" oncomplete="PF('dlg').show();" update=":dlgCadastro"
 		                	rendered="#{!atletasBean.segurancaBean.renderTipoUsuario}"/>
 		                	
 		            </p:column>
@@ -90,11 +90,11 @@
 				<p:confirmDialog global="true">
 				    <p:commandButton value="Sim" styleClass="ui-confirmdialog-yes"  />
 				    <p:commandButton value="Não" styleClass="ui-confirmdialog-no" />
-				</p:confirmDialog>
-				
-
-				<p:dialog id="dlgCadastro" widgetVar="dlg" modal="true" draggable="false" resizable="false">
-
+				</p:confirmDialog>				
+			</h:form>
+			
+			<p:dialog id="dlgCadastro" widgetVar="dlg" modal="true" draggable="false" resizable="false">
+				<h:form id="formDialog">
 					<p:scrollPanel style="width: 480px;" mode="native">
 					
 						<h:panelGroup id="pnlCampos" layout="block" styleClass="ui-grid ui-grid-responsive forms">
@@ -111,9 +111,9 @@
 											rendered="#{empty atletasBean.atleta.foto or atletasBean.apagarFoto}" style="border: solid 1px lightgray"/>
 										<h:form enctype="multipart/form-data" rendered="#{atletasBean.segurancaBean.renderTipoUsuario or (empty atletasBean.atleta.nome)}" >
 											<p:fileUpload mode="advanced" sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
-												fileUploadListener="#{atletasBean.handleFileUpload}" auto="true" update=":frmAtletas:pnlFoto" label="Selecione Foto"/>
+												fileUploadListener="#{atletasBean.handleFileUpload}" auto="true" update=":formDialog:pnlFoto" label="Selecione Foto"/>
 										</h:form>
-										<p:commandButton value="Apagar Foto" actionListener="#{atletasBean.removerFoto}" process="@this" update="pnlFoto,tblAtletas" 
+										<p:commandButton value="Apagar Foto" actionListener="#{atletasBean.removerFoto}" process="@this" update="pnlFoto :frmAtletas:tblAtletas" 
 											rendered="#{atletasBean.segurancaBean.renderTipoUsuario or (empty atletasBean.atleta.nome)}" />								
 									</h:panelGrid>
 						        </div>
@@ -196,7 +196,7 @@
 						        <div class="ui-grid-col-9">
 						        	<p:selectOneMenu id="cmbGraduacao"
 										value="#{atletasBean.atleta.graduacao}" required="true"
-										label="Graduação" rendered="#{atletasBean.segurancaBean.renderTipoUsuario or (empty atletasBean.atleta.nome)}">
+										label="Graduação" rendered="#{atletasBean.segurancaBean.renderTipoUsuario or atletasBean.atleta.id eq null}">
 										<f:selectItem itemLabel="Selecione" itemValue="" />
 										<f:selectItems value="#{atletasBean.graduacoes}" />
 									</p:selectOneMenu>
@@ -208,12 +208,12 @@
 							
 							<div class="ui-grid-row input-space">
 						        <div class="ui-grid-col-3 vertical-center">
-						        	<p:outputLabel value="Função" for="cmbGraduacao" />
+						        	<p:outputLabel value="Função" for="cmbFuncao" />
 						        </div>
 						        <div class="ui-grid-col-9">
 						        	<p:selectOneMenu id="cmbFuncao" 
 										value="#{atletasBean.atleta.funcao}" required="true"
-										label="Função" rendered="#{atletasBean.segurancaBean.renderTipoUsuario or (empty atletasBean.atleta.nome)}">
+										label="Função" rendered="#{atletasBean.segurancaBean.renderTipoUsuario or atletasBean.atleta.id eq null}">
 										<f:selectItem itemLabel="Selecione" itemValue="" />
 										<f:selectItems value="#{atletasBean.funcoes}" />
 									</p:selectOneMenu>
@@ -223,19 +223,19 @@
 						        </div>
 							</div>
 							
-							<div class="ui-grid-row input-space">
+							<h:panelGroup styleClass="ui-grid-row input-space" layout="block" rendered="#{atletasBean.renderAcademias}">
 						        <div class="ui-grid-col-3 vertical-center">
-						        	<p:outputLabel value="Academia:" for="cmbAcademia" rendered="#{atletasBean.renderAcademias}"/>
+						        	<p:outputLabel value="Academia:" for="cmbAcademia" />
 						        </div>
 						        <div class="ui-grid-col-9">
-						        	<p:selectOneMenu id="cmbAcademia" rendered="#{atletasBean.renderAcademias}"
+						        	<p:selectOneMenu id="cmbAcademia" 
 										value="#{atletasBean.nomeUsuarioAcademia}" required="true"
 										label="Academia">
 										<f:selectItem itemLabel="Selecione" itemValue="" />
 										<f:selectItems value="#{atletasBean.academias}"  var="a" itemLabel="#{a.nome}" itemValue="#{a.nomeUsuario}" />
 									</p:selectOneMenu>
 						        </div>
-							</div>
+							</h:panelGroup>
 						
 						</h:panelGroup>
 												
@@ -243,18 +243,17 @@
 					
 					<p:button value="Fechar" onclick="PF('dlg').hide();"/>
 						
-					<p:commandButton id="btnSalvar" value="Salvar e Fechar" action="#{atletasBean.salvarFecha}" 
-						update="growAtletas,tblAtletas,pnlCampos" oncomplete="registroGravado(xhr, status, args)"
+					<p:commandButton id="btnSalvar" value="Salvar e Fechar" actionListener="#{atletasBean.salvarFecha}" 
+						update=":frmAtletas:growAtletas :frmAtletas:tblAtletas pnlCampos" oncomplete="registroGravado(xhr, status, args)"
 						rendered="#{atletasBean.segurancaBean.renderTipoUsuario or (empty atletasBean.atleta.nome) }" />
 						
-					<p:commandButton id="btnSalvarENovo" value="Salvar e Adiciona Novo" action="#{atletasBean.salvar}" 
-						update="growAtletas,tblAtletas,pnlCampos" rendered="#{atletasBean.segurancaBean.renderTipoUsuario or (empty atletasBean.atleta.nome)}"/>
+					<p:commandButton id="btnSalvarENovo" value="Salvar e Adiciona Novo" actionListener="#{atletasBean.salvar}" 
+						update=":frmAtletas:growAtletas :frmAtletas:tblAtletas pnlCampos" rendered="#{atletasBean.segurancaBean.renderTipoUsuario or (empty atletasBean.atleta.nome)}"/>
 					
 					<p:defaultCommand target="btnSalvar" rendered="#{atletasBean.segurancaBean.renderTipoUsuario or (empty atletasBean.atleta.nome)}" />
-
-				</p:dialog>
-				
-			</h:form>
+					
+				</h:form>
+			</p:dialog>
 			
 		</p:panel>
 						
