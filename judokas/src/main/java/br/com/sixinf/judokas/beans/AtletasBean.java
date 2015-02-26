@@ -4,11 +4,12 @@
 package br.com.sixinf.judokas.beans;
 
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -26,6 +27,8 @@ import org.primefaces.event.SelectEvent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
+import br.com.sixinf.ferramentas.ImageUtils;
+import br.com.sixinf.ferramentas.Utilitarios;
 import br.com.sixinf.ferramentas.log.LoggerException;
 import br.com.sixinf.judokas.JudokasHelper;
 import br.com.sixinf.judokas.entidades.Atleta;
@@ -44,6 +47,9 @@ public class AtletasBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public static final String PATH = System.getProperty("user.home") + "/fotos_judokas/";
+	
+	private static final int IMG_COMP_MAXIMO = 354;
+	private static final int IMG_ALT_MAXIMA = 472;
 	
 	private Atleta atleta;
 	private Atleta atletaSelecionado;
@@ -267,12 +273,23 @@ public class AtletasBean implements Serializable {
 	/**
 	 * 
 	 * @param event
-	 * @throws FileNotFoundException 
+	 * @throws IOException 
 	 */
-	public void handleFileUpload(FileUploadEvent event) throws FileNotFoundException {  
+	public void handleFileUpload(FileUploadEvent event) throws IOException {  
 		uploadedFile = event.getFile();
-		File f = new File(PATH + uploadedFile.getFileName());
-		JudokasHelper.copyUploadFileToFile(f, uploadedFile);
+		
+		String nomeArquivo = UUID.randomUUID().toString();
+		
+		String extensao = uploadedFile.getFileName().substring(uploadedFile.getFileName().lastIndexOf('.'));
+		
+		nomeArquivo = nomeArquivo + extensao;
+		nomeArquivo = Utilitarios.removeAcentuacao(nomeArquivo);
+		
+		File f = new File(PATH + nomeArquivo);
+		
+		ImageUtils.gravaImagemComTamanhoCorrigido(
+						uploadedFile.getInputstream(), IMG_COMP_MAXIMO, IMG_ALT_MAXIMA, f);
+				
 		atleta.setFoto(f.getAbsolutePath());		
     } 
 	
