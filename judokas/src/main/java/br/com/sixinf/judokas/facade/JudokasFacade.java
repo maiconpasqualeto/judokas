@@ -4,9 +4,13 @@
 package br.com.sixinf.judokas.facade;
 
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -17,10 +21,14 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.imageio.ImageIO;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.servlet.ServletContext;
@@ -29,8 +37,10 @@ import javax.swing.ImageIcon;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporterParameter;
+import net.sf.jasperreports.engine.JRParameter;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperPrintManager;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
 
@@ -341,11 +351,17 @@ public class JudokasFacade {
 			if (idade == 13 || idade == 14 )
 				categoria = "SUB 15";
 		else 
-			if (idade == 15 || idade == 16 )
+			if (idade >= 15 && idade < 18 )
 				categoria = "SUB 18";
 		else 
-			if (idade >= 17 )
-				categoria = "+SUB 18";
+			if (idade >= 18 && idade < 21 )
+				categoria = "SUB 21";
+		else 
+			if (idade >= 21 && idade < 23 )
+				categoria = "SUB 23";
+		else
+			if (idade >= 21 )
+				categoria = "SÊNIOR";
 		
 		return categoria;
 	}
@@ -360,7 +376,7 @@ public class JudokasFacade {
 			List<Atleta> atletasImpressao) throws LoggerException{
 		
 		InputStream is = null;
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		
 		ExternalContext externalContext = FacesContext.getCurrentInstance()
 				.getExternalContext();
 		ServletContext contextS = (ServletContext) externalContext.getContext();
@@ -398,23 +414,50 @@ public class JudokasFacade {
 			
 			Map<String, Object> parametros = new HashMap<String, Object>();
 			/*parametros.put("agremiacao", usuarioAcademia.getNome());*/
-						
+			Locale locale = new Locale("pt", "BR");
+			parametros.put(JRParameter.REPORT_LOCALE, locale);			
+			
 			JasperPrint print = JasperFillManager.fillReport(arquivo, parametros,
 					beanColDataSource);
 			
-			JRPdfExporter exporter = new JRPdfExporter();
+			//ByteArrayOutputStream zipBaos = new ByteArrayOutputStream();
+			File temp = new File("temp.zip");
+			FileOutputStream fos = new FileOutputStream(temp);
+			ZipOutputStream zos = new ZipOutputStream(fos);
+			
+			for (int i=0; i<print.getPages().size(); i++) {
+				ZipEntry ze = new ZipEntry("page" + i + ".jpg");
+				zos.putNextEntry(ze);
+				
+				ByteArrayOutputStream fBaos = new ByteArrayOutputStream();
+				BufferedImage reportImage = (BufferedImage) JasperPrintManager.printPageToImage(print, i, 1.6f);
+		        ImageIO.write(reportImage, "jpg", fBaos);
+		          
+				zos.write(fBaos.toByteArray());
+				zos.flush();
+				fBaos.close();
+				zos.closeEntry();
+			} 
+			
+			zos.close();
+			
+			fos.close();
+			
+			/*JRPdfExporter exporter = new JRPdfExporter();
 			exporter.setParameter(JRExporterParameter.JASPER_PRINT, print);
 			exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, baos);
-			exporter.exportReport();
-			is = new ByteArrayInputStream(baos.toByteArray());
+			exporter.exportReport(); */
+	        
+			is = new FileInputStream(temp);
 			
 			atualizaDataImpressao(ids);
 
-		} catch (JRException e) {
+		} catch (JRException | IOException e) {
 			Logger.getLogger(JudokasFacade.class).error("Erro ao gerar relatório jasper", e);
+			return null;
 		}		
-		return new DefaultStreamedContent(is, "application/pdf", "carteirinhas_" + 
-				new SimpleDateFormat("yyyy_MM_dd").format(new Date()) + ".pdf");
+		return new DefaultStreamedContent(is, "application/zip", "carteirinhas_" + 
+				new SimpleDateFormat("yyyy_MM_dd").format(new Date()) + ".zip");
 	}
 	
 		
