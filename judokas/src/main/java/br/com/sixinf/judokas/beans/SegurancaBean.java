@@ -123,9 +123,7 @@ public class SegurancaBean implements Serializable {
 	 * @throws LoggerException
 	 */
 	public String logar() throws LoggerException{
-		JudokasFacade facade = JudokasFacade.getInstance();
-		
-		boolean loginValido = facade.logar(usuario);
+		boolean loginValido = JudokasFacade.getInstance().logar(usuario);
 		
 		if ( loginValido ) {			
 			

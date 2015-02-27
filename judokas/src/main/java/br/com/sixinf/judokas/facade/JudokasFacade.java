@@ -60,6 +60,7 @@ import br.com.sixinf.judokas.entidades.Usuario;
  * @author maicon
  *
  */
+@SuppressWarnings("deprecation")
 public class JudokasFacade {
 	
 	//private static final Logger LOG = Logger.getLogger(JudokasFacade.class);
@@ -372,7 +373,7 @@ public class JudokasFacade {
 	 * @return
 	 * @throws LoggerException 
 	 */
-	public DefaultStreamedContent geraReportCarteirinhas(
+	public DefaultStreamedContent geraReportCarteirinhas(String academia,
 			List<Atleta> atletasImpressao) throws LoggerException{
 		
 		InputStream is = null;
@@ -420,34 +421,25 @@ public class JudokasFacade {
 			JasperPrint print = JasperFillManager.fillReport(arquivo, parametros,
 					beanColDataSource);
 			
-			//ByteArrayOutputStream zipBaos = new ByteArrayOutputStream();
 			File temp = new File("temp.zip");
-			FileOutputStream fos = new FileOutputStream(temp);
-			ZipOutputStream zos = new ZipOutputStream(fos);
+			ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(temp));
 			
 			for (int i=0; i<print.getPages().size(); i++) {
-				ZipEntry ze = new ZipEntry("page" + i + ".jpg");
+				String nome = atletasImpressao.get(i).getNome().replace(' ', '-');
+				ZipEntry ze = new ZipEntry(nome + ".jpg");
 				zos.putNextEntry(ze);
 				
-				ByteArrayOutputStream fBaos = new ByteArrayOutputStream();
+				ByteArrayOutputStream baos = new ByteArrayOutputStream();
 				BufferedImage reportImage = (BufferedImage) JasperPrintManager.printPageToImage(print, i, 1.6f);
-		        ImageIO.write(reportImage, "jpg", fBaos);
-		          
-				zos.write(fBaos.toByteArray());
+		        ImageIO.write(reportImage, "jpg", baos);
+		        
+		        zos.write(baos.toByteArray());
 				zos.flush();
-				fBaos.close();
 				zos.closeEntry();
 			} 
 			
 			zos.close();
-			
-			fos.close();
-			
-			/*JRPdfExporter exporter = new JRPdfExporter();
-			exporter.setParameter(JRExporterParameter.JASPER_PRINT, print);
-			exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, baos);
-			exporter.exportReport(); */
-	        
+				        
 			is = new FileInputStream(temp);
 			
 			atualizaDataImpressao(ids);
@@ -455,8 +447,14 @@ public class JudokasFacade {
 		} catch (JRException | IOException e) {
 			Logger.getLogger(JudokasFacade.class).error("Erro ao gerar relatório jasper", e);
 			return null;
-		}		
-		return new DefaultStreamedContent(is, "application/zip", "carteirinhas_" + 
+		}
+		String nomeDownload = "carteirinhas_";
+		if (academia != null)
+			nomeDownload += academia + "_";
+		else 
+			nomeDownload += "todas_";
+		
+		return new DefaultStreamedContent(is, "application/zip", nomeDownload + 
 				new SimpleDateFormat("yyyy_MM_dd").format(new Date()) + ".zip");
 	}
 	

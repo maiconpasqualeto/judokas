@@ -93,8 +93,17 @@ public class ImpressaoBean implements Serializable {
 	
 	public StreamedContent printReport() throws JRException, IOException, ClassNotFoundException, SQLException, LoggerException {  
 		
-		return JudokasFacade.getInstance().geraReportCarteirinhas(
-				atletas.getTarget());
+		String academia = null;
+		if (usuarioAcademia != null)
+			academia = usuarioAcademia.getNome().replace(' ', '_');
+		
+		StreamedContent retorno = 
+				JudokasFacade.getInstance().geraReportCarteirinhas(
+						academia, atletas.getTarget());
+		
+		atletas.getTarget().clear();
+		
+		return retorno;
     }
 	
 	

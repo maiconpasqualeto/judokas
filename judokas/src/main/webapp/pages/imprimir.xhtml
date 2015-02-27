@@ -15,7 +15,7 @@
 			
 				<p:growl id="growAtletas" showDetail="false"/>
 				
-				<p:commandButton value="Imprimir Carteiras" process="@this" 
+				<p:commandButton value="Imprimir Carteiras" process="@this" actionListener="#{principalBean.buscarAtletas}"
 		                	id="btnOpenImprimir" oncomplete="PF('dlg').show();" update="dlgImpressao" />
 				
 				<p:dataTable id="tblCadastros" value="#{principalBean.atletasCadastrados}" var="atleta" 
@@ -35,9 +35,15 @@
 				
 				</p:dataTable>
 				
-				<p:dialog id="dlgImpressao" widgetVar="dlg" modal="true" draggable="false" resizable="false">
-				
+				<p:dialog id="dlgImpressao" widgetVar="dlg" modal="true" draggable="true" resizable="false">
+					
 					<p:ajax event="close" update=":frmCadastrados:tblCadastros"/>
+					
+					<p:selectOneMenu value="#{principalBean.usuarioAcademia}" converter="genericPojoConverter" >
+						<f:selectItem itemLabel="Selecione uma academia" itemValue="#{null}" />
+						<f:selectItems value="#{principalBean.usuarios}" var="u" itemLabel="#{u.nome}" itemValue="#{u}" />
+						<p:ajax event="change" listener="#{principalBean.buscarAtletas}" update="plAtletas" />
+					</p:selectOneMenu>
 
 					<p:pickList id="plAtletas" value="#{principalBean.atletasPrint}" var="atleta"
 					        itemValue="#{atleta}" itemLabel="#{atleta.nome}" converter="genericPojoConverter"  
@@ -63,11 +69,12 @@
 			    	<p:separator />
 			    			    	
 			    	<p:commandButton value="Imprimir carteirinhas" process="@this" id="btnImprimir" 
-			    		ajax="false">
-		                	<p:fileDownload value="#{principalBean.printReport()}"></p:fileDownload>
+			    		ajax="false" update="plAtletas" onclick="PrimeFaces.monitorDownload(null, stop)">
+		                	<p:fileDownload value="#{principalBean.printReport()}" ></p:fileDownload>
 	               	</p:commandButton>
 	               	
-					
+	               	<p:remoteCommand name="stop" update="dlgImpressao"/>
+	               	
 				</p:dialog>
 				
 				

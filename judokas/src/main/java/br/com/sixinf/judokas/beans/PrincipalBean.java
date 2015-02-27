@@ -24,6 +24,7 @@ import org.primefaces.model.StreamedContent;
 import br.com.sixinf.ferramentas.log.LoggerException;
 import br.com.sixinf.judokas.dao.JudokasDAO;
 import br.com.sixinf.judokas.entidades.Atleta;
+import br.com.sixinf.judokas.entidades.Usuario;
 import br.com.sixinf.judokas.facade.JudokasFacade;
 
 /**
@@ -41,6 +42,8 @@ public class PrincipalBean implements Serializable{
 	
 	private List<Atleta> atletasCadastrados = new ArrayList<Atleta>();
 	private DualListModel<Atleta> atletasPrint = new DualListModel<Atleta>();
+	private Usuario usuarioAcademia;
+	private List<Usuario> usuarios = new ArrayList<Usuario>();
 	
 	@PostConstruct
 	public void init() {
@@ -48,6 +51,7 @@ public class PrincipalBean implements Serializable{
 			
 			atletasCadastrados = JudokasDAO.getInstance().buscarAtletasNovos();
 			atletasPrint.setSource(atletasCadastrados);
+			usuarios = JudokasDAO.getInstance().buscarUsuarios();
 			
 		} catch (LoggerException e) {
 			Logger.getLogger(PrincipalBean.class).error("Erro no método init", e);
@@ -70,7 +74,31 @@ public class PrincipalBean implements Serializable{
 		this.atletasPrint = atletasPrint;
 	}
 
-	
+	public Usuario getUsuarioAcademia() {
+		return usuarioAcademia;
+	}
+
+	public void setUsuarioAcademia(Usuario usuarioAcademia) {
+		this.usuarioAcademia = usuarioAcademia;
+	}
+
+	public List<Usuario> getUsuarios() {
+		return usuarios;
+	}
+
+	public void setUsuarios(List<Usuario> usuarios) {
+		this.usuarios = usuarios;
+	}
+
+	/**
+	 * 
+	 * @return
+	 * @throws JRException
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 * @throws LoggerException
+	 */
 	public StreamedContent printReport() throws JRException, IOException, ClassNotFoundException, SQLException, LoggerException {  
 		if (atletasPrint.getTarget().isEmpty()) {
 			FacesMessage m = new FacesMessage(
@@ -81,11 +109,36 @@ public class PrincipalBean implements Serializable{
 			return null;
 		}	
 		
-		StreamedContent retorno = JudokasFacade.getInstance().geraReportCarteirinhas(atletasPrint.getTarget());
+		String academia = null;
+		if (usuarioAcademia != null)
+			academia = usuarioAcademia.getNome().replace(' ', '_');
 		
-		init();
+		StreamedContent retorno = 
+				JudokasFacade.getInstance().geraReportCarteirinhas(
+						academia, atletasPrint.getTarget());
 		
+		atletasPrint.getTarget().clear();
+		
+		atletasCadastrados = JudokasDAO.getInstance().buscarAtletasNovos();
+				
 		return retorno; 
     }
+	
+	/**
+	 * 
+	 * @throws LoggerException
+	 */
+	public void buscarAtletas() throws LoggerException {
+		if (usuarioAcademia != null) {
+			atletasPrint.setSource(
+					JudokasDAO.getInstance().buscarNovosAtletasDaAcademia(
+							usuarioAcademia.getId()));
+		} else {
+			atletasPrint.setSource(
+					JudokasDAO.getInstance().buscarAtletasNovos());
+		}
+		atletasPrint.getTarget().clear();
+			
+	}
 		
 }
