@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 5.6.2.final using JasperReports Library version 5.6.1  -->
-<!-- 2015-02-26T16:32:03 -->
+<!-- 2015-02-27T12:38:03 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="carteirinhas" pageWidth="595" pageHeight="220" columnWidth="585" leftMargin="5" rightMargin="5" topMargin="0" bottomMargin="0" whenResourceMissingType="Empty" uuid="127454db-d647-4282-9d83-60f7ba7f81c5">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Judokas Adapter"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
@@ -173,7 +173,7 @@
 				<textFieldExpression><![CDATA[$F{agremiacaoImpressao}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement key="" style="HeaderStyle" positionType="FixRelativeToBottom" mode="Opaque" x="106" y="75" width="26" height="7" isPrintWhenDetailOverflows="true" forecolor="#000000" uuid="60d6f773-4369-4d04-9dd3-f0369701624a">
+				<reportElement key="" style="HeaderStyle" positionType="FixRelativeToBottom" mode="Opaque" x="106" y="75" width="34" height="8" isPrintWhenDetailOverflows="true" forecolor="#000000" uuid="60d6f773-4369-4d04-9dd3-f0369701624a">
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="local_mesure_unitx" value="pixel"/>
@@ -186,13 +186,14 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center">
+				<textElement textAlignment="Left">
 					<font fontName="SansSerif" size="6" isBold="true" isPdfEmbedded="true"/>
+					<paragraph leftIndent="3"/>
 				</textElement>
 				<text><![CDATA[Nome]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="FixRelativeToBottom" mode="Opaque" x="106" y="94" width="65" height="8" forecolor="#000000" uuid="3003ca9c-c686-4143-86e9-fa6fd335e96d">
+				<reportElement positionType="FixRelativeToBottom" mode="Opaque" x="106" y="94" width="69" height="8" forecolor="#000000" uuid="3003ca9c-c686-4143-86e9-fa6fd335e96d">
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="local_mesure_unity" value="pixel"/>
@@ -204,8 +205,9 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center">
+				<textElement textAlignment="Left">
 					<font fontName="SansSerif" size="6" isBold="true"/>
+					<paragraph leftIndent="3"/>
 				</textElement>
 				<text><![CDATA[Data Nascimento]]></text>
 			</staticText>
@@ -222,8 +224,9 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center">
+				<textElement textAlignment="Left">
 					<font fontName="SansSerif" size="6" isBold="true"/>
+					<paragraph leftIndent="3"/>
 				</textElement>
 				<text><![CDATA[Agremiação]]></text>
 			</staticText>
