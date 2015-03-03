@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 5.6.2.final using JasperReports Library version 5.6.1  -->
-<!-- 2015-02-28T09:34:45 -->
+<!-- 2015-03-02T20:01:46 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="carteirinhas" pageWidth="595" pageHeight="220" columnWidth="585" leftMargin="5" rightMargin="5" topMargin="0" bottomMargin="0" whenResourceMissingType="Empty" uuid="127454db-d647-4282-9d83-60f7ba7f81c5">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Judokas Adapter"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
@@ -15,6 +14,7 @@
 	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<style name="HeaderStyle" fontName="Impact" fontSize="8"/>
 	<queryString language="SQL">
 		<![CDATA[]]>
@@ -59,19 +59,20 @@
 	<detail>
 		<band height="199" splitType="Stretch">
 			<staticText>
-				<reportElement x="132" y="0" width="166" height="32" uuid="dad352f7-77d5-4b4d-9680-1b2517a353d2">
+				<reportElement x="158" y="0" width="140" height="32" uuid="dad352f7-77d5-4b4d-9680-1b2517a353d2">
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="local_mesure_unitwidth" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="SansSerif" size="12" isBold="true" isItalic="false" isPdfEmbedded="true"/>
+					<font fontName="SansSerif" size="10" isBold="true" isItalic="false" isPdfEmbedded="true"/>
+					<paragraph leftIndent="0"/>
 				</textElement>
 				<text><![CDATA[FEDERAÇÃO DE JUDÔ DE MATO GROSSO DO SUL]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="132" y="34" width="166" height="20" uuid="a78aadd5-fe1b-4568-bc08-6509e6b4f6a7">
+				<reportElement x="128" y="34" width="170" height="20" uuid="a78aadd5-fe1b-4568-bc08-6509e6b4f6a7">
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
@@ -81,8 +82,8 @@
 				</textElement>
 				<text><![CDATA[Filiada a Confederação Brasileira de Judô]]></text>
 			</staticText>
-			<image>
-				<reportElement key="" x="100" y="0" width="32" height="32" uuid="fdbc1b9f-ccf1-416a-957a-22b42e05efb9">
+			<image vAlign="Middle">
+				<reportElement key="" x="128" y="0" width="30" height="32" uuid="fdbc1b9f-ccf1-416a-957a-22b42e05efb9">
 					<property name="local_mesure_unitwidth" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="local_mesure_unitheight" value="pixel"/>
@@ -91,13 +92,13 @@
 				<imageExpression><![CDATA["../../images/logo_fjms.jpg"]]></imageExpression>
 			</image>
 			<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle">
-				<reportElement key="" x="100" y="32" width="32" height="24" uuid="75c31c0c-70a3-46cb-b362-b8563f526304">
+				<reportElement key="" x="100" y="0" width="28" height="54" uuid="75c31c0c-70a3-46cb-b362-b8563f526304">
 					<property name="local_mesure_unitwidth" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
-				<imageExpression><![CDATA["../../images/logo-cbj.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["../../images/cbj.jpg"]]></imageExpression>
 			</image>
 			<image scaleImage="FillFrame">
 				<reportElement x="0" y="0" width="98" height="131" uuid="6608ba7f-50a9-42a1-9d57-463557788fb9">
@@ -303,7 +304,7 @@
 				<textFieldExpression><![CDATA["Campo Grande - MS, " + new java.text.SimpleDateFormat("dd/MMM/yyyy", new Locale("PT", "br")).format(new java.util.Date())]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="368" y="136" width="140" height="10" uuid="b048c4bd-5ecd-4ab6-95db-a0ed8df9381e">
+				<reportElement x="368" y="158" width="140" height="10" uuid="b048c4bd-5ecd-4ab6-95db-a0ed8df9381e">
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
@@ -319,7 +320,7 @@
 				<text><![CDATA[Marcos Antônio Moura Cristaldo]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="368" y="146" width="140" height="10" uuid="d4361cba-9017-4524-979c-40d15900811c">
+				<reportElement x="368" y="168" width="140" height="10" uuid="d4361cba-9017-4524-979c-40d15900811c">
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="local_mesure_unity" value="pixel"/>
@@ -365,6 +366,10 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{funcao}]]></textFieldExpression>
 			</textField>
+			<image hAlign="Center">
+				<reportElement x="336" y="107" width="220" height="70" uuid="b5f6882a-e4ce-47e9-b49c-dc78d26c4815"/>
+				<imageExpression><![CDATA["/home/maicon/git/judokas/judokas/src/main/webapp/images/assinatura.png"]]></imageExpression>
+			</image>
 		</band>
 	</detail>
 	<columnFooter>
