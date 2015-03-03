@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.primefaces.model.UploadedFile;
 
+import br.com.sixinf.ferramentas.Utilitarios;
 import br.com.sixinf.judokas.entidades.TipoUsuario;
 import br.com.sixinf.judokas.entidades.Usuario;
 
@@ -100,5 +101,14 @@ public class JudokasHelper {
 				LOG.error("Erro ao fechar os arquivos.", e);
 			}
 		}
+	}
+	
+	/**
+	 * Funcao que anbrevia nomes. 	 * 
+	 * @param nome
+	 * @return
+	 */
+	public static String diminuiONome(String nome) {
+		return Utilitarios.abreviaNome(nome.trim(), 1, 33);
 	}
 }

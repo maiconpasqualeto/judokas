@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 5.6.2.final using JasperReports Library version 5.6.1  -->
-<!-- 2015-03-02T23:47:32 -->
+<!-- 2015-03-03T10:23:24 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="carteirinhas" pageWidth="595" pageHeight="220" columnWidth="585" leftMargin="5" rightMargin="5" topMargin="0" bottomMargin="0" whenResourceMissingType="Empty" uuid="127454db-d647-4282-9d83-60f7ba7f81c5">
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="ireport.zoom" value="1.0"/>
@@ -59,6 +59,45 @@
 	</columnHeader>
 	<detail>
 		<band height="199" splitType="Stretch">
+			<textField>
+				<reportElement x="102" y="79" width="196" height="14" uuid="7b60cb04-4326-4292-8e1a-ddae9b723b18">
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="net.sf.jasperreports.text.truncate.at.char" value="true"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="" style="HeaderStyle" positionType="FixRelativeToBottom" mode="Opaque" x="105" y="73" width="34" height="8" isPrintWhenDetailOverflows="true" forecolor="#000000" uuid="60d6f773-4369-4d04-9dd3-f0369701624a">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="6" isBold="true" isPdfEmbedded="true"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[Nome]]></text>
+			</staticText>
 			<staticText>
 				<reportElement x="158" y="0" width="140" height="32" uuid="dad352f7-77d5-4b4d-9680-1b2517a353d2">
 					<property name="local_mesure_unitheight" value="pixel"/>
@@ -121,25 +160,6 @@
 				<text><![CDATA[CARTEIRA DE IDENTIFICAÇÃO]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="102" y="79" width="196" height="14" uuid="7b60cb04-4326-4292-8e1a-ddae9b723b18">
-					<property name="local_mesure_unity" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.y" value="px"/>
-					<property name="local_mesure_unitheight" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="net.sf.jasperreports.text.truncate.at.char" value="true"/>
-				</reportElement>
-				<box>
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
-			</textField>
-			<textField>
 				<reportElement x="102" y="98" width="196" height="16" uuid="a19cc3fb-6367-49b2-a404-5e7d801f5556">
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -175,26 +195,6 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$F{agremiacaoImpressao}]]></textFieldExpression>
 			</textField>
-			<staticText>
-				<reportElement key="" style="HeaderStyle" positionType="FixRelativeToBottom" mode="Opaque" x="106" y="75" width="34" height="8" isPrintWhenDetailOverflows="true" forecolor="#000000" uuid="60d6f773-4369-4d04-9dd3-f0369701624a">
-					<property name="local_mesure_unitheight" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="local_mesure_unitx" value="pixel"/>
-					<property name="local_mesure_unity" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.y" value="px"/>
-				</reportElement>
-				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textElement textAlignment="Left">
-					<font fontName="SansSerif" size="6" isBold="true" isPdfEmbedded="true"/>
-					<paragraph leftIndent="3"/>
-				</textElement>
-				<text><![CDATA[Nome]]></text>
-			</staticText>
 			<staticText>
 				<reportElement positionType="FixRelativeToBottom" mode="Opaque" x="106" y="94" width="69" height="8" forecolor="#000000" uuid="3003ca9c-c686-4143-86e9-fa6fd335e96d">
 					<property name="local_mesure_unitheight" value="pixel"/>

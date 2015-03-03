@@ -405,6 +405,8 @@ public class JudokasFacade {
 			
 			a.setAgremiacaoImpressao(a.getUsuario().getNome());
 			
+			a.setNome(JudokasHelper.diminuiONome(a.getNome()));
+			
 			ids.add(a.getId());
 		}
 		
