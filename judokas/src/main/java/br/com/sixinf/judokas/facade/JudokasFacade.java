@@ -426,6 +426,7 @@ public class JudokasFacade {
 			
 			for (int i=0; i<print.getPages().size(); i++) {
 				String nome = atletasImpressao.get(i).getNome().replace(' ', '-');
+				nome = Utilitarios.removeAcentuacao(nome);
 				ZipEntry ze = new ZipEntry(nome + ".jpg");
 				zos.putNextEntry(ze);
 				
