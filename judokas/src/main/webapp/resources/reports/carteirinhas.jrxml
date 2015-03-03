@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 5.6.2.final using JasperReports Library version 5.6.1  -->
-<!-- 2015-03-03T10:23:24 -->
+<!-- 2015-03-03T10:37:56 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="carteirinhas" pageWidth="595" pageHeight="220" columnWidth="585" leftMargin="5" rightMargin="5" topMargin="0" bottomMargin="0" whenResourceMissingType="Empty" uuid="127454db-d647-4282-9d83-60f7ba7f81c5">
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="ireport.zoom" value="1.0"/>
@@ -370,7 +370,7 @@
 			</textField>
 			<image hAlign="Center">
 				<reportElement x="336" y="107" width="220" height="70" uuid="b5f6882a-e4ce-47e9-b49c-dc78d26c4815"/>
-				<imageExpression><![CDATA["/home/maicon/git/judokas/judokas/src/main/webapp/images/assinatura.png"]]></imageExpression>
+				<imageExpression><![CDATA["../../images/assinatura.png"]]></imageExpression>
 			</image>
 		</band>
 	</detail>
