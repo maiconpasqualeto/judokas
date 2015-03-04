@@ -157,7 +157,7 @@
 										
 											<p:watermark value="Clique para calendário" for="dtNasc"  />
 											
-											<f:convertDateTime pattern="dd/MM/yyyy" />
+											<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR" timeZone="GMT-4"/>
 											
 											<p:ajax event="dateSelect" listener="#{atletasBean.onDateNascSelect}" 
 												process="@this" update="pnlMatricula" partialSubmit="true" />
@@ -168,7 +168,7 @@
 									<h:inputText value="#{atletasBean.atleta.dataNascimento}" readonly="true" 
 										styleClass="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all"
 										rendered="#{!atletasBean.segurancaBean.renderTipoUsuario and (not empty atletasBean.atleta.nome)}" >
-											<f:convertDateTime pattern="dd/MM/yyyy" />
+											<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR" timeZone="GMT-4"/>
 									</h:inputText>
 						        </div>
 							</div>
