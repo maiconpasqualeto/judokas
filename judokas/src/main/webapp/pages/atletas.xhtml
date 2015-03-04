@@ -151,13 +151,13 @@
 						        	<p:calendar id="dtNasc"
 										value="#{atletasBean.atleta.dataNascimento}" maxdate="now"
 										pattern="dd/MM/yyyy" placeholder=" " required="true"
-										locale="pt" mode="popup" maxlength="10" 
+										locale="pt" mode="popup" maxlength="10" mask="99/99/9999"
 										label="Data de Nascimento" navigator="true" yearRange="1920:now"
 										rendered="#{atletasBean.segurancaBean.renderTipoUsuario or (empty atletasBean.atleta.nome)}" >
 										
 											<p:watermark value="Clique para calendário" for="dtNasc"  />
 											
-											<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR" timeZone="GMT-4"/>
+											<f:convertDateTime pattern="dd/MM/yyyy"/>
 											
 											<p:ajax event="dateSelect" listener="#{atletasBean.onDateNascSelect}" 
 												process="@this" update="pnlMatricula" partialSubmit="true" />
