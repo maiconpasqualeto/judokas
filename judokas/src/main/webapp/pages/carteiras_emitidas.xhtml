@@ -9,13 +9,13 @@
 	
 	<ui:define name="principal">
 	
-		<p:panel id="pnlCartEmit" header="Imprimir carteirinhas emitidas" >
+		<p:panel id="pnlCartEmit" header="Imprimir" >
 			
 			<h:form  id="frmCartEmit">
 			
 				<p:growl id="grow" showDetail="false"/>
 							    	
-		    	<p:commandButton value="Imprimir carteirinhas" process="@this" id="btnImprimir" 
+		    	<p:commandButton value="Emitir relatório carteirinhas emitidas" process="@this" id="btnImprimir" 
 		    		ajax="false">
 	                	<p:fileDownload value="#{impressaoBean.geraCarteirinhasEmitidas()}"></p:fileDownload>
                	</p:commandButton>
