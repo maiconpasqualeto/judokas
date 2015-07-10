@@ -18,13 +18,25 @@
 				<p:growl id="growAtletas" showDetail="false"/>
 				
 				<p:commandButton value="Adicionar Novo Atleta" process="@this" actionListener="#{atletasBean.novo}"
-		                	id="btnNovo" oncomplete="PF('dlg').show();"  update=":dlgCadastro" />
+		                	id="btnNovo" oncomplete="PF('dlg').show();"  update=":dlgCadastro" styleClass="push-down-10" />
 						
 				<p:dataTable 
 					id="tblAtletas"
 					emptyMessage="Lista vazia" 
-					value="#{atletasBean.atletas}" var="a"
-					rowKey="#{a.id}" paginator="true" rows="10" >
+					value="#{atletasBean.dataModel}" var="a"
+					rowKey="#{a.id}" 
+					paginator="true" 
+					rows="10" 
+					lazy="true"
+					widgetVar="lstAtletas">
+					
+					<f:facet name="header">
+			            <p:outputPanel style="text-align: left;">
+			            	<h:outputLabel value="Busca: " />
+			                <p:inputText id="globalFilter" 
+			                	onkeyup="PF('lstAtletas').filter()" styleClass="input-xlarge" placeholder="Digite o nome do atleta"/>
+			            </p:outputPanel>
+			        </f:facet>
 					
 					<p:ajax event="rowSelect" listener="#{atletasBean.onSelect}" /> 
 					
