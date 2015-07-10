@@ -5,6 +5,7 @@ package br.com.sixinf.judokas.dao;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -13,6 +14,7 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import org.apache.log4j.Logger;
+import org.primefaces.model.SortOrder;
 
 import br.com.sixinf.ferramentas.dao.BridgeBaseDAO;
 import br.com.sixinf.ferramentas.dao.HibernateBaseDAOImp;
@@ -532,4 +534,145 @@ public class JudokasDAO extends BridgeBaseDAO {
 		return atletas;
 	}
 	
+	/**
+	 * 
+	 * @param inicio
+	 * @param fim
+	 * @return
+	 */
+	public List<Atleta> buscarAtletasPaginado(
+			int inicio, int fim, String sortField, 
+			SortOrder order, Map<String, Object> filters) {
+		EntityManager em = AdministradorPersistencia.getEntityManager();
+		
+		List<Atleta> list = null;
+		try {
+			StringBuilder hql = new StringBuilder();
+			hql.append("select a from Atleta a ");
+			hql.append("where a.statusRegistro = 'A' ");
+			
+			montaHqlParameter(hql, filters, sortField, order);
+									
+			TypedQuery<Atleta> q = em.createQuery(hql.toString(), Atleta.class);
+			q.setMaxResults(fim - inicio);
+			q.setFirstResult(inicio);
+			
+			preencheQueryParameter(q, filters);
+			
+			list = q.getResultList();
+			
+		} catch (NoResultException e) {
+			
+		} catch (Exception e) {
+			LOG.error("Erro ao buscar atletas paginado", e);
+		} finally {
+            em.close();
+        }
+		return list;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public Long buscarCountAtletasPaginado(Map<String, Object> filters) {
+		EntityManager em = AdministradorPersistencia.getEntityManager();
+		
+		Long count = null;
+		try {
+			StringBuilder hql = new StringBuilder();
+			hql.append("select count(a) from Atleta a ");
+			hql.append("where a.statusRegistro = 'A' ");
+			
+			montaHqlParameter(hql, filters, "", SortOrder.UNSORTED);
+			
+			Query q = em.createQuery(hql.toString());
+			
+			preencheQueryParameter(q, filters);
+			
+			count = (Long) q.getSingleResult();
+			
+		} catch (NoResultException e) {
+			
+		} catch (Exception e) {
+			LOG.error("Erro no count lista atletas", e);
+		} finally {
+            em.close();
+        }
+		return count;
+	}
+	
+	/**
+	 * 
+	 * @param hql
+	 * @param filters
+	 */
+	private void montaHqlParameter(StringBuilder hql, Map<String, Object> filters, String sortField, SortOrder order){
+		
+		if (!filters.isEmpty()) {			
+			
+			for (String str : filters.keySet()) {
+				if (str.equals("globalFilter")) {
+					String globalFilterParameter = (String) filters.get(str);
+					if (!globalFilterParameter.isEmpty()) {
+						hql.append("and ");
+						
+						hql.append("( ");
+						try {
+							Long.parseLong(globalFilterParameter);
+							hql.append("a.id=:id or ");
+						} catch (NumberFormatException e) {
+							
+						}
+						hql.append("lower( a.nome ) like lower( :nome ) ) ");
+					}
+				} else {
+					hql.append("and ");
+					
+					if (str.equals("id"))
+						hql.append("a." + str + "=:" + str + " ");
+					else {
+						int idx = str.lastIndexOf('.') + 1;						
+						hql.append("lower( a." + str + ") like lower(:" + str.substring(idx) + ") ");
+					}
+				}
+			}
+			
+		}
+		
+		if (!order.equals(SortOrder.UNSORTED))
+			hql.append("order by a." + sortField + (order.equals(SortOrder.ASCENDING) ? " ASC " : " DESC "));
+	}
+	
+	/**
+	 * 
+	 * @param q
+	 * @param filters
+	 */
+	private void preencheQueryParameter(Query q, Map<String, Object> filters) {
+		for (String str : filters.keySet()) {
+			
+			if (str.equals("globalFilter")) {
+				String globalFilterParameter = (String) filters.get(str);
+				if (!globalFilterParameter.isEmpty()) {
+					try {
+						Long id = Long.parseLong(globalFilterParameter);
+						q.setParameter("id", id);
+					} catch (NumberFormatException e) {
+						
+					}
+					q.setParameter("nome", "%" + globalFilterParameter + "%");
+				}
+			} else {
+			
+				if (str.equals("id"))
+					q.setParameter(str, Long.valueOf((String) filters.get(str)));
+				else {
+					int idx = str.lastIndexOf('.') + 1;
+					q.setParameter(str.substring(idx), "%" + filters.get(str) + "%");
+				}
+			}
+		}
+		
+	}
 }

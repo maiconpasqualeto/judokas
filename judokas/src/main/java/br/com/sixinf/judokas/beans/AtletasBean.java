@@ -24,12 +24,14 @@ import org.primefaces.component.calendar.Calendar;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.SelectEvent;
+import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
 
 import br.com.sixinf.ferramentas.ImageUtils;
 import br.com.sixinf.ferramentas.Utilitarios;
 import br.com.sixinf.ferramentas.log.LoggerException;
+import br.com.sixinf.judokas.AtletasLazyList;
 import br.com.sixinf.judokas.JudokasHelper;
 import br.com.sixinf.judokas.entidades.Atleta;
 import br.com.sixinf.judokas.entidades.TipoUsuario;
@@ -63,6 +65,7 @@ public class AtletasBean implements Serializable {
 	private List<String> funcoes = new ArrayList<String>(0);
 	private boolean apagarFoto = false;
 	private boolean matriculaObrigatorio = false;
+	private LazyDataModel<Atleta> dataModel;
 	
 	@ManagedProperty(value="#{segurancaBean}")
 	private SegurancaBean segurancaBean;
@@ -205,6 +208,14 @@ public class AtletasBean implements Serializable {
 		this.matriculaObrigatorio = matriculaObrigatorio;
 	}
 
+	public LazyDataModel<Atleta> getDataModel() {
+		return dataModel;
+	}
+
+	public void setDataModel(LazyDataModel<Atleta> dataModel) {
+		this.dataModel = dataModel;
+	}
+
 	/**
 	 * 
 	 * @param event
@@ -219,7 +230,8 @@ public class AtletasBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		try {
-			atletas = JudokasFacade.getInstance().buscarAtletas();
+			//atletas = JudokasFacade.getInstance().buscarAtletas();
+			dataModel = new AtletasLazyList();
 			TipoUsuario tipo = JudokasHelper.getTipoUsuarioSessao();
 			if (tipo.equals(TipoUsuario.MASTER)) {
 				renderAcademias = true;
