@@ -21,6 +21,7 @@
 					<p:submenu label="Relatórios" style="margin-left: 10px" rendered="#{segurancaBean.renderRelatorio}">
 						<p:menuitem value="Impressão Carteirinhas" url="/pages/imprimir.xhtml"  rendered="#{segurancaBean.renderImpCarteiras}" />
 						<p:menuitem value="Relatório de carteirinhas Emitidas" url="/pages/carteiras_emitidas.xhtml"  rendered="#{segurancaBean.renderImpCarteiras}" />
+						<p:menuitem value="Cancelar emissão de todas carteiras" url="/pages/cancelar_emissao.xhtml"  rendered="#{segurancaBean.renderCancel}" />
 					</p:submenu>
 					<p:menuitem value="Sair" action="#{segurancaBean.logoff}" style="margin-left: 10px" />
 				</p:menubar>

@@ -19,9 +19,11 @@ import net.sf.jasperreports.engine.JRException;
 
 import org.apache.log4j.Logger;
 import org.primefaces.model.DualListModel;
+import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.StreamedContent;
 
 import br.com.sixinf.ferramentas.log.LoggerException;
+import br.com.sixinf.judokas.AtletasImprimirLazyList;
 import br.com.sixinf.judokas.dao.JudokasDAO;
 import br.com.sixinf.judokas.entidades.Atleta;
 import br.com.sixinf.judokas.entidades.Usuario;
@@ -40,30 +42,26 @@ public class PrincipalBean implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private List<Atleta> atletasCadastrados = new ArrayList<Atleta>();
+	//private List<Atleta> atletasCadastrados = new ArrayList<Atleta>();
 	private DualListModel<Atleta> atletasPrint = new DualListModel<Atleta>();
 	private Usuario usuarioAcademia;
 	private List<Usuario> usuarios = new ArrayList<Usuario>();
+	private LazyDataModel<Atleta> dataModel;
 	
 	@PostConstruct
 	public void init() {
 		try {
 			
-			atletasCadastrados = JudokasDAO.getInstance().buscarAtletasNovos();
+			List<Atleta> atletasCadastrados = JudokasDAO.getInstance().buscarAtletasNovos();
 			atletasPrint.setSource(atletasCadastrados);
+			
+			dataModel = new AtletasImprimirLazyList();
+			
 			usuarios = JudokasDAO.getInstance().buscarUsuarios();
 			
 		} catch (LoggerException e) {
 			Logger.getLogger(PrincipalBean.class).error("Erro no método init", e);
 		}
-	}
-
-	public List<Atleta> getAtletasCadastrados() {
-		return atletasCadastrados;
-	}
-
-	public void setAtletasCadastrados(List<Atleta> atletasCadastrados) {
-		this.atletasCadastrados = atletasCadastrados;
 	}
 
 	public DualListModel<Atleta> getAtletasPrint() {
@@ -88,6 +86,14 @@ public class PrincipalBean implements Serializable{
 
 	public void setUsuarios(List<Usuario> usuarios) {
 		this.usuarios = usuarios;
+	}
+
+	public LazyDataModel<Atleta> getDataModel() {
+		return dataModel;
+	}
+
+	public void setDataModel(LazyDataModel<Atleta> dataModel) {
+		this.dataModel = dataModel;
 	}
 
 	/**
@@ -119,8 +125,8 @@ public class PrincipalBean implements Serializable{
 		
 		atletasPrint.getTarget().clear();
 		
-		atletasCadastrados = JudokasDAO.getInstance().buscarAtletasNovos();
-				
+		//atletasCadastrados = JudokasDAO.getInstance().buscarAtletasNovos();
+		
 		return retorno; 
     }
 	

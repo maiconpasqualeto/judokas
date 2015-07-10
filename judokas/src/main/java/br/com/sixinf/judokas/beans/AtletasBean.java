@@ -33,6 +33,7 @@ import br.com.sixinf.ferramentas.Utilitarios;
 import br.com.sixinf.ferramentas.log.LoggerException;
 import br.com.sixinf.judokas.AtletasLazyList;
 import br.com.sixinf.judokas.JudokasHelper;
+import br.com.sixinf.judokas.dao.JudokasDAO;
 import br.com.sixinf.judokas.entidades.Atleta;
 import br.com.sixinf.judokas.entidades.TipoUsuario;
 import br.com.sixinf.judokas.entidades.Usuario;
@@ -64,7 +65,8 @@ public class AtletasBean implements Serializable {
 	private List<Usuario> academias = new ArrayList<Usuario>(0);
 	private List<String> funcoes = new ArrayList<String>(0);
 	private boolean apagarFoto = false;
-	private boolean matriculaObrigatorio = false;
+	//private boolean matriculaObrigatorio = false;
+	private boolean matriculaObrigatorio = true;
 	private LazyDataModel<Atleta> dataModel;
 	
 	@ManagedProperty(value="#{segurancaBean}")
@@ -255,6 +257,16 @@ public class AtletasBean implements Serializable {
 	 * @throws LoggerException
 	 */
 	public void salvar() throws LoggerException {
+		
+		if (JudokasDAO.getInstance().exiteDuplicidadeNomeAtleta(atleta)){
+			FacesMessage m = new FacesMessage(
+					FacesMessage.SEVERITY_ERROR, "Já existe atleta com o mesmo nome.", 
+						"Já existe atleta com o mesmo nome.");
+			FacesContext.getCurrentInstance().addMessage(null, m);
+			
+			RequestContext.getCurrentInstance().addCallbackParam("validationFailed", true);
+			return;
+		}
 				
 		TipoUsuario tipo = JudokasHelper.getTipoUsuarioSessao();
 		String nomeUsuario = null;
@@ -280,6 +292,20 @@ public class AtletasBean implements Serializable {
 		
 		FacesMessage m = new FacesMessage("Registro salvo com sucesso!");
 		FacesContext.getCurrentInstance().addMessage(null, m);
+	}
+	
+	/**
+	 * @throws LoggerException 
+	 * 
+	 */
+	public void salvarFoto() throws LoggerException {
+		
+		JudokasDAO.getInstance().atualizaFoto(atleta);
+		
+		init();
+		
+		FacesMessage m = new FacesMessage("Registro salvo com sucesso!");
+		FacesContext.getCurrentInstance().addMessage(null, m);		
 	}
 	
 	/**
@@ -368,18 +394,18 @@ public class AtletasBean implements Serializable {
 	 * @param dataNascimento
 	 */
 	public void atualizaMatriculaRequired(Date dataNascimento){
-		String categoria = JudokasFacade.getInstance().returnCategoria(dataNascimento);
+		/*String categoria = JudokasFacade.getInstance().returnCategoria(dataNascimento);
 		
 		if (categoria.equals("SUB 13") ||
 				categoria.equals("SUB 15") ||
 				categoria.equals("SUB 18") ||
-				categoria.equals("+SUB 18")) 
+				categoria.equals("+SUB 18")) */
 			
 			matriculaObrigatorio = true;
 		
-		else 
+		/*else 
 			
-			matriculaObrigatorio = false;
+			matriculaObrigatorio = false;*/
 	}
 	
 	/**
@@ -402,6 +428,17 @@ public class AtletasBean implements Serializable {
 		
 		JudokasFacade.getInstance().cancelarCarteirinha(atleta);
 		
+	}
+	
+	/**
+	 * @throws LoggerException 
+	 * 
+	 */
+	public void cancelarImpressaoDeTodasCarteiras() throws LoggerException {
+		JudokasDAO.getInstance().removeDataImpressaoTodosAtletas();
+		
+		FacesMessage m = new FacesMessage("A impressão de todas as carteiras foi cancelada");
+		FacesContext.getCurrentInstance().addMessage(null, m);
 	}
 	
 }

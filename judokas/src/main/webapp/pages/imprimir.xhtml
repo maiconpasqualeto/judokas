@@ -2,6 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <ui:composition template="/layout/tpl_limpo.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
@@ -9,17 +10,31 @@
 	
 	<ui:define name="principal">
 	
-		<p:panel id="pnlCadastrados" header="Lista de atletas para impressão de carteirinha" >
+		<p:panel id="pnlCadastrados" header="Relação de carteiras em aberto (não emitidas)" >
 			
 			<h:form  id="frmCadastrados">
 			
 				<p:growl id="growAtletas" showDetail="false"/>
-				
+				<h2>Relação de carteiras em aberto (não emitidas)</h2>
 				<p:commandButton value="Imprimir Carteiras" process="@this" actionListener="#{principalBean.buscarAtletas}"
-		                	id="btnOpenImprimir" oncomplete="PF('dlg').show();" update="dlgImpressao" />
+                	id="btnOpenImprimir" oncomplete="PF('dlg').show();" update="dlgImpressao" styleClass="push-down-10" />
 				
-				<p:dataTable id="tblCadastros" value="#{principalBean.atletasCadastrados}" var="atleta" 
-						emptyMessage="Nenhum atleta novo cadastrado" paginator="true" rows="10" >
+				<p:dataTable id="tblCadastros" 
+					value="#{principalBean.dataModel}" 
+					var="atleta" 
+					emptyMessage="Nenhum atleta novo cadastrado" 
+					paginator="true" 
+					rows="10" 
+					lazy="true"
+					widgetVar="lstAtletas">
+						
+					<f:facet name="header">
+			            <p:outputPanel style="text-align: left;">
+			            	<h:outputLabel value="Busca: " />
+			                <p:inputText id="globalFilter" 
+			                	onkeyup="PF('lstAtletas').filter()" styleClass="input-xlarge" placeholder="Digite o nome do atleta"/>
+			            </p:outputPanel>
+			        </f:facet>
 						
 					<p:column headerText="ID">
 						<h:outputText value="#{atleta.id}" />

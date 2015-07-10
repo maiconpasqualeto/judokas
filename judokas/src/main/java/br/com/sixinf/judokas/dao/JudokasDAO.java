@@ -540,6 +540,44 @@ public class JudokasDAO extends BridgeBaseDAO {
 	 * @param fim
 	 * @return
 	 */
+	public List<Atleta> buscarAtletasImprimirPaginado(
+			int inicio, int fim, String sortField, 
+			SortOrder order, Map<String, Object> filters) {
+		EntityManager em = AdministradorPersistencia.getEntityManager();
+		
+		List<Atleta> list = null;
+		try {
+			StringBuilder hql = new StringBuilder();
+			hql.append("select a from Atleta a ");
+			hql.append("where a.statusRegistro = 'A' ");
+			hql.append("and a.dataEmissaoCarteira is null ");
+			
+			montaHqlParameter(hql, filters, sortField, order);
+									
+			TypedQuery<Atleta> q = em.createQuery(hql.toString(), Atleta.class);
+			q.setMaxResults(fim - inicio);
+			q.setFirstResult(inicio);
+			
+			preencheQueryParameter(q, filters);
+			
+			list = q.getResultList();
+			
+		} catch (NoResultException e) {
+			
+		} catch (Exception e) {
+			LOG.error("Erro ao buscar atletas paginado", e);
+		} finally {
+            em.close();
+        }
+		return list;
+	}
+	
+	/**
+	 * 
+	 * @param inicio
+	 * @param fim
+	 * @return
+	 */
 	public List<Atleta> buscarAtletasPaginado(
 			int inicio, int fim, String sortField, 
 			SortOrder order, Map<String, Object> filters) {
@@ -674,5 +712,105 @@ public class JudokasDAO extends BridgeBaseDAO {
 			}
 		}
 		
+	}
+	
+	
+	/**
+	 * 
+	 * @return
+	 * @throws LoggerException 
+	 */
+	public boolean exiteDuplicidadeNomeAtleta(Atleta atleta) throws LoggerException {
+		EntityManager em = AdministradorPersistencia.getEntityManager();
+		
+		boolean retorno = false; 
+		try {
+			StringBuilder hql = new StringBuilder();
+			hql.append("select count(a) from Atleta a ");
+			hql.append("where a.statusRegistro = 'A' ");
+			if (atleta.getId() != null)
+				hql.append("and a.id != :id ");
+			hql.append("and lower(a.nome) like lower(:nomeAtleta) ");			
+			Query q = em.createQuery(hql.toString());
+			if (atleta.getId() != null)
+				q.setParameter("id", atleta.getId());
+			
+			q.setParameter("nomeAtleta", "%" + atleta.getNome() + "%");
+						
+			Long count = (Long) q.getSingleResult();
+			if (count > 0)
+				retorno = true;
+			
+		} catch (NoResultException e) {
+			
+		} catch (Exception e) {
+			throw new LoggerException("Erro ao buscar atleta pornome", e, LOG);
+		} finally {
+            em.close();
+        }
+		return retorno;
+	}
+	
+	/**
+	 * 
+	 * @param usuario
+	 * @throws LoggerException 
+	 */
+	public void atualizaFoto(Atleta atleta) throws LoggerException {
+		EntityManager em = AdministradorPersistencia.getEntityManager();
+		EntityTransaction t = em.getTransaction();
+		try {
+			
+			StringBuilder hql = new StringBuilder();
+	        hql.append("update Atleta a ");
+	        hql.append("set a.foto = :pathFoto ");
+	        hql.append("where a.id = :id");
+	        
+	        Query q = em.createQuery(hql.toString());
+	        
+	        q.setParameter("id", atleta.getId());
+	        q.setParameter("pathFoto", atleta.getFoto());
+	        
+	        t.begin();
+			
+			q.executeUpdate();
+			
+			t.commit();
+			
+		} catch (Exception e) {
+			t.rollback();
+			throw new LoggerException("Erro ao mudar a foto do atleta", e, LOG);
+		} finally {
+            em.close();
+        }
+	}
+	
+	/**
+	 * 
+	 * @throws LoggerException
+	 */
+	public void removeDataImpressaoTodosAtletas() throws LoggerException {
+		EntityManager em = AdministradorPersistencia.getEntityManager();
+		EntityTransaction t = em.getTransaction();
+		try {
+			
+			StringBuilder hql = new StringBuilder();
+	        hql.append("update Atleta a ");
+	        hql.append("set a.dataEmissaoCarteira = null ");
+	        
+	        Query q = em.createQuery(hql.toString());
+	        
+	        t.begin();
+			
+			q.executeUpdate();
+			
+			t.commit();
+			
+		} catch (Exception e) {
+			t.rollback();
+			throw new LoggerException("Erro ao remover data de emisssao das carteiras", e, LOG);
+		} finally {
+            em.close();
+        }
 	}
 }

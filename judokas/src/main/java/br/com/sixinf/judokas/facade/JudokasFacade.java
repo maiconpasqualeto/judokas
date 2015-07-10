@@ -600,4 +600,57 @@ public class JudokasFacade {
 		
 		return new DefaultStreamedContent(is, "application/pdf", "carteirinhas_emitidas.pdf");
 	}
+	
+	/**
+	 * 
+	 * @param atletasImpressao
+	 * @return
+	 * @throws LoggerException 
+	 */
+	public DefaultStreamedContent geraReportCarteirinhasEmitidasDia(Date data) throws LoggerException{
+		
+		InputStream is = null;
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		ExternalContext externalContext = FacesContext.getCurrentInstance()
+				.getExternalContext();
+		ServletContext contextS = (ServletContext) externalContext.getContext();
+		String arquivo = contextS
+				.getRealPath("/resources/reports/carteirinhas_impressas_dia.jasper");
+		
+		try {
+			Connection conn = null;
+			try {
+			
+				Map<String, Object> parametros = new HashMap<String, Object>();
+				parametros.put("data", data);
+				
+				InitialContext context = new InitialContext();
+				DataSource dataSource = (DataSource) context.lookup("java:comp/env/jdbc/JudokasDS");
+				conn = dataSource.getConnection();
+				
+				JasperPrint print = JasperFillManager.fillReport(
+						arquivo, parametros, conn);
+				
+				JRPdfExporter exporter = new JRPdfExporter();
+				exporter.setParameter(JRExporterParameter.JASPER_PRINT, print);
+				exporter.setParameter(JRExporterParameter.OUTPUT_STREAM, baos);
+				exporter.exportReport();
+				is = new ByteArrayInputStream(baos.toByteArray());
+				
+			
+			} finally {
+				if (conn != null)
+					conn.close();
+			}
+
+		} catch (JRException e) {
+			Logger.getLogger(JudokasFacade.class).error("Erro ao gerar relatório carteiras emitidas dia jasper", e);
+		} catch (SQLException e) {
+			Logger.getLogger(JudokasFacade.class).error("Erro ao carregar driver do banco de dados", e);
+		} catch (NamingException e) {
+			Logger.getLogger(JudokasFacade.class).error("Erro ao carregar driver do banco de dados", e);
+		}
+		
+		return new DefaultStreamedContent(is, "application/pdf", "carteirinhas_emitidas_dia.pdf");
+	}
 }

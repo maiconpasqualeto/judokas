@@ -39,6 +39,7 @@ public class SegurancaBean implements Serializable {
 	private boolean renderUsuarios;
 	private boolean renderRelatorio;
 	private boolean renderImpCarteiras;
+	private boolean renderCancel;
 	// quando usuário for Master mostra no topo da página
 	private boolean renderTipoUsuario;
 	
@@ -55,6 +56,7 @@ public class SegurancaBean implements Serializable {
 		permissoesMaster.add("carteiras.xhtml");
 		permissoesMaster.add("imprimir.xhtml");
 		permissoesMaster.add("carteiras_emitidas.xhtml");
+		permissoesMaster.add("cancelar_emissao.xhtml");
 		
 		// ACADEMIA
 		permissoesAdmin.add("principal.xhtml");
@@ -117,6 +119,14 @@ public class SegurancaBean implements Serializable {
 		this.renderTipoUsuario = renderTipoUsuario;
 	}
 
+	public boolean isRenderCancel() {
+		return renderCancel;
+	}
+
+	public void setRenderCancel(boolean renderCancel) {
+		this.renderCancel = renderCancel;
+	}
+
 	/**
 	 * 
 	 * @return
@@ -177,6 +187,7 @@ public class SegurancaBean implements Serializable {
 		renderUsuarios = false;
 		renderRelatorio = false;
 		renderImpCarteiras = false;
+		renderCancel = false;
 		
 		HttpSession sess = JudokasHelper.getSession();
 		sess.removeAttribute(Usuario.SESSION_NOME_USUARIO);
@@ -192,14 +203,14 @@ public class SegurancaBean implements Serializable {
 		case MASTER:
 			renderAtletas = true;
 			renderUsuarios = true;
-			
+			renderCancel = true;
 			renderImpCarteiras = true;
 			break;
 			
 		case ACADEMIA:
 			renderAtletas = true;
 			renderUsuarios = false;
-			
+			renderCancel = false;
 			renderImpCarteiras = false;
 			break;
 			

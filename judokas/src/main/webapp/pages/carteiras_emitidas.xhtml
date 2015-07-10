@@ -2,6 +2,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <ui:composition template="/layout/tpl_limpo.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
@@ -10,15 +11,56 @@
 	<ui:define name="principal">
 	
 		<p:panel id="pnlCartEmit" header="Imprimir" >
+		
+			<h2>Imprime relação de Atletas com carteiras já impressas</h2>
 			
 			<h:form  id="frmCartEmit">
 			
 				<p:growl id="grow" showDetail="false"/>
-							    	
-		    	<p:commandButton value="Emitir relatório carteirinhas emitidas" process="@this" id="btnImprimir" 
-		    		ajax="false">
-	                	<p:fileDownload value="#{impressaoBean.geraCarteirinhasEmitidas()}"></p:fileDownload>
-               	</p:commandButton>
+				
+				<div class="ui-grid ui-grid-responsive">
+				    <div class="ui-grid-row">
+				        <div class="ui-grid-col-3">
+				        	<p:commandButton value="Emitir relatório completo" process="@this" id="btnImprimir" 
+					    		ajax="false" styleClass="push-down-10">
+				                	<p:fileDownload value="#{impressaoBean.geraCarteirinhasEmitidas()}"></p:fileDownload>
+			               	</p:commandButton>
+				        </div>
+				    </div>
+				</div>
+				
+			</h:form>
+			
+			<hr/>
+			
+			<h:form  id="frmCartEmitDia">
+			
+				<p:growl id="growDia" showDetail="false"/>
+			
+				<div class="ui-grid ui-grid-responsive">
+				    <div class="ui-grid-row">
+				        <div class="ui-grid-col-1">
+				        	<p:outputLabel value="Seleciona a data " for="dtNasc"/>
+				        	<p:calendar id="dtNasc"
+								value="#{impressaoBean.data}" maxdate="now"
+								pattern="dd/MM/yyyy" placeholder=" " required="true"
+								locale="pt" mode="popup" maxlength="10" mask="99/99/9999"
+								label="Data emissão" navigator="true" yearRange="1920:now">
+							</p:calendar>							
+				        </div>
+				     </div>
+				</div>
+				<br/>
+				<div class="ui-grid ui-grid-responsive">
+				    <div class="ui-grid-row">
+				        <div class="ui-grid-col-3">
+				        	<p:commandButton value="Emitir relatório do dia" process="@this" id="btnImprimirDia" 
+					    		ajax="false" styleClass="push-down-10">
+				                	<p:fileDownload value="#{impressaoBean.geraCarteirinhasEmitidasDia()}"></p:fileDownload>
+			               	</p:commandButton>
+				        </div>
+				    </div>
+				</div>
 				
 			</h:form>
 			

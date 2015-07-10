@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition template="/layout/tpl_limpo.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:define name="principal">
+	
+		<p:panel id="pnlCartEmit" header="Imprimir" >
+		
+			<h2>Cancela Emissão de todas as carteiras</h2>
+			
+			<h:form id="frmCartEmit">
+			
+				<p:growl id="grow" showDetail="false"/>
+				
+	        	<p:commandButton value="Cancelar Emissão de todas as carteiras" process="@this" id="btnCancelar"
+	        			actionListener="#{atletasBean.cancelarImpressaoDeTodasCarteiras}" update="@form">
+	                <p:confirm header="Confirmação" icon="ui-icon-alert" message=""/>
+               	</p:commandButton>
+				
+				<p:confirmDialog global="true">
+					<f:facet name="message">
+		                <h:outputText value="Confirmação todas as emissões de carteirinha?" />
+				        <br />
+				        <h:outputText value="Essa operação não poderá ser desfeita." />
+				        <br />
+				        <h:outputText value="Emita o relatório de emissão completa antes de executar essa operação." />
+				        <br />
+				        <p:button value="Emitir relatório completo" outcome="carteiras_emitidas.xhtml"></p:button>
+		               	
+			        </f:facet>
+				    <p:commandButton value="Sim" styleClass="ui-confirmdialog-yes"  />
+				    <p:commandButton value="Não" styleClass="ui-confirmdialog-no" />
+				</p:confirmDialog>	
+			</h:form>
+			
+		</p:panel>
+
+	</ui:define>
+	
+</ui:composition>

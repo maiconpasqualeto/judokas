@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -39,6 +40,7 @@ public class ImpressaoBean implements Serializable {
 	private DualListModel<Atleta> atletas = new DualListModel<Atleta>();
 	private List<Usuario> usuarios = new ArrayList<Usuario>();
 	private Usuario usuarioAcademia;
+	private Date data;
 	
 	public DualListModel<Atleta> getAtletas() {
 		return atletas;
@@ -62,6 +64,14 @@ public class ImpressaoBean implements Serializable {
 
 	public void setUsuarioAcademia(Usuario usuarioAcademia) {
 		this.usuarioAcademia = usuarioAcademia;
+	}
+
+	public Date getData() {
+		return data;
+	}
+
+	public void setData(Date data) {
+		this.data = data;
 	}
 
 	/**
@@ -109,7 +119,7 @@ public class ImpressaoBean implements Serializable {
 	
 	
 	/**
-	 * @throws LoggerException 
+	 * @throws LoggerException data)(
 	 * 
 	 */
 	public void buscarAtletas() throws LoggerException {
@@ -123,5 +133,13 @@ public class ImpressaoBean implements Serializable {
 	 */
 	public StreamedContent geraCarteirinhasEmitidas() throws LoggerException{
 		return JudokasFacade.getInstance().geraReportCarteirinhasEmitidas();
+	}
+	
+	/**
+	 * @throws LoggerException 
+	 * 
+	 */
+	public StreamedContent geraCarteirinhasEmitidasDia() throws LoggerException{
+		return JudokasFacade.getInstance().geraReportCarteirinhasEmitidasDia(data);
 	}
 }
