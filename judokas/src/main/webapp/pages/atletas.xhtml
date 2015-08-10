@@ -125,7 +125,7 @@
 											rendered="#{not empty atletasBean.atleta.foto and not atletasBean.apagarFoto}" style="border: solid 1px lightgray" cache="false"/>  
 										<p:graphicImage id="grfNoFoto" value="/images/nophoto.jpg" width="75" height="100"
 											rendered="#{empty atletasBean.atleta.foto or atletasBean.apagarFoto}" style="border: solid 1px lightgray"/>
-										<h:form enctype="multipart/form-data" rendered="#{atletasBean.segurancaBean.renderTipoUsuario or (atletasBean.atleta.id ne null)}" >
+										<h:form enctype="multipart/form-data" >
 											<p:fileUpload mode="advanced" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
 												fileUploadListener="#{atletasBean.handleFileUpload}" auto="true" update=":formDialog:pnlFoto" label="Selecione Foto"/>
 										</h:form>
