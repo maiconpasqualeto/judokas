@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 5.6.2.final using JasperReports Library version 5.6.1  -->
-<!-- 2015-03-03T10:37:56 -->
+<!-- Created with Jaspersoft Studio version 6.0.4.final using JasperReports Library version 5.5.2  -->
+<!-- 2015-12-29T18:07:05 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="carteirinhas" pageWidth="595" pageHeight="220" columnWidth="585" leftMargin="5" rightMargin="5" topMargin="0" bottomMargin="0" whenResourceMissingType="Empty" uuid="127454db-d647-4282-9d83-60f7ba7f81c5">
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="ireport.zoom" value="1.0"/>
@@ -74,7 +74,7 @@
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="10" isBold="true"/>
+					<font fontName="Ubuntu" size="10" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
 			</textField>
@@ -132,7 +132,7 @@
 				<imageExpression><![CDATA["../../images/logo_fjms.jpg"]]></imageExpression>
 			</image>
 			<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle">
-				<reportElement key="" x="100" y="0" width="28" height="54" uuid="75c31c0c-70a3-46cb-b362-b8563f526304">
+				<reportElement key="" x="102" y="0" width="24" height="51" uuid="75c31c0c-70a3-46cb-b362-b8563f526304">
 					<property name="local_mesure_unitwidth" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="local_mesure_unitheight" value="pixel"/>
@@ -173,7 +173,7 @@
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
-					<font size="10"/>
+					<font fontName="Ubuntu" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.text.SimpleDateFormat("dd/MMM/yyyy", new Locale("PT", "br")).format($F{dataNascimento})]]></textFieldExpression>
 			</textField>
@@ -191,7 +191,7 @@
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
-					<font size="10"/>
+					<font fontName="Ubuntu" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{agremiacaoImpressao}]]></textFieldExpression>
 			</textField>
@@ -248,7 +248,10 @@
 				<text><![CDATA[Matrícula]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="5" y="174" width="66" height="16" uuid="d79efa5a-d3eb-433c-bacd-36c0502d2ac7"/>
+				<reportElement x="5" y="174" width="74" height="18" forecolor="#D60400" uuid="d79efa5a-d3eb-433c-bacd-36c0502d2ac7">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
 				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
@@ -256,7 +259,7 @@
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="8" isBold="false"/>
+					<font fontName="Ubuntu" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{matriculaZempo}]]></textFieldExpression>
 			</textField>
@@ -294,7 +297,7 @@
 					<property name="local_mesure_unity" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
-				<imageExpression><![CDATA["../../images/anuidade.png"]]></imageExpression>
+				<imageExpression><![CDATA["../../images/anuidade_2016.png"]]></imageExpression>
 			</image>
 			<textField>
 				<reportElement mode="Transparent" x="316" y="96" width="240" height="12" forecolor="#000000" backcolor="#FFFFFF" uuid="e4c5bdfe-6ded-43e4-8f6b-dd5ba042463f"/>
@@ -355,7 +358,7 @@
 			<textField>
 				<reportElement x="218" y="100" width="74" height="16" forecolor="#A90000" uuid="af5a6dcb-3003-4eab-b99d-b2e14ec0431c"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font fontName="Ubuntu" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{categoriaImpressao}]]></textFieldExpression>
 			</textField>
@@ -372,6 +375,13 @@
 				<reportElement x="336" y="107" width="220" height="70" uuid="b5f6882a-e4ce-47e9-b49c-dc78d26c4815"/>
 				<imageExpression><![CDATA["../../images/assinatura.png"]]></imageExpression>
 			</image>
+			<staticText>
+				<reportElement x="100" y="51" width="28" height="3" uuid="eb626277-5306-4dae-a019-791be318edbe"/>
+				<textElement>
+					<font size="2.2"/>
+				</textElement>
+				<text><![CDATA['Preparados para vencer']]></text>
+			</staticText>
 		</band>
 	</detail>
 	<columnFooter>
