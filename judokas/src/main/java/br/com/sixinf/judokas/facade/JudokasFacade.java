@@ -361,8 +361,41 @@ public class JudokasFacade {
 			if (idade >= 21 && idade < 23 )
 				categoria = "SUB 23";
 		else
-			if (idade >= 21 )
+			if (idade >= 23 && idade < 30 )
 				categoria = "SÊNIOR";
+		else
+			if (idade >= 30 && idade < 35 )
+				categoria = "SÊNIOR/M1";
+		else
+			if (idade >= 35 && idade < 40 )
+				categoria = "SÊNIOR/M2";
+		else
+			if (idade >= 40 && idade < 45 )
+				categoria = "SÊNIOR/M3";
+		else
+			if (idade >= 45 && idade < 50 )
+				categoria = "SÊNIOR/M4";
+		else 
+			if (idade >= 50 && idade < 55 )
+				categoria = "SÊNIOR/M5";
+		else
+			if (idade >= 55 && idade < 60 )
+				categoria = "SÊNIOR/M6";
+		else
+			if (idade >= 60 && idade < 65 )
+				categoria = "SÊNIOR/M7";
+		else
+			if (idade >= 65 && idade < 70 )
+				categoria = "SÊNIOR/M8";
+		else
+			if (idade >= 70 && idade < 75 )
+				categoria = "SÊNIOR/M9";
+		else
+			if (idade >= 75 && idade < 80 )
+				categoria = "SÊNIOR/M10";
+		else
+			if (idade >= 80)
+				categoria = "SÊNIOR/M11";
 		
 		return categoria;
 	}
