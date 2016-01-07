@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 5.6.2.final using JasperReports Library version 5.6.1  -->
-<!-- 2016-01-07T10:47:56 -->
+<!-- Created with Jaspersoft Studio version 6.0.4.final using JasperReports Library version 5.5.2  -->
+<!-- 2015-12-29T18:07:05 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="carteirinhas" pageWidth="595" pageHeight="220" columnWidth="585" leftMargin="5" rightMargin="5" topMargin="0" bottomMargin="0" whenResourceMissingType="Empty" uuid="127454db-d647-4282-9d83-60f7ba7f81c5">
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="ireport.zoom" value="1.0"/>
@@ -59,21 +59,32 @@
 	</columnHeader>
 	<detail>
 		<band height="199" splitType="Stretch">
-			<image scaleImage="FillFrame">
-				<reportElement x="0" y="0" width="298" height="196" uuid="04f370a9-65b6-4ed0-8381-0f71a6ac704e"/>
-				<imageExpression><![CDATA["../../images/frente.png"]]></imageExpression>
-			</image>
 			<textField>
-				<reportElement x="105" y="85" width="190" height="15" uuid="7b60cb04-4326-4292-8e1a-ddae9b723b18">
+				<reportElement x="102" y="79" width="196" height="14" uuid="7b60cb04-4326-4292-8e1a-ddae9b723b18">
 					<property name="local_mesure_unity" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="net.sf.jasperreports.text.truncate.at.char" value="true"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Ubuntu" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement key="" style="HeaderStyle" positionType="FixRelativeToBottom" mode="Opaque" x="105" y="73" width="34" height="8" isPrintWhenDetailOverflows="true" forecolor="#000000" uuid="60d6f773-4369-4d04-9dd3-f0369701624a">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="local_mesure_unitx" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="local_mesure_unitwidth" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -81,13 +92,56 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Ubuntu" size="10" isBold="true"/>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="6" isBold="true" isPdfEmbedded="true"/>
+					<paragraph leftIndent="3"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
-			</textField>
+				<text><![CDATA[Nome]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="158" y="0" width="140" height="32" uuid="dad352f7-77d5-4b4d-9680-1b2517a353d2">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10" isBold="true" isItalic="false" isPdfEmbedded="true"/>
+					<paragraph leftIndent="0"/>
+				</textElement>
+				<text><![CDATA[FEDERAÇÃO DE JUDÔ DE MATO GROSSO DO SUL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="128" y="34" width="170" height="20" uuid="a78aadd5-fe1b-4568-bc08-6509e6b4f6a7">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="SansSerif" size="8" isBold="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Filiada a Confederação Brasileira de Judô]]></text>
+			</staticText>
+			<image vAlign="Middle">
+				<reportElement key="" x="128" y="0" width="30" height="32" uuid="fdbc1b9f-ccf1-416a-957a-22b42e05efb9">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<imageExpression><![CDATA["../../images/logo_fjms.jpg"]]></imageExpression>
+			</image>
+			<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle">
+				<reportElement key="" x="102" y="0" width="24" height="51" uuid="75c31c0c-70a3-46cb-b362-b8563f526304">
+					<property name="local_mesure_unitwidth" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<imageExpression><![CDATA["../../images/cbj.jpg"]]></imageExpression>
+			</image>
 			<image scaleImage="FillFrame">
-				<reportElement x="3" y="3" width="99" height="137" uuid="6608ba7f-50a9-42a1-9d57-463557788fb9">
+				<reportElement x="0" y="0" width="98" height="131" uuid="6608ba7f-50a9-42a1-9d57-463557788fb9">
 					<property name="local_mesure_unitwidth" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="local_mesure_unitheight" value="pixel"/>
@@ -95,22 +149,28 @@
 				</reportElement>
 				<imageExpression><![CDATA[$F{fotoImpressao}]]></imageExpression>
 			</image>
+			<staticText>
+				<reportElement mode="Opaque" x="100" y="56" width="198" height="18" forecolor="#FFFFFF" backcolor="#000000" uuid="ebbe5e08-474d-4278-bc4b-ce70dd5836c7">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Ubuntu" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CARTEIRA DE IDENTIFICAÇÃO]]></text>
+			</staticText>
 			<textField>
-				<reportElement x="105" y="105" width="190" height="16" uuid="a19cc3fb-6367-49b2-a404-5e7d801f5556">
+				<reportElement x="102" y="98" width="196" height="16" uuid="a19cc3fb-6367-49b2-a404-5e7d801f5556">
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="local_mesure_unity" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
-					<property name="local_mesure_unitx" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="local_mesure_unitwidth" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font fontName="Ubuntu" size="10"/>
@@ -118,31 +178,29 @@
 				<textFieldExpression><![CDATA[new java.text.SimpleDateFormat("dd/MMM/yyyy", new Locale("PT", "br")).format($F{dataNascimento})]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="105" y="125" width="190" height="16" uuid="fcf6fda2-09e5-4fd1-9715-64100185979f">
+				<reportElement x="102" y="119" width="196" height="16" uuid="fcf6fda2-09e5-4fd1-9715-64100185979f">
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="local_mesure_unity" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
-					<property name="local_mesure_unitx" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="local_mesure_unitwidth" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<box>
-					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
 					<font fontName="Ubuntu" size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{agremiacaoImpressao}]]></textFieldExpression>
 			</textField>
-			<textField isBlankWhenNull="true">
-				<reportElement x="5" y="178" width="64" height="14" forecolor="#D60400" uuid="d79efa5a-d3eb-433c-bacd-36c0502d2ac7">
+			<staticText>
+				<reportElement positionType="FixRelativeToBottom" mode="Opaque" x="106" y="94" width="69" height="8" forecolor="#000000" uuid="3003ca9c-c686-4143-86e9-fa6fd335e96d">
 					<property name="local_mesure_unitheight" value="pixel"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
@@ -150,11 +208,70 @@
 					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="6" isBold="true"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[Data Nascimento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="FixRelativeToBottom" mode="Opaque" x="106" y="115" width="46" height="8" forecolor="#000000" uuid="d98d4760-4fc0-435c-b95d-db519be84b30">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="SansSerif" size="6" isBold="true"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[Agremiação]]></text>
+			</staticText>
+			<image>
+				<reportElement x="0" y="156" width="298" height="38" uuid="815b5b4e-8217-47df-b49d-a6346b380a94">
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<imageExpression><![CDATA["../../images/faixa_amarrada.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="5" y="162" width="54" height="12" uuid="feb5a5c4-19c3-4a59-a246-9604a9ecfa52"/>
+				<textElement>
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Matrícula]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="5" y="174" width="74" height="18" forecolor="#D60400" uuid="d79efa5a-d3eb-433c-bacd-36c0502d2ac7">
+					<property name="local_mesure_unitheight" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Ubuntu" size="12" isBold="true"/>
+					<font fontName="Ubuntu" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{matriculaZempo}]]></textFieldExpression>
 			</textField>
+			<rectangle>
+				<reportElement x="0" y="137" width="298" height="2" backcolor="#FFF700" uuid="081dc1ba-3325-4da7-9096-18502bb7c441"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="153" width="298" height="2" backcolor="#FFF700" uuid="ff0a4e94-9132-41a6-b1a2-a30034dee59e"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="101" y="145" width="197" height="2" backcolor="#FFF700" uuid="a6b1f822-cbfa-477a-b0b7-e333696f816d"/>
+			</rectangle>
 			<image>
 				<reportElement x="304" y="2" width="112" height="74" uuid="79522e83-1ce1-4a0e-851c-0631948f4586">
 					<property name="local_mesure_unitwidth" value="pixel"/>
@@ -229,20 +346,24 @@
 				</textElement>
 				<text><![CDATA[www.fjms.com.br  -  fjms@fjms.com.br]]></text>
 			</staticText>
+			<image>
+				<reportElement x="237" y="156" width="61" height="38" uuid="8c2ff6ca-ab6b-4ddf-8f4d-ac342c3d9bad">
+					<property name="local_mesure_unitx" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="local_mesure_unity" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<imageExpression><![CDATA["../../images/bandeira_ms.png"]]></imageExpression>
+			</image>
 			<textField>
-				<reportElement x="221" y="105" width="74" height="16" forecolor="#A90000" uuid="af5a6dcb-3003-4eab-b99d-b2e14ec0431c"/>
+				<reportElement x="218" y="100" width="74" height="16" forecolor="#A90000" uuid="af5a6dcb-3003-4eab-b99d-b2e14ec0431c"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Ubuntu" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{categoriaImpressao}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Transparent" x="0" y="143" width="99" height="12" forecolor="#000000" backcolor="#FFFFFF" uuid="47a9f06d-84e9-4a2c-972d-a0619b582617">
-					<property name="local_mesure_unitheight" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-					<property name="local_mesure_unity" value="pixel"/>
-					<property name="com.jaspersoft.studio.unit.y" value="px"/>
-				</reportElement>
+				<reportElement mode="Transparent" x="0" y="139" width="99" height="14" forecolor="#000000" backcolor="#FFFFFF" uuid="47a9f06d-84e9-4a2c-972d-a0619b582617"/>
 				<box padding="0" topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
 					<font fontName="Arial" size="10" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
@@ -254,6 +375,13 @@
 				<reportElement x="336" y="107" width="220" height="70" uuid="b5f6882a-e4ce-47e9-b49c-dc78d26c4815"/>
 				<imageExpression><![CDATA["../../images/assinatura.png"]]></imageExpression>
 			</image>
+			<staticText>
+				<reportElement x="100" y="51" width="28" height="3" uuid="eb626277-5306-4dae-a019-791be318edbe"/>
+				<textElement>
+					<font size="2.2"/>
+				</textElement>
+				<text><![CDATA['Preparados para vencer']]></text>
+			</staticText>
 		</band>
 	</detail>
 	<columnFooter>
