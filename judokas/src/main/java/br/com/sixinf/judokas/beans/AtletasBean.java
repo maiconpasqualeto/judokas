@@ -266,7 +266,16 @@ public class AtletasBean implements Serializable {
 			
 			RequestContext.getCurrentInstance().addCallbackParam("validationFailed", true);
 			return;
-		}
+		} else 
+			if (JudokasDAO.getInstance().exiteDuplicidadeMatriculaZempo(atleta)){
+				FacesMessage m = new FacesMessage(
+						FacesMessage.SEVERITY_ERROR, "Já existe atleta com a mesma Matrícula do Zempô.", 
+							"Já existe atleta com a mesma Matrícula do Zempô");
+				FacesContext.getCurrentInstance().addMessage(null, m);
+				
+				RequestContext.getCurrentInstance().addCallbackParam("validationFailed", true);
+				return;
+			}
 				
 		TipoUsuario tipo = JudokasHelper.getTipoUsuarioSessao();
 		String nomeUsuario = null;

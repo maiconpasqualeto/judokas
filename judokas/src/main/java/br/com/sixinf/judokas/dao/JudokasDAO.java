@@ -753,6 +753,37 @@ public class JudokasDAO extends BridgeBaseDAO {
 	
 	/**
 	 * 
+	 * @return
+	 * @throws LoggerException 
+	 */
+	public boolean exiteDuplicidadeMatriculaZempo(Atleta atleta) throws LoggerException {
+		EntityManager em = AdministradorPersistencia.getEntityManager();
+		
+		boolean retorno = false; 
+		try {
+			StringBuilder hql = new StringBuilder();
+			hql.append("select count(a) from Atleta a ");
+			hql.append("where a.statusRegistro = 'A' ");
+			hql.append("and lower(a.matriculaZempo) = lower(:matriculaZempo) ");			
+			Query q = em.createQuery(hql.toString());			
+			q.setParameter("matriculaZempo", atleta.getMatriculaZempo());
+			
+			Long count = (Long) q.getSingleResult();
+			if (count > 0)
+				retorno = true;
+			
+		} catch (NoResultException e) {
+			
+		} catch (Exception e) {
+			throw new LoggerException("Erro ao buscar atleta pornome", e, LOG);
+		} finally {
+            em.close();
+        }
+		return retorno;
+	}
+	
+	/**
+	 * 
 	 * @param usuario
 	 * @throws LoggerException 
 	 */
