@@ -73,8 +73,8 @@
 					<p:column headerText="Ação" style="width:230px; text-align: center;">
 						<f:facet name="header">Ação</f:facet>
 						<p:commandButton value="Editar" process="@this" actionListener="#{atletasBean.editar(a)}"
-			                	id="btnEditar" oncomplete="PF('dlg').show();" update=":formDialog:pnlCampos"
-			                	rendered="#{atletasBean.segurancaBean.renderTipoUsuario}">
+			                	id="btnEditar" oncomplete="PF('dlg').show();" update=":dlgCadastro">
+			                	<!-- rendered="#{atletasBean.segurancaBean.renderTipoUsuario}" -->
 		                	<p:resetInput target=":dlgCadastro" />
 		                </p:commandButton>
 							
@@ -95,11 +95,7 @@
 		                		message="Cancelar impressão da carteirinha?" icon="ui-icon-alert" />
                             
 		                </p:commandButton>
-		                
-		                <p:commandButton value="Consultar" process="@this" actionListener="#{atletasBean.editar(a)}"
-		                	id="btnConsultar" oncomplete="PF('dlg').show();" update=":dlgCadastro"
-		                	rendered="#{!atletasBean.segurancaBean.renderTipoUsuario}"/>
-		                	
+		                		                	
 		            </p:column>
 				</p:dataTable>
 				
@@ -212,13 +208,14 @@
 						        <div class="ui-grid-col-9">
 						        	<p:selectOneMenu id="cmbGraduacao"
 										value="#{atletasBean.atleta.graduacao}" required="true"
-										label="Graduação" rendered="#{atletasBean.segurancaBean.renderTipoUsuario or atletasBean.atleta.id eq null}">
+										label="Graduação" >
+										<!-- rendered="#{atletasBean.segurancaBean.renderTipoUsuario or atletasBean.atleta.id eq null}" -->
 										<f:selectItem itemLabel="Selecione" itemValue="" />
 										<f:selectItems value="#{atletasBean.graduacoes}" />
 									</p:selectOneMenu>
-									<h:inputText value="#{atletasBean.atleta.graduacao}" readonly="true" 
+									<!-- <h:inputText value="#{atletasBean.atleta.graduacao}" readonly="true" 
 										styleClass="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all"
-										rendered="#{!atletasBean.segurancaBean.renderTipoUsuario and (atletasBean.atleta.id ne null)}" />
+										rendered="#{!atletasBean.segurancaBean.renderTipoUsuario and (atletasBean.atleta.id ne null)}" /> -->
 						        </div>
 							</div>
 							
@@ -259,16 +256,13 @@
 					
 					<p:button value="Fechar" onclick="PF('dlg').hide();"/>
 					
-					<p:commandButton value="Salvar Foto" process="@this grfFoto" actionListener="#{atletasBean.salvarFoto}"
-						update=":frmAtletas:growAtletas :frmAtletas:tblAtletas pnlCampos" oncomplete="PF('dlg').hide();"
-						rendered="#{!atletasBean.segurancaBean.renderTipoUsuario and (atletasBean.atleta.id ne null)}"/>
 						
 					<p:commandButton id="btnSalvar" value="Salvar e Fechar" actionListener="#{atletasBean.salvarFecha}" 
-						update=":frmAtletas:growAtletas :frmAtletas:tblAtletas pnlCampos" oncomplete="registroGravado(xhr, status, args)"
-						rendered="#{atletasBean.segurancaBean.renderTipoUsuario or (atletasBean.atleta.id eq null) }" />
+						update=":frmAtletas:growAtletas :frmAtletas:tblAtletas formDialog" oncomplete="registroGravado(xhr, status, args)" />
+						<!-- rendered="#{atletasBean.segurancaBean.renderTipoUsuario or (atletasBean.atleta.id eq null) }"  -->
 						
 					<p:commandButton id="btnSalvarENovo" value="Salvar e Adiciona Novo" actionListener="#{atletasBean.salvar}" 
-						update=":frmAtletas:growAtletas :frmAtletas:tblAtletas pnlCampos" rendered="#{atletasBean.segurancaBean.renderTipoUsuario or (atletasBean.atleta.id eq null)}"/>
+						update=":frmAtletas:growAtletas :frmAtletas:tblAtletas formDialog" rendered="#{atletasBean.segurancaBean.renderTipoUsuario or (atletasBean.atleta.id eq null)}"/>
 					
 					<p:defaultCommand target="btnSalvar" rendered="#{atletasBean.segurancaBean.renderTipoUsuario or (atletasBean.atleta.id eq null)}" />
 					
