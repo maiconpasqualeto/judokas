@@ -26,9 +26,10 @@ public class NomeValidator implements Validator {
 		String nome = (String) value;
 		String[] partes = nome.split(" ");
 		for (String parte : partes) {
-			if (parte.length() == 1 ||
+			if ((parte.length() == 1 ||
 					parte.contains(".") ||
-					parte.contains(","))
+					parte.contains(",") ) &&
+					!parte.toLowerCase().equals("e") )
 				throw new ValidatorException(
 						new FacesMessage(FacesMessage.SEVERITY_ERROR, 
 								"O Nome não pode ser abreviado",
